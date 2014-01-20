@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
-
     <!-- edit Template here -->
     <RootNamespace>VVVV.Pack.Game</RootNamespace>
     <AssemblyName>VVVV.Pack.Game.Nodes</AssemblyName>
-
-
     <ProjectGuid>{6A0AFB1F-8219-4A08-85F7-B7F19B66AC16}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
@@ -15,7 +12,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
@@ -31,7 +27,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'" />
-
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
@@ -59,21 +54,22 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-
-   <Import Project="..\packages\VVVV.PluginInterfaces.31.3.1\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.3.1\build\net40\VVVV.PluginInterfaces.targets')" />
+  <Import Project="..\packages\VVVV.PluginInterfaces.31.3.1\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.3.1\build\net40\VVVV.PluginInterfaces.targets')" />
   <Import Project="..\packages\VVVV.PluginInterfaces.31.5.0-develop-80\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.5.0-develop-80\build\net40\VVVV.PluginInterfaces.targets')" />
-
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
-
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.props" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.props')" />
-
-
   <ItemGroup>
-    <Compile Include="Template.cs" />
+    <Compile Include="AbstractActionNode.cs" />
+    <Compile Include="AbstractBehaviorNode.cs" />
+    <Compile Include="AbstractDecorator.cs" />
+    <Compile Include="Action.cs" />
+    <Compile Include="Decorator.cs" />
+    <Compile Include="RootNode.cs" />
+    <Compile Include="SequenceGameNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-
+  <ItemGroup />
   <Target Name="AfterBuild">
     <ItemGroup>
       <MyFiles Include="..\..\patches\**\*.*" />
