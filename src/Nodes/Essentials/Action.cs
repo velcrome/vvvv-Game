@@ -7,7 +7,7 @@ using VVVV.PluginInterfaces.V2;
 
 #endregion usings
 
-namespace VVVV.Nodes
+namespace VVVV.Pack.Game.Nodes
 {
     #region PluginInfo
     [PluginInfo(Name = "Action",

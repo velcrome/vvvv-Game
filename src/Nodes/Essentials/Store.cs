@@ -8,12 +8,12 @@ using VVVV.Pack.Game.Base;
 using VVVV.PluginInterfaces.V2;
 using VVVV.Utils.VMath;
 
-namespace VVVV.Packs.GameElement.Nodes
+namespace VVVV.Pack.Game.Nodes
 {
     [PluginInfo(
         Name = "Store", 
         Category = "Game", 
-        Help = "Stores Agents", 
+        Help = "Stores Agents, is the root of all Behavior Trees", 
         AutoEvaluate = true,
         Tags = "velcrome")]
     public class ElementStoreNode : IPluginEvaluate, IPartImportsSatisfiedNotification

@@ -5,15 +5,13 @@ using System.Dynamic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using VVVV.Pack.Game;
-using VVVV.Pack.Messaging;
 using VVVV.Packs.Game;
 using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game.Base
 {
     [DataContract]
-    public class Agent : Message, IComparable<Agent>
+    public class Agent : DynamicObject, IComparable<Agent>
     {
 		[DataMember]
 		Dictionary<string, SpreadList> Data = new Dictionary<string, SpreadList>();

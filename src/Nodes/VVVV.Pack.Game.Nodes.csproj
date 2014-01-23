@@ -42,19 +42,15 @@
       <HintPath>..\packages\VVVV.Core.31.3.1\lib\net40\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VVVV.Messaging.Core">
-      <HintPath>..\libs\VVVV.Messaging.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="VVVV.Utils">
       <HintPath>..\packages\VVVV.Utils.31.3.1\lib\net40\VVVV.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\VVVV.Packs.Template.Core.csproj">
+    <ProjectReference Include="..\Core\VVVV.Pack.Game.Core.csproj">
       <Project>{c2f6ec8a-aa56-4121-b60f-72012d192835}</Project>
-      <Name>VVVV.Packs.Template.Core</Name>
+      <Name>VVVV.Pack.Game.Core</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
@@ -64,20 +60,20 @@
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.props" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.props')" />
   <ItemGroup>
-    <Compile Include="AbstractActionNode.cs" />
-    <Compile Include="AbstractBehaviorNode.cs" />
-    <Compile Include="AbstractDecorator.cs" />
-    <Compile Include="Action.cs" />
-    <Compile Include="Birth.cs" />
-    <Compile Include="Decorator.cs" />
-    <Compile Include="ParallelGameNode.cs" />
-    <Compile Include="RootNode.cs" />
-    <Compile Include="AbstractCompositeNode.cs" />
+    <Compile Include="BaseNodes\AbstractActionNode.cs" />
+    <Compile Include="BaseNodes\AbstractBehaviorNode.cs" />
+    <Compile Include="BaseNodes\AbstractDecorator.cs" />
+    <Compile Include="Essentials\Action.cs" />
+    <Compile Include="Essentials\Birth.cs" />
+    <Compile Include="Essentials\Decorator.cs" />
+    <Compile Include="CompositeNodes\ParallelGameNode.cs" />
+    <Compile Include="PatchNodes\Lid.cs" />
+    <Compile Include="BaseNodes\AbstractCompositeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectorGameNode.cs" />
-    <Compile Include="SequenceGameNode.cs" />
-    <Compile Include="Sink.cs" />
-    <Compile Include="Store.cs" />
+    <Compile Include="CompositeNodes\SelectorGameNode.cs" />
+    <Compile Include="CompositeNodes\SequenceGameNode.cs" />
+    <Compile Include="PatchNodes\Pot.cs" />
+    <Compile Include="Essentials\Store.cs" />
   </ItemGroup>
   <ItemGroup />
   <Target Name="AfterBuild">

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VVVV.Packs.Template.Nodes", "Nodes\VVVV.Packs.Template.Nodes.csproj", "{6A0AFB1F-8219-4A08-85F7-B7F19B66AC16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VVVV.Pack.Game.Nodes", "Nodes\VVVV.Pack.Game.Nodes.csproj", "{6A0AFB1F-8219-4A08-85F7-B7F19B66AC16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VVVV.Packs.Template.Core", "Core\VVVV.Packs.Template.Core.csproj", "{C2F6EC8A-AA56-4121-B60F-72012D192835}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VVVV.Pack.Game.Core", "Core\VVVV.Pack.Game.Core.csproj", "{C2F6EC8A-AA56-4121-B60F-72012D192835}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

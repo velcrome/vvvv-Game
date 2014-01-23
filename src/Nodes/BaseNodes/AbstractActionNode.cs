@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using VVVV.Pack.Game;
 using VVVV.Pack.Game.Base;
 
-namespace VVVV.Nodes
+namespace VVVV.Pack.Game.Nodes
 {
     public abstract class AbstractActionNode : AbstractBehaviorNode
     {
