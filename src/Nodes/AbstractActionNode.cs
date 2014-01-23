@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using VVVV.Pack.Game;
-using VVVV.Packs.Game;
-using VVVV.Packs.GameElement.Base;
-using VVVV.PluginInterfaces.V2;
+using VVVV.Pack.Game.Base;
 
 namespace VVVV.Nodes
 {
@@ -13,9 +11,8 @@ namespace VVVV.Nodes
 
         public override void Evaluate(int SpreadMax)
         {
-            base.Evaluate(SpreadMax);
             Behave(FAgents);
-            PrintCodes(FAgents);
+            FinishEvaluation();
         }
     }
 }

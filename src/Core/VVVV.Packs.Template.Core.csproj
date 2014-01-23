@@ -43,6 +43,10 @@
       <HintPath>..\packages\VVVV.Core.31.3.1\lib\net40\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="VVVV.Messaging.Core">
+      <HintPath>..\libs\VVVV.Messaging.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="VVVV.PluginInterfaces">
       <HintPath>..\..\build\x64\Debug\vvvv-Game\nodes\plugins\VVVV.PluginInterfaces.dll</HintPath>
       <Private>False</Private>

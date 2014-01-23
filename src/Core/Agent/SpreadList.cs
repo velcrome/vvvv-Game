@@ -3,7 +3,7 @@ using System.Collections;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace VVVV.Packs.GameElement.Base
+namespace VVVV.Pack.Game.Base
 {
 	/// <summary>
 	/// Description of BundleOSCNode.

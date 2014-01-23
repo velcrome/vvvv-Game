@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using VVVV.Packs.Game;
-using VVVV.Packs.GameElement.Base;
+﻿using System;
+using System.Collections.Generic;
+using VVVV.Pack.Game.Base;
 using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game
@@ -18,20 +18,18 @@ namespace VVVV.Pack.Game
 
         public override void Evaluate(int SpreadMax)
         {
-            SpreadMax = FAgents.Count;
-            
-            base.Evaluate(SpreadMax);
-            
             Behave(FAgents);
 
-            if (FInput.SliceCount > 0 && FInput[0] != null)
+            if (IsPinValid(FInput))
             {
-                FInput[0].Agents.Clear();
-                FInput[0].Agents.InsertRange(0, FAgents); // insert all.
+                FInput[0].Agents.AddRange(FAgents); // add all.
                 FInput.Sync(); // call child
+            } else
+            {
+                throw new Exception("Decorator cannot be used unconnected");
             }
 
-            PrintCodes(FAgents);
+            FinishEvaluation();
         }
 
         protected abstract void Behave(IEnumerable<Agent> agents);

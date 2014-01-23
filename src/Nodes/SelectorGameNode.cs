@@ -5,12 +5,12 @@ using VVVV.PluginInterfaces.V2;
 namespace VVVV.Pack.Game.Nodes
 {
     #region PluginInfo
-    [PluginInfo(Name = "Sequence",
+    [PluginInfo(Name = "Selector",
                 Category = "Game",
                 Help = "Sequence",
                 Tags = "")]
     #endregion PluginInfo
-    public class SequenceGameNode : AbstractCompositeNode 
+    public class SelectorGameNode : AbstractCompositeNode
     {
         public override void Evaluate(int SpreadMax)
         {
@@ -26,7 +26,7 @@ namespace VVVV.Pack.Game.Nodes
 
                 if (IsPinValid(pin))
                 {
-                    pin[0].Agents.AddRange(continueWith); // add all that are still sucessful
+                    pin[0].Agents.AddRange(continueWith); // add all that are still unsucessful
                     pin[0].Agents.Sort(); // sort in any running agents already in the target list
 
                     pin.Sync(); // call child
@@ -39,16 +39,14 @@ namespace VVVV.Pack.Game.Nodes
 
                     // the agents that can be processed 
                     continueWith = from agents in pin[0].Agents
-                                   where agents.ReturnCode == ReturnCodeEnum.Success
+                                   where agents.ReturnCode == ReturnCodeEnum.Failure
                                    select agents;
 
-                    // treat all running agents that changed their ReturnCode. can be done 
+                    // treat all running agents that changed their ReturnCode. 
                     var resetRunning = from agents in pin[0].Agents
                                        where agents.RunningNodes.ContainsKey(this) && agents.RunningNodes[this].Contains(pin) && agents.ReturnCode != ReturnCodeEnum.Running
                                        select agents;
                     foreach (var agent in resetRunning) agent.RemoveRunning(this, pin);
-
-
                 }
             }
 

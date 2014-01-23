@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using VVVV.Core.Logging;
-using VVVV.Packs.Game;
-using VVVV.Packs.GameElement.Base;
+using VVVV.Pack.Game.Base;
 using VVVV.PluginInterfaces.V2;
 using VVVV.Utils.VMath;
 
@@ -52,7 +48,7 @@ namespace VVVV.Pack.Game.Nodes
 
 
 
-            SpreadMax = VMath.Random.Next(30)+2;
+            SpreadMax = VMath.Random.Next(10)+1;
 
             FAgents.Clear();
 

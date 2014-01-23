@@ -6,13 +6,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using VVVV.Pack.Game;
+using VVVV.Pack.Messaging;
 using VVVV.Packs.Game;
 using VVVV.PluginInterfaces.V2;
 
-namespace VVVV.Packs.GameElement.Base
+namespace VVVV.Pack.Game.Base
 {
     [DataContract]
-    public class Agent : DynamicObject
+    public class Agent : Message, IComparable<Agent>
     {
 		[DataMember]
 		Dictionary<string, SpreadList> Data = new Dictionary<string, SpreadList>();
@@ -29,22 +30,31 @@ namespace VVVV.Packs.GameElement.Base
             get; set; 
         }
 
+        [DataMember]
         public ReturnCodeEnum ReturnCode { 
             get;
             set;
         }
 
-        public Dictionary<object, Pin<BehaviorLink>> RunningNodes = new Dictionary<object, Pin<BehaviorLink>>();
+        [DataMember]
+        public DateTime BirthTime
+        {
+            get; private set; 
+        }
+
+
+        public Dictionary<object, List<Pin<BehaviorLink>>> RunningNodes = new Dictionary<object, List<Pin<BehaviorLink>>>();
 		
 		public Agent()
 		{
 		    Id = Guid.NewGuid().ToString();
+		    BirthTime = DateTime.Now;
 		    KissOfDeath = false;
 		}
 
 
         #region DynamicObject
-
+/*
         // If you try to get a value of a property  
         // not defined in the class, this method is called. 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
@@ -67,6 +77,8 @@ namespace VVVV.Packs.GameElement.Base
             Data[binder.Name] = (SpreadList)value;
             return true;
         }
+ */
+ 
         #endregion DynamicObject
 
         #region SpreadList Access
@@ -178,11 +190,17 @@ namespace VVVV.Packs.GameElement.Base
             return m;
         }
 
+        public int CompareTo(Agent other)
+        {
+            if (other == null) return 0;
+                else return BirthTime.CompareTo(other.BirthTime);
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
 
-            sb.Append("Element\n");
+            sb.Append("Agent "+  (BirthTime.Second*1000+BirthTime.Millisecond).ToString()+" -> " + ReturnCode +"\n");
             foreach (string name in Data.Keys)
             {
 
@@ -198,5 +216,22 @@ namespace VVVV.Packs.GameElement.Base
 
         #endregion Essentials
 
+        #region Running Cache
+        public void AddRunning(object node, Pin<BehaviorLink> pin)
+        {
+            var list = RunningNodes.ContainsKey(node) ? RunningNodes[node] : new List<Pin<BehaviorLink>>();
+            if (!list.Contains(pin)) list.Add(pin);
+            RunningNodes[node] = list;
+        }
+
+        public void RemoveRunning(object node, Pin<BehaviorLink> pin)
+        {
+            var list = RunningNodes.ContainsKey(node) ? RunningNodes[node] : new List<Pin<BehaviorLink>>();
+            if (list.Contains(pin)) list.Remove(pin);
+            if (list.Count == 0) 
+                RunningNodes.Remove(node);
+                else RunningNodes[node] = list;
+        }
+        #endregion
     }
 }

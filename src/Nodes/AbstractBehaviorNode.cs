@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using VVVV.Core.Logging;
-using VVVV.Packs.Game;
-using VVVV.Packs.GameElement.Base;
+using VVVV.Pack.Game.Base;
 using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game
@@ -25,9 +24,12 @@ namespace VVVV.Pack.Game
         public List<Agent> FAgents = new List<Agent>();
         protected BehaviorLink link;
 
+        [Import()]
+        protected IMainLoop FMainLoop;
+        
         #endregion fields & pins
-        
-        
+
+        #region evaluation management
         public virtual void OnImportsSatisfied()
         {
             link = new BehaviorLink(FAgents);
@@ -36,15 +38,22 @@ namespace VVVV.Pack.Game
             FOutput.Flush();
 
             FOutput.Disconnected += disconnect;
+            FMainLoop.OnPrepareGraph += init;
 
+        }
+
+        private void init(object sender, EventArgs e)
+        {
+            FAgents.Clear();
         }
 
         private void disconnect(object sender, PinConnectionEventArgs args)
         {
-            FLogger.Log(LogType.Message, "hello " + this.ToString());
             FAgents.Clear();
 
-            Evaluate(0);            
+            FOutput.SliceCount = 1;
+            FOutput[0] = link;
+            FOutput.Flush();
         }
 
         protected void connect(object sender, PinConnectionEventArgs args)
@@ -52,28 +61,34 @@ namespace VVVV.Pack.Game
             ( (Pin<BehaviorLink>) sender).Sync();
         }
 
-        protected void PrintCodes(IEnumerable<Agent> agents)
+        public bool IsPinValid(Pin<BehaviorLink> pin)
         {
-            FLogger.Log(LogType.Message, "Hi "+this.ToString());
+            return pin.SliceCount > 0 && pin[0] != null && pin.PluginIO.IsConnected;
+        }
+        #endregion
+
+        #region essentials
+        protected void FinishEvaluation()
+        {
+//            FLogger.Log(LogType.Message, "Hi "+this.ToString());
             
             FReturnCode.SliceCount = FAgents.Count;
             int i = 0;
-            foreach (Agent agent in agents)
+            foreach (Agent agent in FAgents)
             {
-                i++;
                 FReturnCode[i] = agent.ReturnCode.ToString();
+                i++;
             }
             FReturnCode.Flush();
+
+            FOutput.SliceCount = Math.Max(1, FAgents.Count);
+            FOutput[0] = link;
+            FOutput.Flush();
         }
+        #endregion
 
         public virtual void Evaluate(int SpreadMax)
         {
-            SpreadMax = FAgents.Count;
-
-            FOutput.SliceCount = Math.Max(1, SpreadMax);
-            FOutput[0] = link;
-            FOutput.Flush();
-
 /*      TODO: check for security, if more than one parent is connected.
             IPin pin = (IPin)FOutput.PluginIO;            
             if (pin.GetConnectedPins().Length > 1)
@@ -86,7 +101,7 @@ namespace VVVV.Pack.Game
             }
 */
 
-             
+            FinishEvaluation();             
         }
 
     }
