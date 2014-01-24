@@ -52,7 +52,7 @@ namespace VVVV.Pack.Game.Base
 
 
         #region DynamicObject
-/*
+
         // If you try to get a value of a property  
         // not defined in the class, this method is called. 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
@@ -75,7 +75,6 @@ namespace VVVV.Pack.Game.Base
             Data[binder.Name] = (SpreadList)value;
             return true;
         }
- */
  
         #endregion DynamicObject
 
