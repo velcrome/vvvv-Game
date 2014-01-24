@@ -4,7 +4,7 @@ using System.IO;
 using VVVV.Utils.VColor;
 using VVVV.Utils.VMath;
 
-namespace VVVV.Pack.Game.Base
+namespace VVVV.Pack.Game.Core
     
 {
     public class TypeIdentity : Dictionary<Type, string>

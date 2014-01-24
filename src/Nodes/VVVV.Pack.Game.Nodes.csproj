@@ -61,9 +61,11 @@
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.props" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.props')" />
   <ItemGroup>
+    <Compile Include="AgentNodes\DynamicNodes.cs" />
     <Compile Include="BaseNodes\AbstractActionNode.cs" />
     <Compile Include="BaseNodes\AbstractBehaviorNode.cs" />
     <Compile Include="BaseNodes\AbstractDecorator.cs" />
+    <Compile Include="TestAction.cs" />
     <Compile Include="Essentials\Action.cs" />
     <Compile Include="Essentials\Birth.cs" />
     <Compile Include="Essentials\Decorator.cs" />

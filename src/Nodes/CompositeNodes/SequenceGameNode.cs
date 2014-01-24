@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using VVVV.Packs.Game;
+using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game.Nodes

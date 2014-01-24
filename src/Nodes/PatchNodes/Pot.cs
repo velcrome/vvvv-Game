@@ -1,9 +1,6 @@
 ﻿#region usings
-using System;
 using System.Collections.Generic;
-using VVVV.Pack.Game;
-using VVVV.Pack.Game.Base;
-using VVVV.Packs.Game;
+using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V1;
 using VVVV.PluginInterfaces.V2;
 
@@ -29,7 +26,7 @@ namespace VVVV.Pack.Game.Nodes
         [Input("ReturnCode", AutoValidate = false, Order = 3)]
         public ISpread<ReturnCodeEnum> FReturn;
 
-        public virtual void OnImportsSatisfied()
+        public override void OnImportsSatisfied()
         {
             base.OnImportsSatisfied();
             FEditedAgents.Changed += editAgents;

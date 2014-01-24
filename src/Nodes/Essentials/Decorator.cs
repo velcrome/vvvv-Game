@@ -1,6 +1,6 @@
 ﻿#region usings
 using System.Collections.Generic;
-using VVVV.Pack.Game.Base;
+using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
 
 

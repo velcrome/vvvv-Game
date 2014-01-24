@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using VVVV.Pack.Game.Base;
-using VVVV.Packs.Game;
-using VVVV.PluginInterfaces.V1;
+using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
 
 
@@ -18,7 +16,7 @@ namespace VVVV.Pack.Game.Nodes
     {
         #region fields & pins
         // A spread which contains our inputs
-        public Spread<IIOContainer<Pin<BehaviorLink>>> FInputs = new Spread<IIOContainer<Pin<BehaviorLink>>>();
+        public PluginInterfaces.V2.Spread<IIOContainer<Pin<BehaviorLink>>> FInputs = new PluginInterfaces.V2.Spread<IIOContainer<Pin<BehaviorLink>>>();
 
         [Config("Input Count", DefaultValue = 2, MinValue = 1)]
         public IDiffSpread<int> FInputCount;
@@ -36,7 +34,7 @@ namespace VVVV.Pack.Game.Nodes
             FInputCount.Changed += HandleInputCountChanged;
         }
 
-        private void HandlePinCountChanged<T>(ISpread<int> countSpread, Spread<IIOContainer<T>> pinSpread, Func<int, IOAttribute> ioAttributeFactory) where T : class
+        private void HandlePinCountChanged<T>(ISpread<int> countSpread, VVVV.PluginInterfaces.V2.Spread<IIOContainer<T>> pinSpread, Func<int, IOAttribute> ioAttributeFactory) where T : class
         {
             pinSpread.ResizeAndDispose(
                 countSpread[0],

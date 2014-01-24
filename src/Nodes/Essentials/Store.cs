@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using VVVV.Core.Logging;
-using VVVV.Pack.Game;
-using VVVV.Pack.Game.Base;
+using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
 using VVVV.Utils.VMath;
 

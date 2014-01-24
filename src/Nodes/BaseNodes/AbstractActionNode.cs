@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using VVVV.Pack.Game;
-using VVVV.Pack.Game.Base;
+using VVVV.Pack.Game.Core;
 
 namespace VVVV.Pack.Game.Nodes
 {
