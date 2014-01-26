@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using ImpromptuInterface;
 using VVVV.Pack.Game.Faces;
-using VVVV.PluginInterfaces.V2;
+//using VVVV.PluginInterfaces.V2;
 
 
 namespace VVVV.Pack.Game.Core
@@ -47,13 +47,13 @@ namespace VVVV.Pack.Game.Core
         }
 
 
-        public Dictionary<object, List<Pin<BehaviorLink>>> RunningNodes { get; private set; }
+        public Dictionary<object, ArrayList> RunningNodes { get; private set; }
 
         #endregion
 
         public Agent()
         {
-            RunningNodes = new Dictionary<object, List<Pin<BehaviorLink>>>();
+            RunningNodes = new Dictionary<object, ArrayList>();
             Id = Guid.NewGuid().ToString();
             BirthTime = DateTime.Now;
             Dispose = false;
@@ -119,6 +119,8 @@ namespace VVVV.Pack.Game.Core
                 }
             }
             return success;
+
+
         }
 
         // If you try to set a value of a property that is 
@@ -303,16 +305,16 @@ namespace VVVV.Pack.Game.Core
         #endregion Essentials
 
         #region Running Cache
-        public void AddRunning(object node, Pin<BehaviorLink> pin)
+        public void AddRunning(object node, object pin)
         {
-            var list = RunningNodes.ContainsKey(node) ? RunningNodes[node] : new List<Pin<BehaviorLink>>();
+            var list = RunningNodes.ContainsKey(node) ? RunningNodes[node] : new ArrayList();
             if (!list.Contains(pin)) list.Add(pin);
             RunningNodes[node] = list;
         }
 
-        public void RemoveRunning(object node, Pin<BehaviorLink> pin)
+        public void RemoveRunning(object node, object pin)
         {
-            var list = RunningNodes.ContainsKey(node) ? RunningNodes[node] : new List<Pin<BehaviorLink>>();
+            var list = RunningNodes.ContainsKey(node) ? RunningNodes[node] : new ArrayList();
             if (list.Contains(pin)) list.Remove(pin);
             if (list.Count == 0)
                 RunningNodes.Remove(node);

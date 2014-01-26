@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using VVVV.Pack.Game.Core;
-using VVVV.PluginInterfaces.V2;
+
 
 namespace VVVV.Pack.Game.Faces
 {
@@ -13,8 +13,10 @@ namespace VVVV.Pack.Game.Faces
 
         IEnumerable<Bin> this[params string[] keys] { get; }
 
-        void AddRunning(object node, Pin<BehaviorLink> pin);
-        void RemoveRunning(object node, Pin<BehaviorLink> pin);
+//        void AddRunning(object node, Pin<BehaviorLink> pin);
+ //       void RemoveRunning(object node, Pin<BehaviorLink> pin);
+        void AddRunning(object node, object pin);
+        void RemoveRunning(object node, object pin);
 
 
         void Add(string name, object val);

@@ -33,11 +33,11 @@ namespace VVVV.Pack.Game.Nodes
                 
                 FLogger.Log(LogType.Message, cast.Id.ToString());
 
-                cast.Name = (Core.Bin<string>)new string[] {"Marko", "Ritter"};
-                cast.Palette = new Core.Bin<RGBAColor>(new RGBAColor(1, 0, 0, 1), new RGBAColor(0, 1, 0, 1));
+//                cast.Name = (Core.Bin<string>)new string[] {"Marko", "Ritter"};
+  //              cast.Palette = new Core.Bin<RGBAColor>(new RGBAColor(1, 0, 0, 1), new RGBAColor(0, 1, 0, 1));
 
 
-                cast.Position = new Vector3D();
+    //            cast.Position = new Vector3D();
                 cast.Health = 77;
                 cast.Health++;
 
