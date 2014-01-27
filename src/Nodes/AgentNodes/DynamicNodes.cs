@@ -8,49 +8,38 @@ using VVVV.Pack.Game.Core;
 
 using VVVV.PluginInterfaces.V2;
 using VVVV.Core.Logging;
+using VVVV.PluginInterfaces.V2.NonGeneric;
 
 #endregion usings
 
-namespace VVVV.Pack.Game.Nodes {
+namespace VVVV.Pack.Game.Nodes
+{
 
-	public abstract class DynamicNode : IPluginEvaluate, IPartImportsSatisfiedNotification
-	{
-		
-		#region Enum
-		public enum SelectEnum
-		{
-			All,
-			First,
-			Last
-		}
+    public abstract class DynamicNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+    {
 
-		#endregion Enum
-		
-		#region fields & pins
-        [Input("Interface", DefaultString = "IAgent", IsSingle=true)]
-        public IDiffSpread<string> FType;
-       
-        [Config ("Configuration", DefaultString="string Foo")]
-		public IDiffSpread<string> FConfig;
-		
-		[Input ("Verbose", Visibility = PinVisibility.OnlyInspector, IsSingle = true, DefaultBoolean = true)]
-		public ISpread<bool> FVerbose;
-		
-		[Import()]
-		protected ILogger FLogger;
-		
-		[Import()]
-		protected IIOFactory FIOFactory;
-		
-		protected Dictionary<string, IIOContainer> FPins = new Dictionary<string, IIOContainer>();
-		protected Dictionary<string, string> FTypes = new Dictionary<string, string>();
+        #region fields & pins
 
-		protected int FCount = 2;
+        [Input("Interface", DefaultString = "IAgent", IsSingle = true)] public IDiffSpread<string> FType;
 
-		#endregion fields & pins
+        [Config("Configuration", DefaultString = "string Foo")] public IDiffSpread<string> FConfig;
+
+        [Input("Verbose", Visibility = PinVisibility.OnlyInspector, IsSingle = true, DefaultBoolean = true)] public
+            ISpread<bool> FVerbose;
+
+        [Import()] protected ILogger FLogger;
+
+        [Import()] protected IIOFactory FIOFactory;
+
+        protected Dictionary<string, IIOContainer> FPins = new Dictionary<string, IIOContainer>();
+        protected Dictionary<string, string> FTypes = new Dictionary<string, string>();
+
+        protected int FCount = 2;
+
+        #endregion fields & pins
 
         #region type
-        
+
         public DynamicNode()
         {
         }
@@ -58,7 +47,7 @@ namespace VVVV.Pack.Game.Nodes {
 
         protected bool TypeUpdate()
         {
-            
+
             // Todo: find all params in the Interface 
 
             if (FType[0].ToLower() == "none") return false;
@@ -66,117 +55,143 @@ namespace VVVV.Pack.Game.Nodes {
 
             return true;
         }
+
         #endregion type
 
 
         #region pin management
- 
-		
-		
-		public void OnImportsSatisfied() {
-			FConfig.Changed += HandleConfigChange;
-		}
-		
-		protected virtual void HandleConfigChange(IDiffSpread<string> configSpread) {
-			FCount = 0;
-			List<string> invalidPins = FPins.Keys.ToList();
-			
-			string[] config = configSpread[0].Trim().Split(',');
-			foreach (string pinConfig in config) {
-				string[] pinData = pinConfig.Trim().Split(' ');
-				
-				try {
-					string typeName = pinData[0].ToLower();
-					string name = pinData[1];
-					
-					bool create = false;
-					if (FPins.ContainsKey(name) && FPins[name] != null) {
-						invalidPins.Remove(name);
-						
-						if (FTypes.ContainsKey(name)) {
-							if (FTypes[name] != typeName) {
-								FPins[name].Dispose();
-								FPins[name] = null;
-								create = true;
-							}
-							
-						} else {
-							// key is in FPins, but no type defined. should never happen
-							create = true;
-						}
-					} else {
-						FPins.Add(name, null);
-						create = true;
-					}
-					
-					if (create) {
-					    Type type = typeof(string);
+
+
+
+        public void OnImportsSatisfied()
+        {
+            FConfig.Changed += HandleConfigChange;
+        }
+
+        protected virtual void HandleConfigChange(IDiffSpread<string> configSpread)
+        {
+            FCount = 0;
+            List<string> invalidPins = FPins.Keys.ToList();
+
+            string[] config = configSpread[0].Trim().Split(',');
+            foreach (string pinConfig in config)
+            {
+                string[] pinData = pinConfig.Trim().Split(' ');
+
+                try
+                {
+                    string typeName = pinData[0].ToLower();
+                    string name = pinData[1];
+
+                    bool create = false;
+                    if (FPins.ContainsKey(name) && FPins[name] != null)
+                    {
+                        invalidPins.Remove(name);
+
+                        if (FTypes.ContainsKey(name))
+                        {
+                            if (FTypes[name] != typeName)
+                            {
+                                FPins[name].Dispose();
+                                FPins[name] = null;
+                                create = true;
+                            }
+
+                        }
+                        else
+                        {
+                            // key is in FPins, but no type defined. should never happen
+                            create = true;
+                        }
+                    }
+                    else
+                    {
+                        FPins.Add(name, null);
+                        create = true;
+                    }
+
+                    if (create)
+                    {
+                        Type type = typeof (string);
                         foreach (Type key in TypeIdentity.Instance.Keys)
-					    {
+                        {
                             if (TypeIdentity.Instance[key] == typeName)
-					        {
-					            type = key;
-					        }
-					    }
+                            {
+                                type = key;
+                            }
+                        }
 
-                        IOAttribute attr = DefinePin(name, type); // each implementation of DynamicNode must create its own InputAttribute or OutputAttribute (
-					    Type pinType = typeof (ISpread<>).MakeGenericType((typeof (ISpread<>)).MakeGenericType(type)); // the Pin is always a binsized one
-					    FPins[name] = FIOFactory.CreateIOContainer(pinType, attr);
+                        IOAttribute attr = DefinePin(name, type);
+                            // each implementation of DynamicNode must create its own InputAttribute or OutputAttribute (
+                        Type pinType = typeof (ISpread<>).MakeGenericType((typeof (ISpread<>)).MakeGenericType(type));
+                            // the Pin is always a binsized one
+                        FPins[name] = FIOFactory.CreateIOContainer(pinType, attr);
 
-						FTypes.Add(name, typeName);
-					}
-					FCount+=2; // total pincount. always add two to account for data pin and binsize pin
-				} catch (Exception ex) {
-					var e = ex;
-					FLogger.Log(LogType.Debug, ex.ToString());
-					FLogger.Log(LogType.Debug, "Invalid Descriptor in Config Pin");
-				}
-			}
-			foreach (string name in invalidPins) {
-				FPins[name].Dispose();
-				FPins.Remove(name);
-				FTypes.Remove(name);
-			}
-		}
-		
-		#endregion pin management
-		
-		#region tools
-		
-		protected VVVV.PluginInterfaces.V2.NonGeneric.ISpread ToISpread(IIOContainer pin) {
-			return (VVVV.PluginInterfaces.V2.NonGeneric.ISpread)(pin.RawIOObject);
-		}
-		
-		protected VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread ToIDiffSpread(IIOContainer pin) {
-			return (VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread)(pin.RawIOObject);
-		}
-		protected VVVV.PluginInterfaces.V2.ISpread<T> ToGenericISpread<T>(IIOContainer pin) {
-			return (VVVV.PluginInterfaces.V2.ISpread<T>)(pin.RawIOObject);
-		}
-		
-		#endregion tools
-		
-		#region abstract methods
-		protected abstract IOAttribute DefinePin(string name, Type type);
-		
-		public abstract void Evaluate(int SpreadMax);
-		
-		#endregion abstract methods
-	}
+                        FTypes.Add(name, typeName);
+                    }
+                    FCount += 2; // total pincount. always add two to account for data pin and binsize pin
+                }
+                catch (Exception ex)
+                {
+                    var e = ex;
+                    FLogger.Log(LogType.Debug, ex.ToString());
+                    FLogger.Log(LogType.Debug, "Invalid Descriptor in Config Pin");
+                }
+            }
+            foreach (string name in invalidPins)
+            {
+                FPins[name].Dispose();
+                FPins.Remove(name);
+                FTypes.Remove(name);
+            }
+        }
+
+        #endregion pin management
+
+        #region tools
+
+        protected VVVV.PluginInterfaces.V2.NonGeneric.ISpread ToISpread(IIOContainer pin)
+        {
+            return (VVVV.PluginInterfaces.V2.NonGeneric.ISpread) (pin.RawIOObject);
+        }
+
+        protected VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread ToIDiffSpread(IIOContainer pin)
+        {
+            return (VVVV.PluginInterfaces.V2.NonGeneric.IDiffSpread) (pin.RawIOObject);
+        }
+
+        protected VVVV.PluginInterfaces.V2.ISpread<T> ToGenericISpread<T>(IIOContainer pin)
+        {
+            return (VVVV.PluginInterfaces.V2.ISpread<T>) (pin.RawIOObject);
+        }
+
+        #endregion tools
+
+        #region abstract methods
+
+        protected abstract IOAttribute DefinePin(string name, Type type);
+
+        public abstract void Evaluate(int SpreadMax);
+
+        #endregion abstract methods
+    }
 
 
 
     #region PluginInfo
-    [PluginInfo(Name = "Agent.Split", AutoEvaluate=true, Category = "Game", Help = "Joins a Message from custom dynamic pins", Tags = "Dynamic, Bin, velcrome")]
+
+//    [PluginInfo(Name = "Join", Category = "Game.Agent", Help = "Joins an Agent from custom dynamic pins", Tags = "Dynamic, Bin, velcrome")]
+
     #endregion PluginInfo
-    public class JoinMessageNode : DynamicNode
+
+    public class JoinAgentNode : DynamicNode
     {
         #pragma warning disable 649, 169
-        [Input("Send", IsToggle = true, IsSingle = true, DefaultBoolean = true)]
-        ISpread<bool> FSet;
+        [Input("Send", IsToggle = true, IsSingle = true, DefaultBoolean = true)] private ISpread<bool> FSet;
 
-        [Output("Output", AutoFlush = false)]
-        Pin<Agent> FOutput;
+        [Input("Agent Input", AutoValidate = false)] private Pin<Agent> FInput;
+
+        [Output("Agent Output", AutoFlush = false)] private Pin<Agent> FOutput;
         #pragma warning restore
 
         protected override IOAttribute DefinePin(string name, Type type)
@@ -186,7 +201,7 @@ namespace VVVV.Pack.Game.Nodes {
             attr.BinSize = -1;
             attr.Order = FCount;
             attr.BinOrder = FCount + 1;
-            attr.AutoValidate = false;  // need to sync all pins manually
+            attr.AutoValidate = false; // need to sync all pins manually
             return attr;
         }
 
@@ -194,72 +209,42 @@ namespace VVVV.Pack.Game.Nodes {
         {
             TypeUpdate();
 
-            SpreadMax = 0;
-            if (!FSet[0])
-            {
-                //				FLogger.Log(LogType.Debug, "skip join");
-                FOutput.SliceCount = 0;
-                FOutput.Flush();
-                return;
-            }
+            FInput.Sync();
 
             foreach (string name in FPins.Keys)
             {
                 var pin = ToISpread(FPins[name]);
                 pin.Sync();
-                SpreadMax = Math.Max(pin.SliceCount, SpreadMax);
             }
+            SpreadMax = FInput.SliceCount;
+            FOutput.AssignFrom(FInput);
 
 
-            FOutput.SliceCount = SpreadMax;
             for (int i = 0; i < SpreadMax; i++)
             {
-                var agent = new Agent();
+                var agent = FInput[i];
 
                 foreach (string name in FPins.Keys)
                 {
-                    agent.Assign(name, (IEnumerable)ToISpread(FPins[name])[i]);
+                    agent[name].AssignFrom((IEnumerable) (ToISpread(FPins[name])[i]));
                 }
-                FOutput[i] = agent;
-
-                // FLogger.Log(LogType.Debug, "== Message "+i+" == \n" + message.ToString());
-                //	foreach (string name in message.GetDynamicMemberNames()) FLogger.Log(LogType.Debug, message[name].GetType()+" "+ name);
             }
             FOutput.Flush();
         }
     }
 
     #region PluginInfo
-    [PluginInfo(Name = "Agent.Join", AutoEvaluate=true, Category = "Game", Help = "Splits an Agent into custom dynamic pins", Tags = "Dynamic, Bin, velcrome")]
+
+    [PluginInfo(Name = "Split", AutoEvaluate = true, Category = "Game.Agent",
+        Help = "Splits an Agent into custom dynamic pins", Tags = "Dynamic, Bin, velcrome")]
+
     #endregion PluginInfo
-    public class SplitMessageNode : DynamicNode
+
+    public class SplitAgentNode : DynamicNode
     {
-        public enum HoldEnum
-        {
-            Off,
-            Message,
-            Pin
-        }
-
         #pragma warning disable 649, 169
-        [Input("Input")]
-        IDiffSpread<Agent> FInput;
-
-        [Input("Match Rule", DefaultEnumEntry = "All", IsSingle = true)]
-        IDiffSpread<SelectEnum> FSelect;
-
-        [Input("Hold if Nil", IsSingle = true, DefaultEnumEntry = "Message")]
-        ISpread<HoldEnum> FHold; 
-
-        [Output("Address", AutoFlush = false)]
-        ISpread<string> FAddress;
-
-        [Output("Timestamp", AutoFlush = false)]
-        ISpread<string> FTimeStamp;
-
-        //		[Output("Configuration", AutoFlush = false)]
-        //		ISpread<string> FConfigOut;
-
+        [Input("Input")] private IDiffSpread<Agent> FInput;
+        [Output("Timestamp", AutoFlush = false)] private ISpread<string> FTimeStamp;
         #pragma warning restore
 
         protected override IOAttribute DefinePin(string name, Type type)
@@ -277,96 +262,45 @@ namespace VVVV.Pack.Game.Nodes {
         {
             TypeUpdate();
 
-            SpreadMax = (FSelect[0] != SelectEnum.First) ? FInput.SliceCount : 1;
+            SpreadMax = FInput.SliceCount;
 
-            if (!FInput.IsChanged)
+
+            foreach (string pinName in FPins.Keys)
             {
-                //				FLogger.Log(LogType.Debug, "skip split");
-                return;
+                ToISpread(FPins[pinName]).SliceCount = SpreadMax;
+                FTimeStamp.SliceCount = SpreadMax;
             }
 
-            bool empty = (FInput.SliceCount == 0) || (FInput[0] == null);
-
-            if (empty && (FHold[0] == HoldEnum.Off))
+            for (int i = 0; i < SpreadMax; i++)
             {
-                foreach (string name in FPins.Keys)
-                {
-                    var pin = ToISpread(FPins[name]);
-                    pin.SliceCount = 0;
-                    pin.Flush();
-                }
-                FAddress.SliceCount = 0;
-                FTimeStamp.SliceCount = 0;
+                Agent agent = FInput[i];
 
-                FAddress.Flush();
+                FTimeStamp[i] = agent.BirthTime.ToString();
                 FTimeStamp.Flush();
 
-                return;
-            }
-
-            if (!empty)
-            {
-                foreach (string pinName in FPins.Keys)
+                foreach (string name in FPins.Keys)
                 {
-                    if (FSelect[0] == SelectEnum.All)
+                    var spread = (ISpread) ToISpread(FPins[name])[i];
+                    var bin = agent[name];
+
+                    var count = bin.Count;
+                    spread.SliceCount = count;
+                    for (int j = 0; j < count; j++)
                     {
-                        ToISpread(FPins[pinName]).SliceCount = SpreadMax;
-                        FTimeStamp.SliceCount = SpreadMax;
-                        FAddress.SliceCount = SpreadMax;
+                        spread[j] = bin[j];
                     }
-                    else
-                    {
-                        ToISpread(FPins[pinName]).SliceCount = 1;
-                        FTimeStamp.SliceCount = 1;
-                        FAddress.SliceCount = 1;
-                    }
-                }
-
-                for (int i = (FSelect[0] == SelectEnum.Last) ? SpreadMax - 1 : 0; i < SpreadMax; i++)
-                {
-                    Agent agent = FInput[i];
-
-                    FTimeStamp[i] = agent.BirthTime.ToString();
-                    FAddress.Flush();
-                    FTimeStamp.Flush();
-
-                    foreach (string name in FPins.Keys)
-                    {
-                        var bin = (VVVV.PluginInterfaces.V2.NonGeneric.ISpread)ToISpread(FPins[name])[i];
-
-                        Bin attrib = agent[name];
-                        int count = 0;
-
-                        if (attrib == null)
-                        {
-                            if (FVerbose[0]) FLogger.Log(LogType.Debug, "\"" + FTypes[name] + " " + name + "\" is not defined in Message.");
-                        }
-                        else count = attrib.Count;
-
-                        if ((count > 0) || (FHold[0] != HoldEnum.Pin))
-                        {
-                            bin.SliceCount = count;
-                            for (int j = 0; j < count; j++)
-                            {
-                                bin[j] = attrib[j];
-                            }
-                            ToISpread(FPins[name]).Flush();
-                        }
-                        else
-                        {
-                            // keep old values in pin. do not flush
-                        }
-
-                    }
+                    ToISpread(FPins[name]).Flush();
                 }
             }
         }
+    
+
 
 
         #region PluginInfo
-        [PluginInfo(Name = "Agent.Set", Category = "Game", Help = "Adds or edits a Message Property", Tags = "Dynamic, Bin, velcrome")]
+        [PluginInfo(Name = "Set", Category = "Game.Agent", Help = "Adds or edits an Agent", Tags = "Dynamic, Bin, velcrome")]
         #endregion PluginInfo
-        public class SetMessageNode : DynamicNode
+        public class SetAgentNode : DynamicNode
         {
             #pragma warning disable 649, 169
             [Input("Input")]
@@ -392,11 +326,6 @@ namespace VVVV.Pack.Game.Nodes {
             {
                 SpreadMax = FInput.SliceCount;
 
-                if (!FInput.IsChanged)
-                {
-                    //				FLogger.Log(LogType.Debug, "skip set");
-                    return;
-                }
 
 
                 if (FInput.SliceCount == 0 || FInput[0] == null)

@@ -76,48 +76,22 @@ namespace VVVV.Pack.Game.Core
         // not defined in the class, this method is called. 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            bool success; 
+            bool success = false; 
             string name = binder.Name;
             result = null;
 
-            // If the property name is not found in a dictionary, 
-            // add it.
+            // If the property name is not found in a dictionary, it was most likely not initialized
+            // we cannot add it on the fly, because we do not know its type.
+            // binder.ReturnType is always System.Object
 
             if (!Data.ContainsKey(name))
             {
                 throw new Exception(name + " has not been initialized!");
 //                Data[name] = SpreadList.New(binder.ReturnType);
-            }
-            
-            Bin bin = Data[name];
-
-
-            
-            if (binder.ReturnType.IsInstanceOfType(typeof(Bin)))
+            } else
             {
                 success = true;
-                result = bin;
-            }
-            else
-            {
-                if (TypeIdentity.Instance.ContainsKey(binder.ReturnType))
-                {
-                    if (bin.Count > 0)
-                    {
-                        result = bin[0];
-                        success = true;
-                    }
-                    else
-                    {
-                        result = null;
-                        success = true; // this list is empty, no type detectable
-                    }
-                }
-                else
-                {
-                    result = null;
-                    success = false; // this type is not defined in TypeIdentity.cs
-                }
+                result = Data[name];
             }
             return success;
 
@@ -188,22 +162,41 @@ namespace VVVV.Pack.Game.Core
             }
         }
 
+
+        public void Init<T>(string name)
+        {
+            if (TypeIdentity.Instance.ContainsKey(typeof(T)))
+            {
+                Data[name] = new Bin<T>();
+            }
+            else throw new Exception(typeof(T).ToString() + " is not a supported Type in TypeIdentity.");
+        }
+
         // you can add any object, it will be automatically be wrapped by a Bin<> 
         // that is unless you try to add something enumerable, e.g. from a linq query
         public void Add(string name, object val)
         {
-            Type type;
-            if (val is IEnumerable && !(val is string)) // odd thing about strings...
+            Type type = typeof(object);
+            if (val is Type)
+            {
+                type = (Type)val;
+            }
+            else if (TypeIdentity.Instance.ContainsKey(val.GetType()))
+            {
+                type = val.GetType();
+
+            } 
+            else if (val is IEnumerable && !(val is string)) // odd thing about strings...
             {
                 var e = (IEnumerable)val;
                 var num = e.GetEnumerator();
                 num.MoveNext();  // necessary to get to [0]
                 type = num.Current.GetType();
-            }
-            else
+            } else
             {
-                type = val.GetType();
+                throw new Exception("Cannot add object "+val.ToString()+ " to "+name+" because cannot determine type.");
             }
+
 
             if (!Data.ContainsKey(name)) 
                 Data.Add(name, Bin.New(type));

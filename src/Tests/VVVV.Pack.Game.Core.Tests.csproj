@@ -2,8 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- edit Template here -->
-    <RootNamespace>VVVV.Packs.Game</RootNamespace>
-    <AssemblyName>VVVV.Packs.Game.Core.Tests</AssemblyName>
+    <RootNamespace>VVVV.Pack.Game</RootNamespace>
+    <AssemblyName>VVVV.Pack.Game.Core.Tests</AssemblyName>
     <ProjectGuid>{13A9D7B7-BD30-4624-8000-BD5F5B303949}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentTest.cs" />
+    <Compile Include="FaceAgentTest.cs" />
+    <Compile Include="DynamicAgentTest.cs" />
+    <Compile Include="ITestAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\VVVV.Pack.Game.Core.csproj">
@@ -76,8 +79,7 @@
     </Otherwise>
   </Choose>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- 
- <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
        
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

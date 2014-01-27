@@ -2,6 +2,7 @@
 
 using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
+using VVVV.Utils.VMath;
 
 #endregion usings
 
@@ -38,8 +39,13 @@ namespace VVVV.Pack.Game.Nodes
                 if (FInsert[i])
                     for (int j=0;j<FCount[i];j++)
                     {
-                        FAgents.Add(new Agent());
-                       }
+                        var a = new Agent();
+                        a.Add("Position", new Vector3D());
+                        a.Add("Velocity", new Vector3D());
+                        a.Add("NextVelocity", new Vector3D());
+                        
+                        FAgents.Add(a);
+                    }
             }
             FAgents.Flush();
         }

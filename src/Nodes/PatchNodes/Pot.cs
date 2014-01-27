@@ -62,6 +62,7 @@ namespace VVVV.Pack.Game.Nodes
             foreach (var agent in FAgents)
             {
                 agent.ReturnCode = FReturn[i];
+                i++;
             } 
 
             FinishEvaluation();
@@ -74,7 +75,9 @@ namespace VVVV.Pack.Game.Nodes
                 FSink[0].Agents.AddRange(FAgents);
             }
             FSink.Sync();
+
             FEditedAgents.Sync();
+
             FReturn.Sync();
         }
     }

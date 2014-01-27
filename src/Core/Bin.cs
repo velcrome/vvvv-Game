@@ -107,6 +107,8 @@ namespace VVVV.Pack.Game.Core
 				else return this[0].GetType();
 		}
 
+
+
         public virtual string GetTypeIdentity
         {
             get
@@ -162,6 +164,36 @@ namespace VVVV.Pack.Game.Core
         #endregion
 
         #region ISpread conformity
+
+        public override int Add(Object val)
+        {
+            var index = this.Count;
+            if (val == null) return index;
+            
+            if (TypeIdentity.Instance.ContainsKey(val.GetType()))
+            {
+                return base.Add(val);
+            } 
+
+            if (val is IEnumerable)
+            {
+                var s = (IEnumerable) val;
+                var num = s.GetEnumerator();
+                
+                num.MoveNext();
+                if (this.GetInnerType() == num.Current.GetType())
+                {
+                    foreach (var o in s)
+                    {
+                        base.Add(o);
+                    }
+                    return index;
+                }
+            } 
+
+            throw new Exception("Cannot add this value, it is neither a Enumeration of matching registered Type nor a matching Type.");
+        }
+
         public void AssignFrom(IEnumerable source) {
 			this.Clear();
 
@@ -171,7 +203,6 @@ namespace VVVV.Pack.Game.Core
 			
 		}
         #endregion
-
 
         #region alternative constructor for runtime typing of the bin
         public static Bin New(Type type)
