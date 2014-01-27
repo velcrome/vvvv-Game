@@ -11,6 +11,6 @@ namespace VVVV.Pack.Game.Faces
         Bin<string> Name { get; set; }
         Vector3D Position { get; set; }
         int Health { get; set; }
-        Bin<RGBAColor> Palette { get; set; }
+        Bin<RGBAColor> Palette{get;set;}
     }
 }

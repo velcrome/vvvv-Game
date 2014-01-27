@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using ImpromptuInterface;
 using VVVV.Pack.Game.Faces;
-//using VVVV.PluginInterfaces.V2;
+
 
 
 namespace VVVV.Pack.Game.Core
@@ -64,6 +64,7 @@ namespace VVVV.Pack.Game.Core
         public T Face<T>() where T : class, IAgent
         {
             return Impromptu.ActLike<T>(this);
+        //    return null;
         }
 
 
@@ -132,8 +133,36 @@ namespace VVVV.Pack.Game.Core
         }
         #endregion DynamicObject
 
+        #region DynamicCast
+        //public override bool TryConvert(
+        //    ConvertBinder binder, out object result)
+        //{
+        //    // Converting to string.  
+        //    binder.Explicit.
+        //    if (TypeIdentity.Instance.ContainsKey(binder.Type) )
+        //    {
+        //        result = Data["t"];
+        //        return true;
+        //    }
 
-        #region SpreadList Access
+        //    // Converting to integer. 
+        //    if (binder.Type == typeof(int))
+        //    {
+        //        result = Data["Numeric"];
+        //        return true;
+        //    }
+
+        //    // In case of any other type, the binder  
+        //    // attempts to perform the conversion itself. 
+        //    // In most cases, a run-time exception is thrown. 
+        //    return base.TryConvert(binder, out result);
+        //}
+
+
+        #endregion
+
+
+        #region Bin Quick Access. No range modulo
 
         // you can use the ["key"] Operator to access a specific attribute 
         public Bin this[string name]
@@ -159,36 +188,39 @@ namespace VVVV.Pack.Game.Core
             }
         }
 
-        // you can add any object, it will be automatically be wrapped by a SpreadList. 
-        // that is unless you try to add a SpreadList 
+        // you can add any object, it will be automatically be wrapped by a Bin<> 
+        // that is unless you try to add something enumerable, e.g. from a linq query
         public void Add(string name, object val)
         {
             Type type;
-            if (val is IEnumerable && !(val is string))
+            if (val is IEnumerable && !(val is string)) // odd thing about strings...
             {
                 var e = (IEnumerable)val;
                 var num = e.GetEnumerator();
-                num.MoveNext();
+                num.MoveNext();  // necessary to get to [0]
                 type = num.Current.GetType();
             }
             else
             {
                 type = val.GetType();
-            } 
-            
-            if (!Data.ContainsKey(name))
+            }
+
+            if (!Data.ContainsKey(name)) 
                 Data.Add(name, Bin.New(type));
+            else
+            {
+                if (Data[name].GetInnerType() != type) throw new Exception("Tried to add "+type+" into a Bin<"+Data[name].GetInnerType());
+                
+            }
+            var bin = Data[name];
 
-            var spread = Data[name];
-
+            
             if (val is IEnumerable && !(val is string))
             {
-                foreach (var o in (IEnumerable)val)
-                {
-                    spread.Add(o);
-                }
+                foreach (var o in (IEnumerable) val)
+                    bin.Add(o);
             }
-            else spread.Add(val);
+            else bin.Add(val);
         }
 
         public void Assign(string name, object val)
@@ -222,23 +254,6 @@ namespace VVVV.Pack.Game.Core
         }
 
         #endregion SpreadList Access
-
-        #region Access Default
-        //public SpreadList GetOrDefault(string name, object defaultValue)
-        //{
-        //    if (!Data.ContainsKey(name))
-        //    {
-        //        Add(name, defaultValue);                
-        //    }
-        //    return Data[name];
-        //}
-
-        //public object GetFirstOrDefault(string name, object defaultValue)
-        //{
-        //    return GetOrDefault(name, defaultValue)[0];
-        //}
-        
-        #endregion Access Default
 
         #region Essentials
 

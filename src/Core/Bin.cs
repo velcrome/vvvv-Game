@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-
+using System.Security;
+using ImpromptuInterface.Dynamic;
 
 
 namespace VVVV.Pack.Game.Core
@@ -25,6 +26,9 @@ namespace VVVV.Pack.Game.Core
             }
 
         } 
+
+        public override object First {
+            get; set; }
         
         public override Type GetInnerType()
         {
@@ -48,19 +52,15 @@ namespace VVVV.Pack.Game.Core
         }
 
 
-        public static explicit operator Bin<T>(T[] s)  // explicit array to Spreadlist conversion operator
+        public static explicit operator Bin<T>(T[] s)  // explicit generic array to Bin conversion operator
         {
-            Bin<T> sl = (Bin<T>)Bin.New(typeof(T));  // explicit conversion
-            sl.AssignFrom(s);
-            return sl;
+            return new Bin<T>(s);  // explicit conversion
         }
 
 
-        public static explicit operator Bin<T>(T s)  // explicit string to Spreadlist conversion operator
+        public static explicit operator Bin<T>(T s)  // explicit generic fist value to Bin conversion operator
         {
-            Bin<T> sl = (Bin<T>)Bin.New(typeof(T));  // explicit conversion
-            sl.Add(s);
-            return sl;
+            return new Bin<T>(s);  // explicit conversion
         }
 
         public static implicit operator T(Bin<T> sl)  // implicit digit to byte conversion operator
@@ -68,7 +68,15 @@ namespace VVVV.Pack.Game.Core
             return (T)sl[0];  // implicit conversion
         }
 
-   
+        #region Essentials
+        public new Bin Clone()
+        {
+            Bin<T> c = new Bin<T>();
+            c.AssignFrom(this);
+
+            return c;
+        }
+        #endregion
 
     }
     
@@ -77,7 +85,7 @@ namespace VVVV.Pack.Game.Core
 	/// Description of 
 	/// </summary>
 	[Serializable]
-	public class Bin : ArrayList, ISerializable
+	public abstract class Bin : ArrayList, ISerializable
 	{
         public virtual Type GetInnerType() {
     		if (this.Count == 0) return typeof(object);
@@ -88,7 +96,7 @@ namespace VVVV.Pack.Game.Core
         {
             get
             {
-                if (this.Count == 0) return "Empty Spreadlist has neither a Type nor a TypeIdentity";
+                if (this.Count == 0) return "Empty Spreadlist has neither a Type nor a TypeIdentity.";
                 else
                 {
                     var type = this[0].GetType();
@@ -100,21 +108,34 @@ namespace VVVV.Pack.Game.Core
             }
         }
 
+        public virtual object First
+        {
+            get { return this[0]; }
+            set
+            {
+                this[0] = value;
+                if (!TypeIdentity.Instance.ContainsKey(value.GetType()))
+                {
+                    throw new Exception(value.GetType() + " is not a supported Type in TypeIdentity.cs");
+                }
+                if (this.GetInnerType() != value.GetType())
+                {
+                    throw new Exception(value.GetType().ToString() +" cannot be the first among " +this.GetInnerType());
+                }
+            }
+        }
 
-        //public SpreadList()
-        //{
-        //    throw new Exception("Should not create an empty SpreadList");
-        //}
 
-        public Bin(params object[] values) : base()
+        protected Bin(params object[] values) : base()
         {
             foreach (var v in values)
             {
                 this.Add(v);
             }
 
-        } 
+        }
 
+        #region Serialization
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			for (int i=0;i<this.Count;i++)
@@ -123,22 +144,21 @@ namespace VVVV.Pack.Game.Core
 				
 			}
 		}
-		
-		public void AssignFrom(IEnumerable source) {
+        #endregion
+
+        #region ISpread conformity
+        public void AssignFrom(IEnumerable source) {
 			this.Clear();
+
             foreach (object o in source) {
 				this.Add(o);
 			}
 			
 		}
-		
-		public new Bin Clone() {
-			Bin c = Bin.New(this.GetType());
-			c.AssignFrom(this);
-            
-			return c;
-		}
+        #endregion
 
+
+        #region alternative constructor for runtime typing of the bin
         public static Bin New(Type type)
         {
             Type spreadType = typeof(Bin<>).MakeGenericType(type);
@@ -149,12 +169,14 @@ namespace VVVV.Pack.Game.Core
             }
             else
             {
-                throw new Exception(type.ToString() +" is not a valid Type, it needs to be listed in TypeIdentity.cs");
+                throw new Exception(type.ToString() + " is not a supported Type in TypeIdentity.cs");
             }
         }
+        #endregion
 
 
-        
+
+
     }
 	
 }
