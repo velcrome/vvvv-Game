@@ -25,10 +25,22 @@ namespace VVVV.Pack.Game.Core
                 this.Add(v);
             }
 
+        }
+
+        public Bin(IEnumerable<T> values)
+        {
+            Add(values);
         } 
 
         public override object First {
-            get; set; }
+            get { return this[0]; }
+            set
+            {
+                if (this.GetInnerType() == value.GetType())
+                    this[0] = value;
+                else throw new Exception(value.GetType().ToString() + " cannot be the first in Bin<" + this.GetInnerType() +">");
+            } 
+        }
         
         public override Type GetInnerType()
         {
@@ -50,24 +62,27 @@ namespace VVVV.Pack.Game.Core
         {
             return (T[])this.ToArray(typeof(T));
         }
-
-
+        /*
+         * no cast should be necessary!
+         * 
         public static explicit operator Bin<T>(T[] s)  // explicit generic array to Bin conversion operator
         {
             return new Bin<T>(s);  // explicit conversion
         }
 
-
         public static explicit operator Bin<T>(T s)  // explicit generic fist value to Bin conversion operator
-        {
-            return new Bin<T>(s);  // explicit conversion
-        }
+                {
+                    return new Bin<T>(s);  // explicit conversion
+                }
+                */
 
-        public static implicit operator T(Bin<T> sl)  // implicit digit to byte conversion operator
-        {
-            return (T)sl[0];  // implicit conversion
-        }
 
+        // implicit conversion
+        public static implicit operator T(Bin<T> sl)  
+        {
+            return (T)sl.First;  
+        }
+        
         #region Essentials
         public new Bin Clone()
         {
