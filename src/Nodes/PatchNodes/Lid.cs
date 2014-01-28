@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using VVVV.Pack.Game.Core;
+using VVVV.Pack.Game.Faces;
 using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game.Nodes
@@ -15,7 +16,7 @@ namespace VVVV.Pack.Game.Nodes
         [Output("Agents", AutoFlush = false, Order = 1)]
         public ISpread<Agent> FAgentsOut;
 
-        protected override void Behave(IEnumerable<Agent> agents)
+        protected override void Behave(IEnumerable<IAgent> agents)
         {
             FAgentsOut.AssignFrom(FAgents);
             FAgentsOut.Flush();

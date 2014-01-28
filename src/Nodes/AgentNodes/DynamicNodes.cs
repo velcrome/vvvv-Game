@@ -176,76 +176,18 @@ namespace VVVV.Pack.Game.Nodes
         #endregion abstract methods
     }
 
-
-
     #region PluginInfo
-
-//    [PluginInfo(Name = "Join", Category = "Game.Agent", Help = "Joins an Agent from custom dynamic pins", Tags = "Dynamic, Bin, velcrome")]
-
-    #endregion PluginInfo
-
-    public class JoinAgentNode : DynamicNode
-    {
-        #pragma warning disable 649, 169
-        [Input("Send", IsToggle = true, IsSingle = true, DefaultBoolean = true)] private ISpread<bool> FSet;
-
-        [Input("Agent Input", AutoValidate = false)] private Pin<Agent> FInput;
-
-        [Output("Agent Output", AutoFlush = false)] private Pin<Agent> FOutput;
-        #pragma warning restore
-
-        protected override IOAttribute DefinePin(string name, Type type)
-        {
-            var attr = new InputAttribute(name);
-            attr.BinVisibility = PinVisibility.Hidden;
-            attr.BinSize = -1;
-            attr.Order = FCount;
-            attr.BinOrder = FCount + 1;
-            attr.AutoValidate = false; // need to sync all pins manually
-            return attr;
-        }
-
-        public override void Evaluate(int SpreadMax)
-        {
-            TypeUpdate();
-
-            FInput.Sync();
-
-            foreach (string name in FPins.Keys)
-            {
-                var pin = ToISpread(FPins[name]);
-                pin.Sync();
-            }
-            SpreadMax = FInput.SliceCount;
-            FOutput.AssignFrom(FInput);
-
-
-            for (int i = 0; i < SpreadMax; i++)
-            {
-                var agent = FInput[i];
-
-                foreach (string name in FPins.Keys)
-                {
-                    agent[name].AssignFrom((IEnumerable) (ToISpread(FPins[name])[i]));
-                }
-            }
-            FOutput.Flush();
-        }
-    }
-
-    #region PluginInfo
-
     [PluginInfo(Name = "Split", AutoEvaluate = true, Category = "Game.Agent",
-        Help = "Splits an Agent into custom dynamic pins", Tags = "Dynamic, Bin, velcrome")]
-
+        Help = "Splits all Agents into custom dynamic pins", Tags = "Dynamic, Bin")]
     #endregion PluginInfo
 
     public class SplitAgentNode : DynamicNode
     {
-        #pragma warning disable 649, 169
-        [Input("Input")] private IDiffSpread<Agent> FInput;
-        [Output("Timestamp", AutoFlush = false)] private ISpread<string> FTimeStamp;
-        #pragma warning restore
+        [Input("Input")] 
+        protected IDiffSpread<Agent> FInput;
+        
+        [Output("Timestamp", AutoFlush = false)] 
+        protected ISpread<string> FTimeStamp;
 
         protected override IOAttribute DefinePin(string name, Type type)
         {
@@ -293,22 +235,19 @@ namespace VVVV.Pack.Game.Nodes
                 }
             }
         }
-    
-
 
 
         #region PluginInfo
-        [PluginInfo(Name = "Set", Category = "Game.Agent", Help = "Adds or edits an Agent", Tags = "Dynamic, Bin, velcrome")]
+        [PluginInfo(Name = "Set", Category = "Game.Agent", Help = "Adds or edits an Agent",
+            Tags = "Dynamic, Bin, velcrome")]
         #endregion PluginInfo
         public class SetAgentNode : DynamicNode
         {
-            #pragma warning disable 649, 169
-            [Input("Input")]
-            IDiffSpread<Agent> FInput;
+            [Input("Input")] 
+            protected IDiffSpread<Agent> FInput;
 
-            [Output("Output", AutoFlush = false)]
-            Pin<Agent> FOutput;
-            #pragma warning restore
+            [Output("Output", AutoFlush = false)] 
+            protected Pin<Agent> FOutput;
 
             protected override IOAttribute DefinePin(string name, Type type)
             {
@@ -325,9 +264,6 @@ namespace VVVV.Pack.Game.Nodes
             public override void Evaluate(int SpreadMax)
             {
                 SpreadMax = FInput.SliceCount;
-
-
-
                 if (FInput.SliceCount == 0 || FInput[0] == null)
                 {
                     FOutput.SliceCount = 0;
@@ -339,7 +275,7 @@ namespace VVVV.Pack.Game.Nodes
                     Agent agent = FInput[i];
                     foreach (string name in FPins.Keys)
                     {
-                        var pin = (IEnumerable)ToISpread(FPins[name])[i];
+                        var pin = (IEnumerable) ToISpread(FPins[name])[i];
                         agent.Assign(name, pin);
                     }
                 }
@@ -348,7 +284,8 @@ namespace VVVV.Pack.Game.Nodes
                 FOutput.Flush();
             }
         }
+    }
 
-	}
-   
+
+
 }

@@ -59,10 +59,12 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Compile Include="AgentNodes\DynamicNodes.cs" />
+    <Compile Include="AgentNodes\InitAgent.cs" />
+    <Compile Include="AgentNodes\IComplexAgent.cs" />
     <Compile Include="BaseNodes\AbstractActionNode.cs" />
     <Compile Include="BaseNodes\AbstractBehaviorNode.cs" />
     <Compile Include="BaseNodes\AbstractDecorator.cs" />
-    <Compile Include="TestAction.cs" />
+    <Compile Include="Templates\TemplateAction.cs" />
     <Compile Include="Essentials\Action.cs" />
     <Compile Include="Essentials\Birth.cs" />
     <Compile Include="Essentials\Decorator.cs" />

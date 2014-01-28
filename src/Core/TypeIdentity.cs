@@ -22,6 +22,11 @@ namespace VVVV.Pack.Game.Core
         public TypeIdentity()
 	    {
             // This is the only place where you need to add new datatypes.
+            // Requirements: 
+            //- serializable (for json and general persisting)
+            //- needs standard constructor 
+            //- Activator.CreateInstance(Type t) must return a valid instance
+            //- should not implement IEnumerable
 
             Add(typeof(bool), "bool".ToLower());
             Add(typeof(int), "int".ToLower());
@@ -35,10 +40,9 @@ namespace VVVV.Pack.Game.Core
             Add(typeof(Vector3D), "Vector3D".ToLower());
             Add(typeof(Vector4D), "Vector4D".ToLower());
 
-            Add(typeof(Stream), "Raw".ToLower());
+            Add(typeof(Stream), "Raw".ToLower()); //untested. 
             Add(typeof(DateTime), "Time".ToLower());
             
-            //            Add(typeof(Message), "Message".ToLower());	        
 	    }
 
         public Type FindKey(string typeName)

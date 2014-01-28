@@ -5,7 +5,6 @@ using System.Dynamic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using ImpromptuInterface;
 using VVVV.Pack.Game.Faces;
 
 
@@ -13,7 +12,7 @@ using VVVV.Pack.Game.Faces;
 namespace VVVV.Pack.Game.Core
 {
     [DataContract]
-    public class Agent : DynamicObject, IDisposable, IComparable
+    public class Agent : DynamicObject, IAgent
     {
         #region pins & fields
 
@@ -63,8 +62,8 @@ namespace VVVV.Pack.Game.Core
 
         public T Face<T>() where T : class, IAgent
         {
-            return Impromptu.ActLike<T>(this);
-        //    return null;
+            return ImpromptuInterface.Impromptu.ActLike<T>(this);
+
         }
 
 
@@ -107,34 +106,6 @@ namespace VVVV.Pack.Game.Core
         }
         #endregion DynamicObject
 
-        #region DynamicCast
-        //public override bool TryConvert(
-        //    ConvertBinder binder, out object result)
-        //{
-        //    // Converting to string.  
-        //    binder.Explicit.
-        //    if (TypeIdentity.Instance.ContainsKey(binder.Type) )
-        //    {
-        //        result = Data["t"];
-        //        return true;
-        //    }
-
-        //    // Converting to integer. 
-        //    if (binder.Type == typeof(int))
-        //    {
-        //        result = Data["Numeric"];
-        //        return true;
-        //    }
-
-        //    // In case of any other type, the binder  
-        //    // attempts to perform the conversion itself. 
-        //    // In most cases, a run-time exception is thrown. 
-        //    return base.TryConvert(binder, out result);
-        //}
-
-
-        #endregion
-
 
         #region Bin Quick Access. No range modulo
 
@@ -162,14 +133,21 @@ namespace VVVV.Pack.Game.Core
             }
         }
 
-
         public void Init<T>(string name)
         {
-            if (TypeIdentity.Instance.ContainsKey(typeof(T)))
+            Init(name, typeof(T));
+        }
+
+        public void Init(string name, Type type)
+        {
+            if (type.IsSubclassOf(typeof(Bin)) && type.IsGenericType)
             {
-                Data[name] = new Bin<T>();
+                type = type.GetGenericArguments()[0];
             }
-            else throw new Exception(typeof(T).ToString() + " is not a supported Type in TypeIdentity.");
+            
+            
+            if (!TypeIdentity.Instance.ContainsKey(type)) throw new Exception(type.ToString() + " is not a supported Type in TypeIdentity.");
+            if (!Data.ContainsKey(name) || Data[name].GetInnerType() != type) Data[name] = Bin.New(type);
         }
 
         // you can add any object defined in TypeIdentity, it will be automatically be wrapped by a Bin<> 
@@ -255,19 +233,19 @@ namespace VVVV.Pack.Game.Core
         
         public object Clone()
         {
-            var m = new Agent();
+            var copy = new Agent();
 
             foreach (string name in Data.Keys)
             {
-                Bin list = Data[name];
-                m.Add(name, list.Clone());
+                Bin bin = Data[name];
+                copy[name] = bin.Clone();
 
                 // really deep cloning
                 try
                 {
-                    for (int i = 0; i < list.Count; i++)
+                    for (int i = 0; i < bin.Count; i++)
                     {
-                        list[i] = ((ICloneable)list[i]).Clone();
+                        bin[i] = ((ICloneable)bin[i]).Clone();
                     }
                 }
                 catch (Exception err)
@@ -277,7 +255,7 @@ namespace VVVV.Pack.Game.Core
                 }
             }
 
-            return m;
+            return copy;
         }
 
         public override string ToString()

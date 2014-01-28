@@ -33,7 +33,12 @@ namespace VVVV.Pack.Game.Core
         } 
 
         public override object First {
-            get { return this[0]; }
+            get
+            {
+                if (this.Count == 0)
+                    this.Add(Activator.CreateInstance(this.GetInnerType()));
+                return this[0];
+            }
             set
             {
                 if (this.GetInnerType() == value.GetType())
@@ -82,6 +87,8 @@ namespace VVVV.Pack.Game.Core
 	{
 
 //      constructor
+        #region Essentials
+        
         protected Bin(params object[] values): base()
         {
             foreach (var v in values)
@@ -115,7 +122,13 @@ namespace VVVV.Pack.Game.Core
         }
 
 
-
+        public new Bin Clone()
+        {
+            Bin c = Bin.New(this.GetInnerType());
+            c.AssignFrom(this);
+            return c;
+        }
+        #endregion
 
         #region [Serializable] Necessary Method implementation
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -209,17 +222,6 @@ namespace VVVV.Pack.Game.Core
 
         #endregion
         
-        #region Essentials
-        public new Bin Clone()
-        {
-            Bin c = Bin.New(this.GetInnerType());
-            c.AssignFrom(this);
-            return c;
-        }
-        #endregion
-
-
-
 
 	}
 	

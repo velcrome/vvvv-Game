@@ -13,6 +13,29 @@ namespace VVVV.Pack.Game.Core.Tests
     public class AgentTest
     {
         [TestMethod]
+        public void TestClone()
+        {
+            var agent = new Agent();
+            agent["Access"] = new Bin<bool>(true, false);
+
+            agent.Add("Test", new Vector3D());
+            agent["Test"].Add(new Vector3D(1,1,1));
+
+            var copy = (Agent)agent.Clone();
+
+            Assert.AreEqual(true, copy["Access"].First);
+            Assert.AreEqual(false, copy["Access"][1]);
+
+
+            Assert.AreEqual(0.0, ((Vector3D)copy["Test"].First).x);
+            Assert.AreEqual(1.0, ((Vector3D)copy["Test"][1]).x);
+
+
+
+        }
+
+
+        [TestMethod]
         public void TestInt()
         {
             var agent = new Agent();

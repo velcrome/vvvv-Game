@@ -40,9 +40,7 @@ namespace VVVV.Pack.Game.Nodes
                     for (int j=0;j<FCount[i];j++)
                     {
                         var a = new Agent();
-                        a.Add("Position", new Vector3D());
-                        a.Add("Velocity", new Vector3D());
-                        a.Add("NextVelocity", new Vector3D());
+
                         
                         FAgents.Add(a);
                     }

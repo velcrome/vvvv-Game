@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using VVVV.Pack.Game.Core;
 using VVVV.Utils.VMath;
@@ -55,7 +51,7 @@ namespace VVVV.Pack.Game
 
             // does not look pretty yet. waiting for beta32
             Assert.AreEqual("{\r\n  \"Data\": {\r\n    \"Test\": {\r\n      \"Type\": \"string\",\r\n      \"Bin\": [\r\n        \"foo\",\r\n        \"bar\"\r\n      ]\r\n    },\r\n    \"Path\": {\r\n      \"Type\": \"vector3d\",\r\n      \"Bin\": [\r\n        {\r\n          \"x\": 0.0,\r\n          \"y\": 0.0,\r\n          \"z\": 0.0\r\n        },\r\n        {\r\n          \"x\": 1.0,\r\n          \"y\": 1.0,\r\n          \"z\": 1.0\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}", s, "Json failed");
-            Assert.Inconclusive();
+    //        Assert.Inconclusive();
         }
     }
 }

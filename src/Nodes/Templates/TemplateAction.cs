@@ -6,15 +6,15 @@ using VVVV.PluginInterfaces.V2;
 namespace VVVV.Pack.Game.Nodes
 {
     #region PluginInfo
-    [PluginInfo(Name = "TestAction",
+    [PluginInfo(Name = "Template",
         Category = "Game",
-        Help = "Necessary base node to patch an action",
+        Help = "Template node to patch an action",
         Tags = "")]
     #endregion PluginInfo
-    public class TestActionGameNode : AbstractActionNode
+    public class TemplateActionGameNode : AbstractActionNode
     {
 
-        protected override void Behave(IEnumerable<Agent> agents)
+        protected override void Behave(IEnumerable<IAgent> agents)
         {
 
 

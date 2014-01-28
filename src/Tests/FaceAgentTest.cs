@@ -14,7 +14,19 @@ namespace VVVV.Pack.Game
     public class FaceAgentTest
     {
 
+        [TestMethod]
+        public void TestAccess()
+        {
+            var agent = new Agent().Face<ITestAgent>();
+            agent["Access"] = new Bin<bool>(true, false);
 
+
+            agent.Add("Secure", true);
+            agent["Secure"].Add(true);
+
+            Assert.AreEqual(true, agent["Access"].First);
+            Assert.AreEqual(true, agent["Secure"][1]);
+        }
 
         [TestMethod]
         public void TestInt()

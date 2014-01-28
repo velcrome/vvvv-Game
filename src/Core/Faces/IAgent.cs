@@ -7,20 +7,19 @@ namespace VVVV.Pack.Game.Faces
 {
     public interface IAgent : IComparable, ICloneable, IDisposable
     {
-        DateTime BirthTime { get; set; }
+        DateTime BirthTime { get;  }
         ReturnCodeEnum ReturnCode { get; set; }
-        string Id { get; set; }
-
-        IEnumerable<Bin> this[params string[] keys] { get; }
-
-//        void AddRunning(object node, Pin<BehaviorLink> pin);
- //       void RemoveRunning(object node, Pin<BehaviorLink> pin);
-        void AddRunning(object node, object pin);
-        void RemoveRunning(object node, object pin);
-
+        string Id { get;  }
 
         void Add(string name, object val);
         void Assign(string name, object val);
+
+        Bin this[string name] { get; set; }
+        IEnumerable<Bin> this[params string[] keys] { get; }
+
+        T Face<T>() where T : class, IAgent;
+
+        void Init(string name, Type type);
 
     }
 }
