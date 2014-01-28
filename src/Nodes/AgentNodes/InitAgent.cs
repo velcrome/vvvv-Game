@@ -94,23 +94,7 @@ namespace VVVV.Pack.Game.Nodes
                 for (int j = 0; j < FFace.SliceCount; j++)
                 {
                     Type face = AllAgentFaces[FFace[j].Index];
-
-                    foreach (var prop in face.GetProperties())
-                        //   BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public))
-                    {
-    
-                        if (!baseProperties.Contains(prop))
-                        {
-                            try
-                            {
-                                agent.Init(prop.Name, prop.PropertyType);
-                            }
-                            catch (Exception e)
-                            {
-                                FLogger.Log(LogType.Error, e.ToString());
-                            }
-                        }
-                    }
+                    agent.Init(face);
 
                 }
             }

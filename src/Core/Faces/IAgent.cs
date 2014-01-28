@@ -19,7 +19,8 @@ namespace VVVV.Pack.Game.Faces
 
         T Face<T>() where T : class, IAgent;
 
-        void Init(string name, Type type);
+        void Init(string name, Type type, bool populateFirst = false);
+        void Init(Type face, bool populateFirst = true);
 
     }
 }

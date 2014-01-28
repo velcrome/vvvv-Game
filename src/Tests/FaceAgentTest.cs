@@ -32,9 +32,11 @@ namespace VVVV.Pack.Game
         public void TestInt()
         {
             var agent = new Agent().Face<ITestAgent>();
-
-            agent.TestInt = (Bin<int>) 1;
-            //new Bin<int>(1);
+    //        agent.Init("SingleInt", typeof(int));
+            agent.SingleInt++;
+            Assert.AreEqual(1, agent["SingleInt"].First, "Face Agent int initialisation");
+          
+            agent.TestInt = new Bin<int>(1);
             Assert.AreEqual(1, agent.TestInt[0], "Face Agent int initialisation");
 
             agent.TestInt.Add(2);

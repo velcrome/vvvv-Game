@@ -40,7 +40,7 @@ namespace VVVV.Pack.Game.Core
             Add(typeof(Vector3D), "Vector3D".ToLower());
             Add(typeof(Vector4D), "Vector4D".ToLower());
 
-            Add(typeof(Stream), "Raw".ToLower()); //untested. 
+            Add(typeof(Stream), "Raw".ToLower()); //cannot be initialized when using autoinit by e.g. calling Faces<>
             Add(typeof(DateTime), "Time".ToLower());
             
 	    }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -62,7 +63,9 @@ namespace VVVV.Pack.Game.Core
 
         public T Face<T>() where T : class, IAgent
         {
-            return ImpromptuInterface.Impromptu.ActLike<T>(this);
+            var face = ImpromptuInterface.Impromptu.ActLike<T>(this);
+            Init(typeof (T));
+            return face;
 
         }
 
@@ -133,13 +136,38 @@ namespace VVVV.Pack.Game.Core
             }
         }
 
-        public void Init<T>(string name)
+        
+        // initializes all properties as listed in the Interface provided. Must inherit IAgent. Adds a first element in the Bin.
+        public void Init(Type faceType, bool populateFirst = true)
+        {
+            if (!faceType.IsInterface || !typeof(IAgent).IsAssignableFrom(faceType)) throw new Exception("Something wrong with "+faceType.Name+"? ");
+
+            var baseProperties = typeof(IAgent).GetProperties();             
+            foreach (var prop in faceType.GetProperties())
+            {
+                if (!baseProperties.Contains(prop))
+                {
+                    try
+                    {
+                        Init(prop.Name, prop.PropertyType, populateFirst);
+                    }
+                    catch (Exception e) {throw new Exception("Something wrong with "+faceType.Name+"? ", e);}
+                }
+
+             }
+
+
+        }
+
+        public void Init<T>(string name) 
         {
             Init(name, typeof(T));
         }
 
-        public void Init(string name, Type type)
+        public void Init(string name, Type type, bool populateFirst=false)
         {
+            if (Data.ContainsKey(name)) return;
+
             if (type.IsSubclassOf(typeof(Bin)) && type.IsGenericType)
             {
                 type = type.GetGenericArguments()[0];
@@ -147,7 +175,14 @@ namespace VVVV.Pack.Game.Core
             
             
             if (!TypeIdentity.Instance.ContainsKey(type)) throw new Exception(type.ToString() + " is not a supported Type in TypeIdentity.");
-            if (!Data.ContainsKey(name) || Data[name].GetInnerType() != type) Data[name] = Bin.New(type);
+            if (!Data.ContainsKey(name) || Data[name].GetInnerType() != type)
+            {
+                Data[name] = Bin.New(type);
+                if (populateFirst)
+                {
+                    var initFirst = Data[name].First;
+                }
+            }
         }
 
         // you can add any object defined in TypeIdentity, it will be automatically be wrapped by a Bin<> 

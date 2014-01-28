@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -14,7 +15,6 @@ namespace VVVV.Pack.Game.Core
     {
         public Bin()
         {
-            
         }
         
         
@@ -32,20 +32,20 @@ namespace VVVV.Pack.Game.Core
             Add(values);
         } 
 
-        public override object First {
-            get
-            {
-                if (this.Count == 0)
-                    this.Add(Activator.CreateInstance(this.GetInnerType()));
-                return this[0];
-            }
-            set
-            {
-                if (this.GetInnerType() == value.GetType())
-                    this[0] = value;
-                else throw new Exception(value.GetType().ToString() + " cannot be the first in Bin<" + this.GetInnerType() +">");
-            } 
-        }
+        //public override object First {
+        //    get
+        //    {
+        //        if (this.Count == 0)
+        //            this.Add(Activator.CreateInstance(this.GetInnerType()));
+        //        return this[0];
+        //    }
+        //    set
+        //    {
+        //        if (this.GetInnerType() == value.GetType())
+        //            this[0] = value;
+        //        else throw new Exception(value.GetType().ToString() + " cannot be the first in Bin<" + this.GetInnerType() +">");
+        //    } 
+        //}
         
         public override Type GetInnerType()
         {
@@ -106,7 +106,18 @@ namespace VVVV.Pack.Game.Core
 
         public virtual object First
         {
-            get { return this[0]; }
+            get
+            {
+                if (this.Count == 0)
+                {
+                    var type = this.GetInnerType();
+
+                    if (type == typeof (string)) Add("vvvv");
+                    else if (type == typeof (Stream)) Add(new MemoryStream());
+                    else Add(Activator.CreateInstance(type));
+                }
+                return this[0];
+            }
             set
             {
                 this[0] = value;
