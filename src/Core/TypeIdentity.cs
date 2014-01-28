@@ -41,5 +41,19 @@ namespace VVVV.Pack.Game.Core
             //            Add(typeof(Message), "Message".ToLower());	        
 	    }
 
+        public Type FindKey(string typeName)
+        {
+            Type type = typeof(string);
+            typeName = typeName.ToLower();
+            foreach (Type key in Keys)
+            {
+                if (this[key] == typeName)
+                {
+                    type = key;
+                }
+            }
+            return type;
+        }
+
     }
 }

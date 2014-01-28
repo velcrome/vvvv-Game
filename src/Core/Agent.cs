@@ -20,26 +20,26 @@ namespace VVVV.Pack.Game.Core
         [DataMember]
 		Dictionary<string, Bin> Data = new Dictionary<string, Bin>() ;
 		
-		[DataMember]
+//		[DataMember]
 		public string Id {
 			get;
 			private set;
 		}
 
-        [DataMember]
+  //      [DataMember]
         public bool Dispose
         {
             get; set; 
         }
 
-        [DataMember]
+    //    [DataMember]
         public ReturnCodeEnum ReturnCode
         {
             get;
             set;
         }
 
-        [DataMember]
+      //  [DataMember]
         public DateTime BirthTime
         {
             get;
@@ -172,8 +172,8 @@ namespace VVVV.Pack.Game.Core
             else throw new Exception(typeof(T).ToString() + " is not a supported Type in TypeIdentity.");
         }
 
-        // you can add any object, it will be automatically be wrapped by a Bin<> 
-        // that is unless you try to add something enumerable, e.g. from a linq query
+        // you can add any object defined in TypeIdentity, it will be automatically be wrapped by a Bin<> 
+        // alternatively all instances in the enumerable will be added, e.g. from a linq query
         public void Add(string name, object val)
         {
             Type type = typeof(object);
@@ -194,7 +194,7 @@ namespace VVVV.Pack.Game.Core
                 type = num.Current.GetType();
             } else
             {
-                throw new Exception("Cannot add object "+val.ToString()+ " to "+name+" because cannot determine type.");
+                throw new Exception("Cannot determine type or add object "+val.ToString()+ " to "+name+" because it is empty.");
             }
 
 
@@ -202,18 +202,13 @@ namespace VVVV.Pack.Game.Core
                 Data.Add(name, Bin.New(type));
             else
             {
-                if (Data[name].GetInnerType() != type) throw new Exception("Tried to add "+type+" into a Bin<"+Data[name].GetInnerType());
+                if (Data[name].GetInnerType() != type) throw new Exception("Tried to add "+type+" into a Bin<"+Data[name].GetInnerType()+">.");
                 
             }
             var bin = Data[name];
 
             
-            if (val is IEnumerable && !(val is string))
-            {
-                foreach (var o in (IEnumerable) val)
-                    bin.Add(o);
-            }
-            else bin.Add(val);
+            bin.Add(val);
         }
 
         public void Assign(string name, object val)

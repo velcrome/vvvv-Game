@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System.Security;
-using ImpromptuInterface.Dynamic;
+using Newtonsoft.Json;
 
 
 namespace VVVV.Pack.Game.Core
 {
     [Serializable]
+    [JsonConverter(typeof(BinSerializer))]
     public class Bin<T> : Bin
     {
         public Bin()
@@ -22,7 +22,7 @@ namespace VVVV.Pack.Game.Core
         {
             foreach (var v in values)
             {
-                this.Add(v);
+                Add(v);
             }
 
         }
@@ -62,19 +62,19 @@ namespace VVVV.Pack.Game.Core
         {
             return (T[])this.ToArray(typeof(T));
         }
+
         /*
-         * no cast should be necessary!
-         * 
+         * next two methods maybe unnecessary...
+         */
         public static explicit operator Bin<T>(T[] s)  // explicit generic array to Bin conversion operator
+        {
+            return new Bin<T>(s);  
+        }
+        public static explicit operator Bin<T>(T s)  // explicit generic frist value to Bin conversion operator
         {
             return new Bin<T>(s);  // explicit conversion
         }
-
-        public static explicit operator Bin<T>(T s)  // explicit generic fist value to Bin conversion operator
-                {
-                    return new Bin<T>(s);  // explicit conversion
-                }
-                */
+                
 
 
         // implicit conversion
@@ -82,16 +82,7 @@ namespace VVVV.Pack.Game.Core
         {
             return (T)sl.First;  
         }
-        
-        #region Essentials
-        public new Bin Clone()
-        {
-            Bin<T> c = new Bin<T>();
-            c.AssignFrom(this);
 
-            return c;
-        }
-        #endregion
 
     }
     
@@ -100,6 +91,7 @@ namespace VVVV.Pack.Game.Core
 	/// Description of 
 	/// </summary>
 	[Serializable]
+    [JsonConverter(typeof(BinSerializer))]
 	public abstract class Bin : ArrayList, ISerializable
 	{
         public virtual Type GetInnerType() {
@@ -163,27 +155,39 @@ namespace VVVV.Pack.Game.Core
 		}
         #endregion
 
-        #region ISpread conformity
+        #region ISpread vs. ArrayList compromise
 
-        public override int Add(Object val)
+//      Think of this as a combined Add and AddRange with internal type checks.
+        public override int Add(object val)
         {
-            var index = this.Count;
-            if (val == null) return index;
+            var index = this.Count;  //proper return as of ArrayList.Add()
+//            if (val == null) return index;
             
-            if (TypeIdentity.Instance.ContainsKey(val.GetType()))
+            if (TypeIdentity.Instance.ContainsKey(val.GetType())) 
             {
                 return base.Add(val);
             } 
 
-            if (val is IEnumerable)
+            if (val is IEnumerable ) // string should be treated differently, but that is implicit in the last 4 lines
             {
-                var s = (IEnumerable) val;
-                var num = s.GetEnumerator();
-                
-                num.MoveNext();
-                if (this.GetInnerType() == num.Current.GetType())
+                var enumerable = (IEnumerable)val;
+
+                Type type;
+                try
                 {
-                    foreach (var o in s)
+                    var num = enumerable.GetEnumerator();
+
+                    num.MoveNext();
+                    type = num.Current.GetType();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Cannot add object " + enumerable.ToString() + " to Bin because cannot determine type. Maybe empty?", e);
+
+                }
+                if (this.GetInnerType() == type)
+                {
+                    foreach (var o in enumerable)
                     {
                         base.Add(o);
                     }
@@ -194,14 +198,25 @@ namespace VVVV.Pack.Game.Core
             throw new Exception("Cannot add this value, it is neither a Enumeration of matching registered Type nor a matching Type.");
         }
 
-        public void AssignFrom(IEnumerable source) {
+        public void AssignFrom(IEnumerable enumerable) {
 			this.Clear();
-
-            foreach (object o in source) {
-				this.Add(o);
-			}
-			
+    		this.Add(enumerable);
+            
 		}
+
+        // TODO: implement if necessary - with necessary Type checks in place
+        protected new void Insert(int index, object value)
+        {
+            
+        }
+
+        // TODO: implementation not recommended, LINQ depends on IEnumerable
+        protected new void InsertRange(int index, ICollection c)
+        {
+
+        }
+
+
         #endregion
 
         #region alternative constructor for runtime typing of the bin
@@ -218,11 +233,43 @@ namespace VVVV.Pack.Game.Core
                 throw new Exception(type.ToString() + " is not a supported Type in TypeIdentity.cs");
             }
         }
+        // creates aweful syntax
+        //public static Bin FromIEnumerable(IEnumerable enumerable) 
+        //{
+        //    Type type;
+        //    try
+        //    {
+        //        var num = enumerable.GetEnumerator();
+
+        //        num.MoveNext();
+        //        type = num.Current.GetType();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception("Cannot add object " + enumerable.ToString() + " to Bin because cannot determine type. Maybe empty?",e);
+
+        //    }
+            
+        //    var bin = Bin.New(type);
+        //    bin.AssignFrom(enumerable);
+        //    return bin;
+        //}
+
+        #endregion
+
+
+        #region Essentials
+        public new Bin Clone()
+        {
+            Bin c = Bin.New(this.GetInnerType());
+            c.AssignFrom(this);
+            return c;
+        }
         #endregion
 
 
 
 
-    }
+	}
 	
 }

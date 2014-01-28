@@ -21,7 +21,8 @@ namespace VVVV.Pack.Game
         {
             var agent = new Agent().Face<ITestAgent>();
 
-            agent.TestInt = new Bin<int>(1);
+            agent.TestInt = (Bin<int>) 1;
+            //new Bin<int>(1);
             Assert.AreEqual(1, agent.TestInt[0], "Face Agent int initialisation");
 
             agent.TestInt.Add(2);
@@ -42,6 +43,7 @@ namespace VVVV.Pack.Game
             Assert.AreEqual(3, agent.TestInt[0], "Face Agent int assign IEnumeration");
             Assert.AreEqual(4, agent.TestInt[1], "Face Agent int assign IEnumeration");
 
+           
             Assert.AreEqual(2, agent.TestInt.Count, "Face Agent int Count");
         }
 
