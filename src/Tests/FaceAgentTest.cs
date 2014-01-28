@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,14 +19,29 @@ namespace VVVV.Pack.Game
         public void TestAccess()
         {
             var agent = new Agent().Face<ITestAgent>();
-            agent["Access"] = new Bin<bool>(true, false);
+            agent["Access"] = new Bin<bool>();
+
+            agent.Init("stream", typeof(Stream), false);
+            try
+            {
+                var f = agent["stream"].First;
+            }
+            catch (Exception e)
+            {
+                Assert.Inconclusive();
+            }
+
+            Assert.AreEqual(false, agent["Access"].First);
+
+            Assert.AreEqual(1, agent["Access"].Count);
 
 
-            agent.Add("Secure", true);
+            agent.Init("Secure", true);
             agent["Secure"].Add(true);
 
-            Assert.AreEqual(true, agent["Access"].First);
+        
             Assert.AreEqual(true, agent["Secure"][1]);
+            Assert.AreEqual(2, agent["Secure"].Count);
         }
 
         [TestMethod]

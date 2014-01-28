@@ -11,15 +11,16 @@ namespace VVVV.Pack.Game.Faces
         ReturnCodeEnum ReturnCode { get; set; }
         string Id { get;  }
 
-        void Add(string name, object val);
-        void Assign(string name, object val);
-
         Bin this[string name] { get; set; }
         IEnumerable<Bin> this[params string[] keys] { get; }
 
-        T Face<T>() where T : class, IAgent;
+        T Face<T>(bool makeSafe = true) where T : class, IAgent;
 
+        void Init(string name, object val);
         void Init(string name, Type type, bool populateFirst = false);
+        
+        // face must be IAgent or any other interface extending IAgent. will init all Properties in one go
+        // will be automatically called by Face<>()
         void Init(Type face, bool populateFirst = true);
 
     }

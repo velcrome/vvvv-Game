@@ -18,7 +18,7 @@ namespace VVVV.Pack.Game.Core.Tests
             var agent = new Agent();
             agent["Access"] = new Bin<bool>(true, false);
 
-            agent.Add("Test", new Vector3D());
+            agent.Init("Test", new Vector3D());
             agent["Test"].Add(new Vector3D(1,1,1));
 
             var copy = (Agent)agent.Clone();
@@ -40,7 +40,7 @@ namespace VVVV.Pack.Game.Core.Tests
         {
             var agent = new Agent();
 
-            agent.Add("Test", 1);
+            agent.Init("Test", 1);
             Assert.AreEqual(1, agent["Test"][0], "Vanilla Agent int initialisation");
 
             agent["Test"].Add(2);
@@ -74,7 +74,7 @@ namespace VVVV.Pack.Game.Core.Tests
         {
             var agent = new Agent();
 
-            agent.Add("Test", 1.0);
+            agent.Init("Test", 1.0);
             Assert.AreEqual(1.0, agent["Test"][0], "Vanilla Agent double initialisation");
 
             agent["Test"].Add(2.0);
@@ -103,7 +103,7 @@ namespace VVVV.Pack.Game.Core.Tests
         {
             var agent = new Agent();
 
-            agent.Add("Test", "First");
+            agent.Init("Test", "First");
             Assert.AreEqual("First", agent["Test"][0], "Vanilla Agent string initialisation");
 
             agent["Test"].Add("Second");
@@ -140,7 +140,7 @@ namespace VVVV.Pack.Game.Core.Tests
             
             var agent = new Agent();
 
-            agent.Add("Test",v1);
+            agent.Init("Test", v1);
             Assert.AreEqual(v1, agent["Test"][0], "Vanilla Agent Vector3D initialisation");
 
             agent["Test"].Add(v2);

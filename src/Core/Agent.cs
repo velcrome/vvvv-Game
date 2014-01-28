@@ -20,26 +20,20 @@ namespace VVVV.Pack.Game.Core
         [DataMember]
 		Dictionary<string, Bin> Data = new Dictionary<string, Bin>() ;
 		
-//		[DataMember]
+		[DataMember]
 		public string Id {
 			get;
 			private set;
 		}
 
-  //      [DataMember]
-        public bool Dispose
-        {
-            get; set; 
-        }
-
-    //    [DataMember]
+        [DataMember]
         public ReturnCodeEnum ReturnCode
         {
             get;
             set;
         }
 
-      //  [DataMember]
+        [DataMember]
         public DateTime BirthTime
         {
             get;
@@ -56,19 +50,16 @@ namespace VVVV.Pack.Game.Core
             RunningNodes = new Dictionary<object, ArrayList>();
             Id = Guid.NewGuid().ToString();
             BirthTime = DateTime.Now;
-            Dispose = false;
         }
 
         #region duck casting
 
-        public T Face<T>() where T : class, IAgent
+        public T Face<T>(bool makeSafe = true) where T : class, IAgent
         {
             var face = ImpromptuInterface.Impromptu.ActLike<T>(this);
-            Init(typeof (T));
+            Init(typeof (T), makeSafe);
             return face;
-
         }
-
 
         #endregion
 
@@ -109,8 +100,7 @@ namespace VVVV.Pack.Game.Core
         }
         #endregion DynamicObject
 
-
-        #region Bin Quick Access. No range modulo
+        #region Quick Access.
 
         // you can use the ["key"] Operator to access a specific attribute 
         public Bin this[string name]
@@ -120,8 +110,7 @@ namespace VVVV.Pack.Game.Core
                 if (Data.ContainsKey(name)) return Data[name];
                 else
                 {
-                    Add(name, null);
-                    return Data[name];
+                    throw new Exception(name+" was not initialized, do so before accessing it with the Agent[string] operator.");
                 }
             }
             set { Data[name] = (Bin)value; }
@@ -159,15 +148,13 @@ namespace VVVV.Pack.Game.Core
 
         }
 
-        public void Init<T>(string name) 
+        public void Init<T>(string name, bool populateFirst=false) 
         {
-            Init(name, typeof(T));
+            Init(name, typeof(T), populateFirst);
         }
 
         public void Init(string name, Type type, bool populateFirst=false)
         {
-            if (Data.ContainsKey(name)) return;
-
             if (type.IsSubclassOf(typeof(Bin)) && type.IsGenericType)
             {
                 type = type.GetGenericArguments()[0];
@@ -185,73 +172,36 @@ namespace VVVV.Pack.Game.Core
             }
         }
 
-        // you can add any object defined in TypeIdentity, it will be automatically be wrapped by a Bin<> 
-        // alternatively all instances in the enumerable will be added, e.g. from a linq query
-        public void Add(string name, object val)
+        public void Init(string name, object val)
         {
-            Type type = typeof(object);
-            if (val is Type)
-            {
-                type = (Type)val;
-            }
-            else if (TypeIdentity.Instance.ContainsKey(val.GetType()))
+            Type type = typeof (object);
+            
+            if (TypeIdentity.Instance.ContainsKey(val.GetType()))
             {
                 type = val.GetType();
 
-            } 
-            else if (val is IEnumerable && !(val is string)) // odd thing about strings...
-            {
-                var e = (IEnumerable)val;
-                var num = e.GetEnumerator();
-                num.MoveNext();  // necessary to get to [0]
-                type = num.Current.GetType();
-            } else
-            {
-                throw new Exception("Cannot determine type or add object "+val.ToString()+ " to "+name+" because it is empty.");
             }
-
-
-            if (!Data.ContainsKey(name)) 
-                Data.Add(name, Bin.New(type));
+            else if (val is IEnumerable && !(val is string)) // odd thing about strings, they are IEnumerible...
+            {
+                var e = (IEnumerable) val;
+                var num = e.GetEnumerator();
+                num.MoveNext(); // necessary to get to [0]
+                type = num.Current.GetType();
+            }
             else
             {
-                if (Data[name].GetInnerType() != type) throw new Exception("Tried to add "+type+" into a Bin<"+Data[name].GetInnerType()+">.");
-                
+                throw new Exception("Cannot determine type or add object " + val.ToString() + " to " + name +
+                                    " because it is empty.");
             }
-            var bin = Data[name];
 
-            
-            bin.Add(val);
+            Init(name, type, false);
+            Data[name].Add(val);
         }
 
         public void Assign(string name, object val)
         {
-            Type type;
-            if (val is IEnumerable && !(val is string))
-            {
-                var e = (IEnumerable) val;
-                var num = e.GetEnumerator();
-                num.MoveNext();
-                type = num.Current.GetType();
-            } else
-            {
-                type = val.GetType();
-            }
-
-            
-            if (!Data.ContainsKey(name))
-                Data.Add(name, Bin.New(type));
-                else Data[name].Clear();
-
-            var spread = Data[name];
-
-            if (val is IEnumerable && !(val is string) ) // unfortunately string is IEnumerable
-            {
-                foreach (var o in (IEnumerable)val)
-                {
-                    spread.Add(o);
-                }
-            } else spread.Add(val);
+            if (Data.ContainsKey(name)) Data.Remove(name);
+            Init(name, val);
         }
 
         #endregion SpreadList Access

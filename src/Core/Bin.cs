@@ -111,10 +111,12 @@ namespace VVVV.Pack.Game.Core
                 if (this.Count == 0)
                 {
                     var type = this.GetInnerType();
+                    object o;
+                    if (type == typeof (string)) o = "vvvv";
+                    else if (type == typeof (Stream)) o = new MemoryStream();
+                    else o = Activator.CreateInstance(type);
 
-                    if (type == typeof (string)) Add("vvvv");
-                    else if (type == typeof (Stream)) Add(new MemoryStream());
-                    else Add(Activator.CreateInstance(type));
+                    base.Add(o);
                 }
                 return this[0];
             }
@@ -158,8 +160,8 @@ namespace VVVV.Pack.Game.Core
         public override int Add(object val)
         {
             var index = this.Count;  //proper return as of ArrayList.Add()
-//            if (val == null) return index;
             
+            // here is a place to start to add inheritance in TypeIdentities.
             if (TypeIdentity.Instance.ContainsKey(val.GetType())) 
             {
                 return base.Add(val);
@@ -186,13 +188,16 @@ namespace VVVV.Pack.Game.Core
                 {
                     foreach (var o in enumerable)
                     {
+                        if (o.GetType() != this.GetInnerType()) throw new Exception("Cannot add object " + enumerable.ToString() + " from "+enumerable+ " to Bin because Type of inside element does not match");
+
+                        
                         base.Add(o);
                     }
                     return index;
                 }
             } 
 
-            throw new Exception("Cannot add this value, it is neither a Enumeration of matching registered Type nor a matching Type.");
+            throw new Exception("Cannot add this value,"+ val.GetType() + " is neither a Enumeration of matching registered Type nor a matching Type.");
         }
 
         public void AssignFrom(IEnumerable enumerable) {

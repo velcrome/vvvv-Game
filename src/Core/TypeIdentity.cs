@@ -24,8 +24,7 @@ namespace VVVV.Pack.Game.Core
             // This is the only place where you need to add new datatypes.
             // Requirements: 
             //- serializable (for json and general persisting)
-            //- needs standard constructor 
-            //- Activator.CreateInstance(Type t) must return a valid instance
+            //- needs standard constructor, otherwise exempt in Bin.First
             //- should not implement IEnumerable
 
             Add(typeof(bool), "bool".ToLower());
