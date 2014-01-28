@@ -13,7 +13,20 @@ namespace VVVV.Pack.Game
     public class JsonAgentTest
     {
 
+        [TestMethod]
+        public void TestToString()
+        {
+            var agent = new Agent();
 
+            agent.Add("Test", "foo");
+            agent["Test"].Add("bar");
+
+            agent["Path"] = new Bin<Vector3D>(new Vector3D(), new Vector3D(1, 1, 1));
+
+            var s = agent.ToString();
+            s += "";
+            Assert.AreEqual("Agent\n Test (string) \t: foo[string], bar[string], \r\n Path (vector3d) \t: VVVV.Utils.VMath.Vector3D[vector3d], VVVV.Utils.VMath.Vector3D[vector3d], \r\n", s);
+        }
 
         [TestMethod]
         public void TestJson()

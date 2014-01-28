@@ -288,7 +288,7 @@ namespace VVVV.Pack.Game.Core
             foreach (string name in Data.Keys)
             {
 
-                sb.Append(" " + name +" ("+ Data[name].GetTypeIdentity.ToString()+") \t: ");
+                sb.Append(" " + name +" ("+ TypeIdentity.Instance[Data[name].GetInnerType()]+") \t: ");
                 foreach (object o in Data[name])
                 {
                     string typeIdentity = TypeIdentity.Instance[o.GetType()];

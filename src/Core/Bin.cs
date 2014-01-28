@@ -47,75 +47,55 @@ namespace VVVV.Pack.Game.Core
             return typeof(T);
         }
 
-        public override string GetTypeIdentity
-        {
-            get
-            {
-                var supportedTypes = TypeIdentity.Instance;
-                if (supportedTypes.ContainsKey(typeof(T)))
-                    return supportedTypes[typeof(T)];
-                else return "Unsupported Type in TypeIdentity.";
-            }
-        }
-
         public new T[] ToArray()
         {
             return (T[])this.ToArray(typeof(T));
         }
 
+        public static implicit operator T(Bin<T> sl)
+        {
+            return (T)sl.First;
+        }
+
         /*
          * next two methods maybe unnecessary...
+         * but i like the funny casts they allow in faced mode
          */
         public static explicit operator Bin<T>(T[] s)  // explicit generic array to Bin conversion operator
         {
             return new Bin<T>(s);  
         }
-        public static explicit operator Bin<T>(T s)  // explicit generic frist value to Bin conversion operator
+        public static explicit operator Bin<T>(T s)  // explicit generic value to Bin-First conversion operator
         {
-            return new Bin<T>(s);  // explicit conversion
+            return new Bin<T>(s);  
         }
                 
 
-
-        // implicit conversion
-        public static implicit operator T(Bin<T> sl)  
-        {
-            return (T)sl.First;  
-        }
 
 
     }
     
     
-    /// <summary>
-	/// Description of 
-	/// </summary>
 	[Serializable]
     [JsonConverter(typeof(BinSerializer))]
 	public abstract class Bin : ArrayList, ISerializable
 	{
-        public virtual Type GetInnerType() {
+
+//      constructor
+        protected Bin(params object[] values): base()
+        {
+            foreach (var v in values)
+            {
+                Add(v);
+            }
+
+        }
+        
+        public virtual Type GetInnerType()
+        {
     		if (this.Count == 0) return typeof(object);
 				else return this[0].GetType();
 		}
-
-
-
-        public virtual string GetTypeIdentity
-        {
-            get
-            {
-                if (this.Count == 0) return "Empty Spreadlist has neither a Type nor a TypeIdentity.";
-                else
-                {
-                    var type = this[0].GetType();
-                    var supportedTypes = TypeIdentity.Instance;
-                    if (supportedTypes.ContainsKey(type))
-                        return supportedTypes[type];
-                    else return "Unsupported Type in TypeIdentity.";
-                }
-            }
-        }
 
         public virtual object First
         {
@@ -135,16 +115,9 @@ namespace VVVV.Pack.Game.Core
         }
 
 
-        protected Bin(params object[] values) : base()
-        {
-            foreach (var v in values)
-            {
-                this.Add(v);
-            }
 
-        }
 
-        #region Serialization
+        #region [Serializable] Necessary Method implementation
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			for (int i=0;i<this.Count;i++)
@@ -233,31 +206,9 @@ namespace VVVV.Pack.Game.Core
                 throw new Exception(type.ToString() + " is not a supported Type in TypeIdentity.cs");
             }
         }
-        // creates aweful syntax
-        //public static Bin FromIEnumerable(IEnumerable enumerable) 
-        //{
-        //    Type type;
-        //    try
-        //    {
-        //        var num = enumerable.GetEnumerator();
-
-        //        num.MoveNext();
-        //        type = num.Current.GetType();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception("Cannot add object " + enumerable.ToString() + " to Bin because cannot determine type. Maybe empty?",e);
-
-        //    }
-            
-        //    var bin = Bin.New(type);
-        //    bin.AssignFrom(enumerable);
-        //    return bin;
-        //}
 
         #endregion
-
-
+        
         #region Essentials
         public new Bin Clone()
         {
