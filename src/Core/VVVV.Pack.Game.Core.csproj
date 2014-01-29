@@ -55,6 +55,7 @@
     <Compile Include="Agent.cs" />
     <Compile Include="Bin.cs" />
     <Compile Include="BinSerializer.cs" />
+    <Compile Include="Faces\INamedAgent.cs" />
     <Compile Include="TypeIdentity.cs" />
     <Compile Include="BehaviorLink.cs" />
     <Compile Include="Faces\IAgent.cs" />

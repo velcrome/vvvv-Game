@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Dynamic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using VVVV.Pack.Game.Faces;
@@ -73,15 +75,37 @@ namespace VVVV.Pack.Game.Core
             string name = binder.Name;
             result = null;
 
-            // If the property name is not found in a dictionary, it was most likely not initialized
+           // If the property name is not found in a dictionary, it was most likely not initialized
             // we cannot add it on the fly, because we do not know its type.
             // binder.ReturnType is always System.Object
 
             if (!Data.ContainsKey(name))
             {
-                throw new Exception(name + " has not been initialized!");
-//                Data[name] = SpreadList.New(binder.ReturnType);
-            } else
+//                try
+//                {
+//                    var methods = from type in typeof(Agent).Assembly.GetTypes()
+//                                where type.IsSealed && !type.IsGenericType && !type.IsNested
+//                                from method in type.GetMethods(BindingFlags.Static
+//                                    | BindingFlags.Public | BindingFlags.NonPublic)
+//                                where method.IsDefined(typeof(ExtensionAttribute), false)
+//                                where method.Name == name
+//                                select method;
+//
+//                    
+//                    var extensionMethod = methods.First();
+//
+//                    var ret = extensionMethod.Invoke(this, new object[] {this });
+//                    return false;
+//                }
+//                catch (Exception e)
+//                {
+//                  //    fails. extensionmethod is found in the Assembly, but not bound correctly during invoke
+//                  //    http://www.developerfusion.com/community/blog-entry/8389108/c-40-why-dynamic-binding-and-extension-methods-dont-mix/
+//                  //    would have been nice to add Face specific functionality in extension methods of Agent
+//                }
+                throw new Exception(name + " has not been initialized.");
+            }
+            else
             {
                 success = true;
                 result = Data[name];

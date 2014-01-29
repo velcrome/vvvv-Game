@@ -14,6 +14,14 @@ namespace VVVV.Pack.Game
     [TestClass]
     public class FaceAgentTest
     {
+        [TestMethod]
+        public void TestExtensionMethod()
+        {
+            var agent = new Agent().Face<INamedAgent>(true);
+//            agent.SetRandomName();
+
+        }
+
 
         [TestMethod]
         public void TestAccess()

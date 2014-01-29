@@ -1,4 +1,4 @@
-﻿#region usings
+#region usings
 using System.Collections.Generic;
 using VVVV.Core.Logging;
 using VVVV.Pack.Game.Core;
@@ -17,7 +17,7 @@ namespace VVVV.Pack.Game.Nodes
                 Help = "Basic template with one value in/out",
                 Tags = "")]
     #endregion PluginInfo
-    public class ActionGameNode : AbstractActionNode
+    public class ActionGameNode : AbstractActionNode 
     {
         [Input("ReturnCode")]
         public ISpread<ReturnCodeEnum> FSetCode;
@@ -28,17 +28,15 @@ namespace VVVV.Pack.Game.Nodes
             foreach (var agent in agents)
             {
                 var code = FSetCode[i];
-                agent.ReturnCode = code;
-
-                ((dynamic) agent).Test = "hello";
+                agent.ReturnCode = code;             
 
                 var f = agent.Face<IMoveableAgent>(false);
 
                 f.Position += new Vector3D(1,1,1);
-                FLogger.Log(LogType.Message, f.Position.ToString());
+          //      FLogger.Log(LogType.Message, f.Position.ToString());
                 f.Position += new Vector3D();
                 i++;
             }
         }
-    }
+    } 
 }
