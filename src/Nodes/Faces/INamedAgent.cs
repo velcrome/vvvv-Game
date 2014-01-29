@@ -1,9 +1,4 @@
-﻿using ImpromptuInterface.Dynamic;
-using ImpromptuInterface.InvokeExt;
-using VVVV.Pack.Game.Core;
-using VVVV.Utils.VColor;
-using VVVV.Utils.VMath;
-
+﻿using VVVV.Pack.Game.Core;
 
 namespace VVVV.Pack.Game.Faces
 {
@@ -17,7 +12,7 @@ namespace VVVV.Pack.Game.Faces
 {
     public static class API
     {
-        public static string SetRandomName(this Agent agent)
+        public static string SetRandomName(this AbstractGameNode node, INamedAgent agent)
         {
             var str = "random";
             agent.Init("name", str);

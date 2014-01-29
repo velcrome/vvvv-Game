@@ -5,7 +5,7 @@ using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game
 {
-    public abstract class AbstractDecoratorNode : AbstractBehaviorNode
+    public abstract class AbstractDecoratorNode : AbstractGameNode
     {
         [Input("Input", AutoValidate = false)]
         public Pin<BehaviorLink> FInput;

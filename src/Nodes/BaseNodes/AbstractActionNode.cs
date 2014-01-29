@@ -4,7 +4,7 @@ using VVVV.Pack.Game.Faces;
 
 namespace VVVV.Pack.Game.Nodes
 {
-    public abstract class AbstractActionNode : AbstractBehaviorNode
+    public abstract class AbstractActionNode : AbstractGameNode
     {
 
         protected abstract void Behave(IEnumerable<IAgent> agents);

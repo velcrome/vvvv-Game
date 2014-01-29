@@ -62,8 +62,10 @@
     <Compile Include="AgentNodes\InitAgent.cs" />
     <Compile Include="AgentNodes\IComplexAgent.cs" />
     <Compile Include="BaseNodes\AbstractActionNode.cs" />
-    <Compile Include="BaseNodes\AbstractBehaviorNode.cs" />
+    <Compile Include="BaseNodes\AbstractGameNode.cs" />
     <Compile Include="BaseNodes\AbstractDecorator.cs" />
+    <Compile Include="Faces\IMoveableAgent.cs" />
+    <Compile Include="Faces\INamedAgent.cs" />
     <Compile Include="Templates\TemplateAction.cs" />
     <Compile Include="Essentials\Action.cs" />
     <Compile Include="Essentials\Birth.cs" />

@@ -12,7 +12,7 @@ using VVVV.PluginInterfaces.V2;
 namespace VVVV.Pack.Game.Nodes
 
 {
-    public abstract class AbstractCompositeNode : AbstractBehaviorNode
+    public abstract class AbstractCompositeNode : AbstractGameNode
     {
         #region fields & pins
         // A spread which contains our inputs

@@ -35,8 +35,7 @@ namespace VVVV.Pack.Game.Nodes
                 var f = agent.Face<IMoveableAgent>(false);
 
                 f.Position += new Vector3D(1,1,1);
-                FLogger.Log(LogType.Message, f.Position.ToString());
-                f.Position += new Vector3D();
+                f.Velocity += new Vector3D(0.1,0.1,0.1);
                 i++;
             }
         }

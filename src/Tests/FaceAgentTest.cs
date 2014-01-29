@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
-using VVVV.Utils.VColor;
 using VVVV.Utils.VMath;
 
 namespace VVVV.Pack.Game
@@ -21,7 +18,6 @@ namespace VVVV.Pack.Game
 //            agent.SetRandomName();
 
         }
-
 
         [TestMethod]
         public void TestAccess()

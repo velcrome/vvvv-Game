@@ -7,7 +7,7 @@ using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game
 {
-    public abstract class AbstractBehaviorNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+    public abstract class AbstractGameNode : IPluginEvaluate, IPartImportsSatisfiedNotification
     {
 
         #region fields & pins
