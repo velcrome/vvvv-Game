@@ -12,12 +12,12 @@ using VVVV.Utils.VMath;
 namespace VVVV.Pack.Game.Nodes
 {
     #region PluginInfo
-    [PluginInfo(Name = "Action",
+    [PluginInfo(Name = "ActionTemplate",
                 Category = "Game",
                 Help = "Basic template with one value in/out",
                 Tags = "")]
     #endregion PluginInfo
-    public class ActionGameNode : AbstractActionNode 
+    public class TemplateActionGameNode : AbstractActionNode 
     {
         [Input("ReturnCode")]
         public ISpread<ReturnCodeEnum> FSetCode;
@@ -30,11 +30,12 @@ namespace VVVV.Pack.Game.Nodes
                 var code = FSetCode[i];
                 agent.ReturnCode = code;             
 
-                var f = agent.Face<IMoveableAgent>(false);
+                var f = agent.Face<INamedAgent>(true);
+                var k = agent.Face<IComplexAgent>(true);
 
-                f.Position += new Vector3D(1,1,1);
+      //          f.Position += new Vector3D(1,1,1);
           //      FLogger.Log(LogType.Message, f.Position.ToString());
-                f.Position += new Vector3D();
+      //          f.Position += new Vector3D();
                 i++;
             }
         }

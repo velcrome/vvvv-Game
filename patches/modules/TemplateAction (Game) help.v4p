@@ -1,0 +1,379 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta31.2.dtd" >
+   <PATCH nodename="C:\dev\vvvv\vvvv-game\patches\modules\TemplateAction (Game) help.v4p" systemname="TemplateAction (Game) help" filename="C:\dev\vvvv\vvvv-game\patches\modules\TemplateAction (Game) help.v4p">
+   <BOUNDS type="Window" left="15705" top="615" width="11685" height="7260">
+   </BOUNDS>
+   <NODE systemname="Renderer (TTY)" nodename="Renderer (TTY)" componentmode="InAWindow" id="12">
+   <BOUNDS type="Node" left="5328" top="1188" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5328" top="1188" width="2400" height="1800">
+   </BOUNDS>
+   <BOUNDS type="Window" left="20220" top="7935" width="8385" height="7335">
+   </BOUNDS>
+   <PIN pinname="Layers" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="WritePage (TTY)" nodename="WritePage (TTY)" componentmode="Hidden" id="13">
+   <BOUNDS type="Node" left="5292" top="768" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Layer" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="13" srcpinname="Layer" dstnodeid="12" dstpinname="Layers">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="14" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="5568" top="12" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5568" top="12" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="14" srcpinname="Y Output Value" dstnodeid="13" dstpinname="DoWrite">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="15" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="6432" top="300" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6432" top="300" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="15" srcpinname="Y Output Value" dstnodeid="12" dstpinname="Log Messages">
+   </LINK>
+   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
+   <BOUNDS type="Node" left="4968" top="2184" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Maximum background fpsS" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="27" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="4884" top="1692" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4884" top="1692" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="129">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="30">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="27" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum forground fps">
+   </LINK>
+   <LINK srcnodeid="27" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum background fpsS">
+   </LINK>
+   <NODE systemname="Birth (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Birth (Game)" componentmode="Hidden" id="41">
+   <BOUNDS type="Node" left="900" top="2520" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Agents" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Store (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Store (Game)" componentmode="Hidden" id="42">
+   <BOUNDS type="Node" left="1884" top="5472" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Add Agent" visible="1">
+   </PIN>
+   <PIN pinname="Input" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Clear" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="43" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="1200" top="1848" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1200" top="1848" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="43" srcpinname="Y Output Value" dstnodeid="41" dstpinname="Spread Count">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="44" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="396" top="1728" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="396" top="1728" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="44" srcpinname="Y Output Value" dstnodeid="41" dstpinname="Insert">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="46" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="3936" top="4152" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3936" top="4152" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Input String">
+   </PIN>
+   </NODE>
+   <NODE systemname="Action (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Action (Game)" componentmode="Hidden" id="45">
+   <BOUNDS type="Node" left="3156" top="3528" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="45" srcpinname="Return Code" dstnodeid="46" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="47" systemname="IOBox (Enumerations)">
+   <BOUNDS type="Box" left="3336" top="2976" width="1584" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3336" top="2976" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Enum" slicecount="1" values="Success">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="47" srcpinname="Output Enum" dstnodeid="45" dstpinname="ReturnCode">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="48" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="336" top="3480" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="336" top="3480" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="48" srcpinname="Y Output Value" dstnodeid="42" dstpinname="Clear">
+   </LINK>
+   <NODE systemname="Timing (Debug)" nodename="Timing (Debug)" componentmode="Hidden" id="51">
+   <BOUNDS type="Node" left="6816" top="1668" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="52" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="6780" top="2292" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6780" top="2292" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="51" srcpinname="frames per second" dstnodeid="52" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="53" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="1860" top="5988" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1860" top="5988" width="0" height="0">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="42" srcpinname="Output" dstnodeid="53" dstpinname="Input Node">
+   </LINK>
+   <NODE systemname="Init (Game.Agent)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Init (Game.Agent)" componentmode="Hidden" id="55">
+   <BOUNDS type="Node" left="1356" top="3360" width="1044" height="264">
+   </BOUNDS>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   <PIN pinname="Scan" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Face" slicecount="1" values="VVVV.Pack.Game.Faces.IAgent">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="41" srcpinname="Agents" dstnodeid="55" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="55" srcpinname="Agent" dstnodeid="42" dstpinname="Add Agent">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="58" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="5544" top="3384" width="6432" height="9540">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5544" top="3384" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Input String" slicecount="1" values="|{&cr;&lf;  &quot;Data&quot;: {&cr;&lf;    &quot;Position&quot;: {&cr;&lf;      &quot;Type&quot;: &quot;vector3d&quot;,&cr;&lf;      &quot;Bin&quot;: [&cr;&lf;        {&cr;&lf;          &quot;x&quot;: 945.0,&cr;&lf;          &quot;y&quot;: 945.0,&cr;&lf;          &quot;z&quot;: 945.0,&cr;&lf;          &quot;Length&quot;: 1636.788013152589,&cr;&lf;          &quot;xy&quot;: {&cr;&lf;            &quot;x&quot;: 945.0,&cr;&lf;            &quot;y&quot;: 945.0,&cr;&lf;            &quot;Length&quot;: 1336.4318164425749&cr;&lf;          },&cr;&lf;          &quot;xz&quot;: {&cr;&lf;            &quot;x&quot;: 945.0,&cr;&lf;            &quot;y&quot;: 945.0,&cr;&lf;            &quot;Length&quot;: 1336.4318164425749&cr;&lf;          },&cr;&lf;          &quot;yz&quot;: {&cr;&lf;            &quot;x&quot;: 945.0,&cr;&lf;            &quot;y&quot;: 945.0,&cr;&lf;            &quot;Length&quot;: 1336.4318164425749&cr;&lf;          }&cr;&lf;        }&cr;&lf;      ]&cr;&lf;    },&cr;&lf;    &quot;Velocity&quot;: {&cr;&lf;      &quot;Type&quot;: &quot;string&quot;,&cr;&lf;      &quot;Bin&quot;: []&cr;&lf;    },&cr;&lf;    &quot;NextVelocity&quot;: {&cr;&lf;      &quot;Type&quot;: &quot;string&quot;,&cr;&lf;      &quot;Bin&quot;: []&cr;&lf;    }&cr;&lf;  },&cr;&lf;  &quot;Id&quot;: &quot;fd366e69-b23e-4af9-be3e-bd1f481dcc15&quot;,&cr;&lf;  &quot;ReturnCode&quot;: 2,&cr;&lf;  &quot;BirthTime&quot;: &quot;2014-01-29T01:19:11.1873227+01:00&quot;&cr;&lf;}|">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="59" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="2172" top="3864" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2172" top="3864" width="0" height="0">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="55" srcpinname="Agent" dstnodeid="59" dstpinname="Input Node">
+   </LINK>
+   <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="61" systemname="IOBox (Enumerations)">
+   <BOUNDS type="Box" left="1884" top="2364" width="3132" height="276">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1884" top="2364" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Enum" slicecount="1" values="VVVV.Pack.Game.Faces.IComplexAgent">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="61" srcpinname="Output Enum" dstnodeid="55" dstpinname="Face">
+   </LINK>
+   <NODE systemname="IOBox (Value Advanced)" nodename="IOBox (Value Advanced)" componentmode="InABox" id="62">
+   <BOUNDS type="Node" left="408" top="828" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="408" top="828" width="480" height="480">
+   </BOUNDS>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="63" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="3996" top="4704" width="351" height="240">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3996" top="4704" width="351" height="240">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="ass">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="66" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="3552" top="4956" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3552" top="4956" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Input String" slicecount="8" values="Success,Success,Success,Success,Success,Success,Success,Success">
+   </PIN>
+   </NODE>
+   <NODE systemname="AsString (Object)" nodename="AsString (Object)" componentmode="Hidden" id="57" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll">
+   <BOUNDS type="Node" left="5628" top="3024" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Object" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="42" srcpinname="Output" dstnodeid="57" dstpinname="Object">
+   </LINK>
+   <LINK srcnodeid="57" srcpinname="String" dstnodeid="58" dstpinname="Input String">
+   </LINK>
+   <NODE systemname="Init (Game.Agent)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Init (Game.Agent)" componentmode="Hidden" id="67">
+   <BOUNDS type="Node" left="984" top="6480" width="1044" height="264">
+   </BOUNDS>
+   <PIN pinname="Agent" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Scan" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Face" slicecount="1" values="VVVV.Pack.Game.Faces.INamedAgent">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="42" srcpinname="Output" dstnodeid="67" dstpinname="Agent">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="68" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="2544" top="2844" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2544" top="2844" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="68" srcpinname="Y Output Value" dstnodeid="55" dstpinname="Scan">
+   </LINK>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="69" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="936" top="6840" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="936" top="6840" width="0" height="0">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="67" srcpinname="Agent" dstnodeid="69" dstpinname="Input Node">
+   </LINK>
+   <NODE systemname="Action (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Action (Game)" componentmode="Hidden" id="65">
+   <BOUNDS type="Node" left="2664" top="4356" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="ReturnCode" slicecount="1" values="Success">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="65" srcpinname="Return Code" dstnodeid="66" dstpinname="Input String">
+   </LINK>
+   <LINK srcnodeid="65" srcpinname="Output" dstnodeid="42" dstpinname="Input">
+   </LINK>
+   </PATCH>

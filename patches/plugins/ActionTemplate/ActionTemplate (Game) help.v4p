@@ -1,0 +1,151 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta31.2.dtd" >
+   <PATCH nodename="C:\dev\vvvv\vvvv-game\patches\plugins\ActionTemplate\ActionTemplate (Game) help.v4p">
+   <BOUNDS type="Window" left="3690" top="2880" width="12390" height="9735">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="25" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="192" top="144" width="5000" height="450">
+   </BOUNDS>
+   <BOUNDS type="Box" left="192" top="144" width="3864" height="444">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|ActionTemplate (Game)|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="24" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="192" top="544" width="5000" height="500">
+   </BOUNDS>
+   <BOUNDS type="Box" left="192" top="544" width="3516" height="540">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|provides quick start for custom actions in the Game framework|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   </NODE>
+   <NODE systemname="Store (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Store (Game)" componentmode="Hidden" id="23">
+   <BOUNDS type="Node" left="4278" top="2934" width="2796" height="264">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Add Agent" visible="1">
+   </PIN>
+   <PIN pinname="Clear">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="22" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="8550" top="2166" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="8550" top="2166" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="Input String">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="21" systemname="IOBox (Enumerations)">
+   <BOUNDS type="Box" left="7350" top="1134" width="1584" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7350" top="1134" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Enum" slicecount="1" values="Success">
+   </PIN>
+   <PIN pinname="Output Enum" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Birth (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Birth (Game)" componentmode="Hidden" id="20">
+   <BOUNDS type="Node" left="5118" top="1494" width="864" height="264">
+   </BOUNDS>
+   <PIN pinname="Agents" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="20" srcpinname="Agents" dstnodeid="23" dstpinname="Add Agent">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="19" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="5094" top="474" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5094" top="474" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Insert">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="20" dstpinname="Insert">
+   </LINK>
+   <NODE systemname="ActionTemplate (Game)" filename="ActionTemplate\ActionTemplate.csproj" nodename="ActionTemplate (Game)" componentmode="Hidden" id="18">
+   <BOUNDS type="Node" left="7350" top="1686" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="ReturnCode" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="18" srcpinname="Output" dstnodeid="23" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="18" srcpinname="Return Code" dstnodeid="22" dstpinname="Input String">
+   </LINK>
+   <LINK srcnodeid="21" srcpinname="Output Enum" dstnodeid="18" dstpinname="ReturnCode">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="17" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="4446" top="1338" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4446" top="1338" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Clear">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="17" srcpinname="Y Output Value" dstnodeid="23" dstpinname="Clear">
+   </LINK>
+   <NODE systemname="AsString (Object)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="AsString (Object)" componentmode="Hidden" id="16">
+   <BOUNDS type="Node" left="4278" top="3378" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Object" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="23" srcpinname="Output" dstnodeid="16" dstpinname="Object">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="15" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="4290" top="3942" width="4068" height="2700">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4290" top="3942" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="16" srcpinname="String" dstnodeid="15" dstpinname="Input String">
+   </LINK>
+   </PATCH>
