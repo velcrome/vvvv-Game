@@ -1,1 +1,1 @@
-TASKKILL /F /IM vvvv.exe
+start TASKKILL /F /IM vvvv.exe

@@ -32,7 +32,7 @@ namespace VVVV.Pack.Game
             }
             catch (Exception e)
             {
-                Assert.Inconclusive();
+                Assert.Inconclusive(e.ToString());
             }
 
             Assert.AreEqual(false, agent["Access"].First);

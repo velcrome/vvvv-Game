@@ -80,12 +80,26 @@
     <Compile Include="Essentials\Store.cs" />
   </ItemGroup>
   <ItemGroup />
+  
+  <Target Name="BeforeBuild">
+    <Exec Command='CALL ..\..\patches\killVVVV.bat' /> 
+    <ItemGroup>
+        <MyFiles Include="..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\**\*.*" Exclude="..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\**\bin\**\*.*"/>
+        <MyFiles Remove ="*~.xml"/> 
+        <MyFiles Remove ="*.dll" />
+        <MyFiles Remove ="*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\patches\%(RecursiveDir)%(Filename)%(Extension)')"  ContinueOnError="true" SkipUnchangedFiles="true"/>
+  </Target>
+
   <Target Name="AfterBuild">
     <ItemGroup>
       <MyFiles Include="..\..\patches\**\*.*" />
     </ItemGroup>
     <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
+
+
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
   <Import Project="..\packages\VVVV.PluginInterfaces.31.6.0-develop-99\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.6.0-develop-99\build\net40\VVVV.PluginInterfaces.targets')" />
 </Project>
