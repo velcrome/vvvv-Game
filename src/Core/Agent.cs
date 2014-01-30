@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -81,29 +81,67 @@ namespace VVVV.Pack.Game.Core
 
             if (!Data.ContainsKey(name))
             {
-//                try
-//                {
-//                    var methods = from type in typeof(Agent).Assembly.GetTypes()
-//                                where type.IsSealed && !type.IsGenericType && !type.IsNested
-//                                from method in type.GetMethods(BindingFlags.Static
-//                                    | BindingFlags.Public | BindingFlags.NonPublic)
-//                                where method.IsDefined(typeof(ExtensionAttribute), false)
-//                                where method.Name == name
-//                                select method;
-//
-//                    
-//                    var extensionMethod = methods.First();
-//
-//                    var ret = extensionMethod.Invoke(this, new object[] {this });
-//                    return false;
-//                }
-//                catch (Exception e)
-//                {
-//                  //    fails. extensionmethod is found in the Assembly, but not bound correctly during invoke
-//                  //    http://www.developerfusion.com/community/blog-entry/8389108/c-40-why-dynamic-binding-and-extension-methods-dont-mix/
-//                  //    would have been nice to add Face specific functionality in extension methods of Agent
-//                }
-                throw new Exception(name + " has not been initialized.");
+                try
+                {
+                    var methods = from type in typeof(IAgent).Assembly.GetTypes()
+                                  where type.IsSealed && !type.IsGenericType && !type.IsNested
+                                  from method in type.GetMethods(BindingFlags.Static
+                                      | BindingFlags.Public | BindingFlags.NonPublic)
+                                  where method.Name == name
+                                  where method.IsDefined(typeof(ExtensionAttribute), false)
+                                  select method;
+
+                    var extensionMethod = methods.First();
+                    var args = extensionMethod.GetParameters();
+
+                    var agent = Expression.Constant(this);
+
+                    Expression[] parameters = extensionMethod.GetParameters()
+                                               .Select(p => Expression.Parameter(p.ParameterType, p.Name))
+                                               .ToArray();
+
+
+                    var call = Expression.Call(extensionMethod, agent);
+
+                    //parameters = new ParameterExpression[args.Length - 1];
+
+                    //int i = 0;
+                    //foreach (var arg in args)
+                    //{
+                    //    if (i > 0) parameters[i] = Expression.Parameter(arg.ParameterType, arg.Name);
+                    //    i++;
+                    //}
+
+                    result = Expression.Lambda(call).Compile();                  
+                    
+                    //Expression[] args = new Expression[parameters.Length];
+
+
+                    //int i = 0;
+                    //foreach (var arg in parameters)
+                    //{
+                    //    args[i] = Expression.Parameter(arg.ParameterType, arg.Name);
+                    //    i++;
+                    //}
+                    
+                    //var call = Expression.Call(extensionMethod, agent);
+                    //var lambda = Expression.Lambda(call);
+                    
+                    //result = lambda.Compile();
+
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(name + " has not been initialized. Also no Extension Method of IAgent of that name could be found", e);
+
+                    //    fails. extensionmethod is found in the Assembly, but not bound correctly during invoke
+                    //    http://www.developerfusion.com/community/blog-entry/8389108/c-40-why-dynamic-binding-and-extension-methods-dont-mix/
+                    //    would have been nice to add Face specific functionality in extension methods of Agent
+                    //    edit: Expression trees seem capable of doing that, but I have too little experience with it.
+                    //    works for parameterless methods now.
+                }
             }
             else
             {

@@ -14,9 +14,20 @@ namespace VVVV.Pack.Game
         [TestMethod]
         public void TestExtensionMethod()
         {
-            var agent = new Agent().Face<INamedAgent>(true);
-//            agent.SetRandomName();
+            var agent = new Agent();
+                
 
+            var named = agent.Face<INamedAgent>(true);
+            Assert.AreEqual("vvvv", named.Name);
+
+            named.SetRandomName();
+            Assert.AreEqual("Marko", named.Name);
+
+            var positioned = agent.Face<IMoveableAgent>(true);
+            Assert.AreEqual(new Vector3D(), positioned.Position);
+            
+//            var v3 = positioned.SetRandomPosition(10.0);
+//            Assert.AreEqual(v3, positioned.Position);
         }
 
         [TestMethod]

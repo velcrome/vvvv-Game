@@ -59,7 +59,6 @@
     <Compile Include="JsonAgentTest.cs" />
     <Compile Include="FaceAgentTest.cs" />
     <Compile Include="DynamicAgentTest.cs" />
-    <Compile Include="Faces\ITestAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\VVVV.Pack.Game.Core.csproj">
@@ -67,14 +66,11 @@
       <Name>VVVV.Pack.Game.Core</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Nodes\VVVV.Pack.Game.Nodes.csproj">
-      <Project>{6A0AFB1F-8219-4A08-85F7-B7F19B66AC16}</Project>
-      <Name>VVVV.Pack.Game.Nodes</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
       <ItemGroup>

@@ -24,12 +24,16 @@ namespace VVVV.Pack.Game.Nodes
 
         [Input("Agent")]
         protected Pin<Agent> FInput;
-        
+
+        [Input("Init First Element", IsToggle = true, DefaultBoolean = true)]
+        protected ISpread<bool> FInitFirst;
+
         [Input("Face", EnumName = "AllAgentFaces")]
         protected IDiffSpread<EnumEntry> FFace;
 
         [Input("Scan", IsBang = true, IsSingle = true)]
         protected ISpread<bool> FScan;
+
 
         [Output("Agent")]
         public Pin<Agent> FOutput;
@@ -46,7 +50,6 @@ namespace VVVV.Pack.Game.Nodes
         }
         
         private void Update() {
-
             var baseType = typeof(IAgent);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
@@ -94,7 +97,7 @@ namespace VVVV.Pack.Game.Nodes
                 for (int j = 0; j < FFace.SliceCount; j++)
                 {
                     Type face = AllAgentFaces[FFace[j].Index];
-                    agent.Init(face);
+                    agent.Init(face, FInitFirst[j]);
 
                 }
             }

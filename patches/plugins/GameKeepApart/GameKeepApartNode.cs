@@ -16,22 +16,36 @@ namespace VVVV.Pack.Game.Nodes
 	#endregion PluginInfo
 	public class GameKeepApartNode : AbstractActionNode
 	{
-		[Input("ReturnCode")]
-		public ISpread<ReturnCodeEnum> FSetCode;
+		[Input("Strength", DefaultValue = 0.5)]
+		protected ISpread<double> FStrength;		
+
+		[Input("Max Radius", DefaultValue = 1.0)]
+		protected ISpread<double> FMaxRadius;		
 
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
 			int i = 0;
-			foreach (var agent in agents) {
-				var code = FSetCode[i];
-				agent.ReturnCode = code;
+			foreach (var a in agents) {
 
-				var f = agent.Face<INamedAgent>(true);
-				var k = agent.Face<IComplexAgent>(true);
-
-				//          f.Position += new Vector3D(1,1,1);
-				//      FLogger.Log(LogType.Message, f.Position.ToString());
-				//          f.Position += new Vector3D();
+				var agent = a.Face<IMoveableAgent>(true);
+				agent.ReturnCode = ReturnCodeEnum.Success; 
+	
+				int j=0;
+				foreach  (var a2 in agents)
+            	{
+					var agent2 = a2.Face<IMoveableAgent>(true);
+            		
+            		if (i != j) // if its the same agent dont do it
+            		{
+            			Vector3D pos1 = agent.Position;
+            			Vector3D pos2 =agent2.Position;
+            			
+            			double dist = VMath.Dist(pos1, pos2);
+            			if ( dist<FMaxRadius[0] ) //if I'm within range
+            				agent.ForceSum += FStrength[0]*(pos1 - pos2);
+            		}
+            		j++;
+                }
 				i++;
 			}
 		}
