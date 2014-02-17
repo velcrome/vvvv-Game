@@ -19,13 +19,13 @@ namespace VVVV.Pack.Game.Nodes
     #endregion PluginInfo
     public class TemplateActionGameNode : AbstractActionNode 
     {
-        [Input("ReturnCode")]
+        [Input("ReturnCode")] 
         public ISpread<ReturnCodeEnum> FSetCode;
         
         protected override void Behave(IEnumerable<IAgent> agents)
         {
             int i = 0;
-            foreach (var agent in agents)
+            foreach (var agent in agents) 
             {
                 var code = FSetCode[i];
                 agent.ReturnCode = code;             

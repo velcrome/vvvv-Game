@@ -46,6 +46,10 @@
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="VVVV.Core">
+      <HintPath>..\packages\VVVV.Core.31.6.0-develop-99\lib\net40\VVVV.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="VVVV.Utils">
       <HintPath>..\packages\VVVV.Utils.31.6.0-develop-99\lib\net40\VVVV.Utils.dll</HintPath>
       <Private>False</Private>
