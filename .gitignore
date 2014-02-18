@@ -109,3 +109,5 @@ Backup*/
 UpgradeLog*.XML
 Particle Demo
 VVVV Particle Library Proof
+
+/tmp

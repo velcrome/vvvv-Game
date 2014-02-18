@@ -26,8 +26,8 @@ namespace VVVV.Pack.Game
             var positioned = agent.Face<IMoveableAgent>(true);
             Assert.AreEqual(new Vector3D(), positioned.Position);
             
-//            var v3 = positioned.SetRandomPosition(10.0);
-//            Assert.AreEqual(v3, positioned.Position);
+            var v3 = positioned.SetRandomPosition(10.0);
+            Assert.AreEqual(v3, positioned.Position);
         }
 
         [TestMethod]
