@@ -41,11 +41,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="VVVV.Core">
-      <HintPath>..\packages\VVVV.Core.31.6.0-develop-99\lib\net40\VVVV.Core.dll</HintPath>
+      <HintPath>..\packages\VVVV.Core.31.7.0-develop-132\lib\net40\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VVVV.Utils">
-      <HintPath>..\packages\VVVV.Utils.31.6.0-develop-99\lib\net40\VVVV.Utils.dll</HintPath>
+      <HintPath>..\packages\VVVV.Utils.31.7.0-develop-132\lib\net40\VVVV.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -94,5 +94,5 @@
     <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
-  <Import Project="..\packages\VVVV.PluginInterfaces.31.6.0-develop-99\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.6.0-develop-99\build\net40\VVVV.PluginInterfaces.targets')" />
+  <Import Project="..\packages\VVVV.PluginInterfaces.31.7.0-develop-132\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.7.0-develop-132\build\net40\VVVV.PluginInterfaces.targets')" />
 </Project>

@@ -11,6 +11,7 @@ namespace VVVV.Pack.Game.Nodes
 
         public override void Evaluate(int SpreadMax)
         {
+            StartEvaluation();
             Behave(FAgents);
             FinishEvaluation();
         }

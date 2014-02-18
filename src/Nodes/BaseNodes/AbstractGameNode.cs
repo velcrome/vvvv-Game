@@ -21,6 +21,9 @@ namespace VVVV.Pack.Game
         [Import()]
         public ILogger FLogger;
 
+        [Import()]
+        public IPluginHost2 FHost;
+
         public List<Agent> FAgents = new List<Agent>();
         protected BehaviorLink link;
 
@@ -70,6 +73,10 @@ namespace VVVV.Pack.Game
         #region essentials
         protected void FinishEvaluation()
         {
+
+//          Flush all output pins.
+
+
 //            FLogger.Log(LogType.Message, "Hi "+this.ToString());
             
             FReturnCode.SliceCount = FAgents.Count;
@@ -87,9 +94,22 @@ namespace VVVV.Pack.Game
         }
         #endregion
 
+        protected virtual void StartEvaluation()
+        {
+            //          Sync all input pins.
+
+            foreach (var p in FHost.GetPins())
+            {
+                FLogger.Log(LogType.Message, p.ToString());
+
+            }            
+        }
+        
         public virtual void Evaluate(int SpreadMax)
         {
-/*      TODO: check for security, if more than one parent is connected.
+
+            StartEvaluation();
+            /*      TODO: check for security, if more than one parent is connected.
             IPin pin = (IPin)FOutput.PluginIO;            
             if (pin.GetConnectedPins().Length > 1)
             {
