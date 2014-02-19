@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
+using ImpromptuInterface;
+using ImpromptuInterface.InvokeExt;
 using VVVV.Pack.Game.Faces;
 
 
@@ -67,6 +69,35 @@ namespace VVVV.Pack.Game.Core
 
         #region DynamicObject
 
+        // Calling a method. 
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        {
+            try
+            {
+
+
+
+                var extensionMethod = typeof(AgentAPI).GetMethod(binder.Name, BindingFlags.Static
+                | BindingFlags.Public | BindingFlags.NonPublic);
+
+                Expression[] parameters = extensionMethod.GetParameters()
+                                           .Select(p => Expression.Parameter(p.ParameterType, p.Name))
+                                           .ToArray();  
+
+            //    var args = parameters.ToList();
+
+                var call = Expression.Call(extensionMethod, parameters);
+
+                result = Expression.Lambda(call).Compile();
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
+
         // If you try to get a value of a property  
         // not defined in the class, this method is called. 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
@@ -83,53 +114,25 @@ namespace VVVV.Pack.Game.Core
             {
                 try
                 {
+
                     var methods = from type in typeof(IAgent).Assembly.GetTypes()
-                                  where type.IsSealed && !type.IsGenericType && !type.IsNested
+                                  //                where type.IsSealed 
+                                  where !type.IsGenericType && !type.IsNested
                                   from method in type.GetMethods(BindingFlags.Static
-                                      | BindingFlags.Public | BindingFlags.NonPublic)
-                                  where method.Name == name
+                                    | BindingFlags.Public | BindingFlags.NonPublic)
+                                  where method.Name == binder.Name
                                   where method.IsDefined(typeof(ExtensionAttribute), false)
                                   select method;
 
                     var extensionMethod = methods.First();
-                    var args = extensionMethod.GetParameters();
+
+                    //                    result = Delegate.CreateDelegate(this.GetType(), extensionMethod);
 
                     var agent = Expression.Constant(this);
-
-                    Expression[] parameters = extensionMethod.GetParameters()
-                                               .Select(p => Expression.Parameter(p.ParameterType, p.Name))
-                                               .ToArray();
-
-
                     var call = Expression.Call(extensionMethod, agent);
 
-                    //parameters = new ParameterExpression[args.Length - 1];
-
-                    //int i = 0;
-                    //foreach (var arg in args)
-                    //{
-                    //    if (i > 0) parameters[i] = Expression.Parameter(arg.ParameterType, arg.Name);
-                    //    i++;
-                    //}
-
-                    result = Expression.Lambda(call).Compile();                  
+                    result = Expression.Lambda(call).Compile();   
                     
-                    //Expression[] args = new Expression[parameters.Length];
-
-
-                    //int i = 0;
-                    //foreach (var arg in parameters)
-                    //{
-                    //    args[i] = Expression.Parameter(arg.ParameterType, arg.Name);
-                    //    i++;
-                    //}
-                    
-                    //var call = Expression.Call(extensionMethod, agent);
-                    //var lambda = Expression.Lambda(call);
-                    
-                    //result = lambda.Compile();
-
-
                     return true;
                 }
                 catch (Exception e)

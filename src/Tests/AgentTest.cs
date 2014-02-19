@@ -19,7 +19,7 @@ namespace VVVV.Pack.Game.Core.Tests
             agent["Access"] = new Bin<bool>(true, false);
 
             agent.Init("Test", new Vector3D());
-            agent["Test"].Add(new Vector3D(1,1,1));
+            agent["Test"].Add(new Vector3D(1.0,1.0,1.0));
 
             var copy = (Agent)agent.Clone();
 
