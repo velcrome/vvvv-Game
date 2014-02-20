@@ -10,7 +10,7 @@ namespace VVVV.Pack.Game.Faces
 
         Vector3D ForceSum { get; set; } // Sum of all Forces acting on the Agent
 
-        Vector3D SetRandomPosition(double width); 
+    //    Vector3D SetRandomPosition(double width); //optional header 
 
     }
 
@@ -18,8 +18,10 @@ namespace VVVV.Pack.Game.Faces
     {
         public static Vector3D SetRandomPosition(this IAgent agent, double width)
         {
-            var v3 = VMath.RandomVector3D()*width;
-            agent["Position"].First = v3;
+            var a = agent.Face<IMoveableAgent>();
+            var v3 = VMath.RandomVector3D()*width; 
+   //         agent["Position"].First = v3; // oldschool
+            a.Position = v3;
             return v3;
         }
     }
