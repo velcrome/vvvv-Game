@@ -41,7 +41,7 @@ In good tradition with vvvv, any data you add as a property can be one or many i
 
 In C# terms, Agent is a fully [dynamic](http://www.codeproject.com/Articles/69407/The-Dynamic-Keyword-in-C-4-0) class. This means you can use c# to script really quick, if you are okay with loosing Code Completion and safe type handling. 
 
-The implemented Agent in this framework can adopt to any mask, or what I call a Face, from the very simple (just a [name](src/Core/Faces/INamedAgent)) to the almost physical ([IGravityAgent](src/Core/Faces/IGravityAgent.cs)). With vvvv you can apply a custom Face to any Agent during runtime. The agent stays the same dynamic, it is just the mask, the Face, and the mindset that comes with the mask. As with any good agent, you can reapply a new Face anytime you want, it is done in a blitz.
+The implemented Agent in this framework can adopt to any mask, or what I call a Face, from the very simple (just a [name](src/Core/Faces/INamedAgent.cs)) to the almost physical ([IGravityAgent](src/Core/Faces/IGravityAgent.cs)). With vvvv you can apply a custom Face to any Agent during runtime. The agent stays the same dynamic, it is just the mask, the Face, and the mindset that comes with the mask. As with any good agent, you can reapply a new Face anytime you want, it is done in a blitz.
 
 To make a new custom Face, simply clone `TemplateFace (Game)` with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> and edit the provided interface.
 It must inherit IAgent to be found by the framework, but can inherit any number of other Faces, if you want to make use of ready-made modular functionality. 
@@ -81,15 +81,17 @@ Additional external libraries are available via Nuget.org.
 [Impromptu-Interface](https://github.com/ekonbenefits/impromptu-interface) under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 > for [Duck Typing](http://ericlippert.com/2014/01/02/what-is-duck-typing/) and [Schönfinkeling](http://en.wikipedia.org/wiki/Currying)
 
-[Json.NET]() under [MIT License](http://opensource.org/licenses/MIT)
+[Json.NET](http://james.newtonking.com/json) under [MIT License](http://opensource.org/licenses/MIT)
 > for serializing Agents. Useful for saving Agents to disc.
 
 License
 =======
 
-Marko Ritter (www.intolight.com)
+![CC 4.0BY NC SAt](http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
 
-This software is distributed under the [CC Attribution-NonCommercial-ShareAlike](https://creativecommons.org/licenses/by-nc-sa/3.0/) license.
+Marko Ritter (www.intolight.de)
+
+This software is distributed under the [CC Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
 If you want to use it commercially or have any other reason why this license does not fit your need, write a quick email to <license@intolight.de> for a different license. Usually you will get away with either a flattr or a useful addition to the framework (Faces, API extensions, help patches, nodes, docu). This pack is for the community, really, and hand-crafted commercial work is a valued part of our community. 
 
