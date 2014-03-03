@@ -8,8 +8,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
+using ImpromptuInterface;
 using VVVV.Pack.Game.Faces;
-
+using Microsoft.CSharp.RuntimeBinder;
 
 
 namespace VVVV.Pack.Game.Core
@@ -67,6 +68,53 @@ namespace VVVV.Pack.Game.Core
 
         #region DynamicObject
 
+        // Calling a method. 
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        {
+            result = null;
+
+            MethodInfo extensionMethod;
+            try
+            {
+                extensionMethod = typeof (AgentAPI).GetMethod(binder.Name, BindingFlags.Static
+                                                                               | BindingFlags.Public |
+                                                                               BindingFlags.NonPublic);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                    binder.Name +
+                    "()   ->   TODO: discovery of multiple extension methods with the same name and checking against arguments provided. for now do not overload", e);
+                return false;
+            }
+
+            try {
+                Expression[] parameters = extensionMethod.GetParameters()
+                                           .Select(p => Expression.Parameter(p.ParameterType, p.Name))
+                                           .ToArray();  
+
+                if (parameters.Length != args.Count() + 1) throw new Exception("Something seems wrong with the arguments for " + binder.Name + "()");
+
+                var call = Expression.Call(extensionMethod, parameters);
+                var func = Expression.Lambda(call, binder.Name, false, (ParameterExpression[])parameters).Compile();
+
+                // todo: caching
+                var curry = Impromptu.Curry(func, parameters.Length);
+
+                curry = curry(this);  // first argument is the instance of IAgent
+
+                foreach (var arg in args) curry = curry(arg); // followed by whatever parameters you sent in
+                result = curry;
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(binder.Name + "() has not been found. Create an Extension Method of IAgent within the partial GameAPI class.", e);
+                result = null;
+                return false;
+            }
+        }
+
         // If you try to get a value of a property  
         // not defined in the class, this method is called. 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
@@ -81,67 +129,36 @@ namespace VVVV.Pack.Game.Core
 
             if (!Data.ContainsKey(name))
             {
-                try
-                {
-                    var methods = from type in typeof(IAgent).Assembly.GetTypes()
-                                  where type.IsSealed && !type.IsGenericType && !type.IsNested
-                                  from method in type.GetMethods(BindingFlags.Static
-                                      | BindingFlags.Public | BindingFlags.NonPublic)
-                                  where method.Name == name
-                                  where method.IsDefined(typeof(ExtensionAttribute), false)
-                                  select method;
+                //try
+                //{
 
-                    var extensionMethod = methods.First();
-                    var args = extensionMethod.GetParameters();
+                //    var methods = from type in typeof(IAgent).Assembly.GetTypes()
+                //                  //                where type.IsSealed 
+                //                  where !type.IsGenericType && !type.IsNested
+                //                  from method in type.GetMethods(BindingFlags.Static
+                //                    | BindingFlags.Public | BindingFlags.NonPublic)
+                //                  where method.Name == binder.Name
+                //                  where method.IsDefined(typeof(ExtensionAttribute), false)
+                //                  select method;
 
-                    var agent = Expression.Constant(this);
+                //    var extensionMethod = methods.First();
 
-                    Expression[] parameters = extensionMethod.GetParameters()
-                                               .Select(p => Expression.Parameter(p.ParameterType, p.Name))
-                                               .ToArray();
+                //    var agent = Expression.Constant(this);
+                //    var call = Expression.Call(extensionMethod, agent);
 
-
-                    var call = Expression.Call(extensionMethod, agent);
-
-                    //parameters = new ParameterExpression[args.Length - 1];
-
-                    //int i = 0;
-                    //foreach (var arg in args)
-                    //{
-                    //    if (i > 0) parameters[i] = Expression.Parameter(arg.ParameterType, arg.Name);
-                    //    i++;
-                    //}
-
-                    result = Expression.Lambda(call).Compile();                  
-                    
-                    //Expression[] args = new Expression[parameters.Length];
-
-
-                    //int i = 0;
-                    //foreach (var arg in parameters)
-                    //{
-                    //    args[i] = Expression.Parameter(arg.ParameterType, arg.Name);
-                    //    i++;
-                    //}
-                    
-                    //var call = Expression.Call(extensionMethod, agent);
-                    //var lambda = Expression.Lambda(call);
-                    
-                    //result = lambda.Compile();
-
-
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    throw new Exception(name + " has not been initialized. Also no Extension Method of IAgent of that name could be found", e);
+                //    result = Expression.Lambda(call).Compile();
+                //    return true;
+                //}
+                //catch (Exception e)
+                //{
+                    throw new Exception(name + " has not been initialized. Also no Extension Method of IAgent of that name could be found");
 
                     //    fails. extensionmethod is found in the Assembly, but not bound correctly during invoke
                     //    http://www.developerfusion.com/community/blog-entry/8389108/c-40-why-dynamic-binding-and-extension-methods-dont-mix/
                     //    would have been nice to add Face specific functionality in extension methods of Agent
                     //    edit: Expression trees seem capable of doing that, but I have too little experience with it.
                     //    works for parameterless methods now.
-                }
+       //         }
             }
             else
             {

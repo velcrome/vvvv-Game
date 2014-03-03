@@ -23,9 +23,17 @@ namespace VVVV.Pack.Game
             named.SetRandomName();
             Assert.AreEqual("Marko", named.Name);
 
+
+        }
+
+        [TestMethod]
+        public void TestExtensionMethodWithParameter()
+        {
+            var agent = new Agent();
+
             var positioned = agent.Face<IMoveableAgent>(true);
             Assert.AreEqual(new Vector3D(), positioned.Position);
-            
+
             var v3 = positioned.SetRandomPosition(10.0);
             Assert.AreEqual(v3, positioned.Position);
         }
