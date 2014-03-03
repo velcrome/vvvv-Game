@@ -40,7 +40,7 @@ namespace VVVV.Pack.Game.Nodes
         ISpread<bool> FClear;
 
         [Input("Add Agent")]
-        ISpread<Agent> FAdd;
+        Pin<Agent> FAdd;
 
         [Input("Input", AutoValidate = false)]
         public Pin<BehaviorLink> FInput;
@@ -88,17 +88,20 @@ namespace VVVV.Pack.Game.Nodes
 
                 for (int i = 0; i < del.Count; i++)
                 {
-                    FAgents.RemoveAt(del[i] - i);
+                    if (FAgents.Count > i)
+                        FAgents.RemoveAt(del[i] - i);
                 }
             }
 
-            FAgents.AddRange(FAdd);
-            FAgents.Sort();
+            if (!FAdd.IsAnyEmpty())
+            {
+                FAgents.AddRange(FAdd);
+                FAgents.Sort();
+            }
 
             if (FInput.SliceCount > 0 && FInput[0] != null && FInput.PluginIO.IsConnected)
             {
                 FInput[0].Agents.AddRange(FAgents);
-      //          FInput[0].Agents.Sort();
                 FInput.Sync();
 
                 FOutput.AssignFrom(FInput[0].Agents);

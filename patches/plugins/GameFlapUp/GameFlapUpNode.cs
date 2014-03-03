@@ -19,16 +19,22 @@ namespace VVVV.Pack.Game.Nodes
 		[Input("Flap", DefaultValue = 0.0, IsBang = true, AutoValidate = false)]
 		protected Pin<bool> FPushFlap;
 
+		[Input("Strength", DefaultValue = 0.1, AutoValidate = false)]
+		protected Pin<double> FStrength;
+
 		private Vector3D FlapDirection = new Vector3D(0,1,0);
 		
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
 			int i = 0;
 			FPushFlap.Sync();
+			FStrength.Sync();
+			
+			
 
 			foreach (var a in agents) {
 				var agent = a.Face<IMoveableAgent>();
-				if (FPushFlap[i]) agent.ForceSum += FlapDirection;
+				if (FPushFlap[i]) agent.ForceSum += FlapDirection * FStrength[i];
 
 				i++;
 				agent.ReturnCode = ReturnCodeEnum.Success;

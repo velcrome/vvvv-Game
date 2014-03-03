@@ -1,0 +1,153 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta31.2.dtd" >
+   <PATCH nodename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Init (FlappyBird).v4p" systemname="Init (FlappyBird)" filename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Init (FlappyBird).v4p">
+   <NODE systemname="Init (Game.Agent)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Init (Game.Agent)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="1500" top="3195" width="1284" height="264">
+   </BOUNDS>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   <PIN pinname="Scan" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Init First Element" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Face" slicecount="1" values="VVVV.Pack.Game.Nodes.IGravityAgent">
+   </PIN>
+   <BOUNDS type="Box" left="1500" top="3195">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Birth (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Birth (Game)" componentmode="Hidden" id="1">
+   <BOUNDS type="Node" left="1500" top="2319" width="1212" height="264">
+   </BOUNDS>
+   <PIN pinname="Agents" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="1500" top="2319">
+   </BOUNDS>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="2" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="1503" top="1500" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1503" top="1500" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Insert">
+   </PIN>
+   </NODE>
+   <NODE systemname="Set (Game.Agent)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game.Agent)" componentmode="Hidden" id="3">
+   <BOUNDS type="Node" left="1500" top="3867" width="2232" height="264">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Interface" slicecount="1" values="IGravityAgent">
+   </PIN>
+   <PIN pinname="Configuration" slicecount="1" values="|double Mass, Vector3D Position, Vector3D Velocity|">
+   </PIN>
+   <PIN pinname="Mass">
+   </PIN>
+   <BOUNDS type="Box" left="1500" top="3867">
+   </BOUNDS>
+   <PIN pinname="Position">
+   </PIN>
+   <PIN pinname="VelocityXYZ" visible="1">
+   </PIN>
+   <PIN pinname="Velocity Bin Size" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Position Bin Size" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Mass Bin Size" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="4" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="2088" top="3507" width="792" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2088" top="3507" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="5" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="3273" top="1500" width="792" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3273" top="1500" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="3" values="-1,0,0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="PositionXYZ">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="6" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="4398" top="1500" width="792" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4398" top="1500" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="3" values="0.06,0,0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="VelocityXYZ">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1" srcpinname="Agents" dstnodeid="0" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="2" srcpinname="Y Output Value" dstnodeid="1" dstpinname="Insert">
+   </LINK>
+   <LINK srcnodeid="0" srcpinname="Agent" dstnodeid="3" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="4" srcpinname="Y Output Value" dstnodeid="3" dstpinname="Mass">
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="Y Output Value" dstnodeid="3" dstpinname="PositionXYZ">
+   </LINK>
+   <LINK srcnodeid="6" srcpinname="Y Output Value" dstnodeid="3" dstpinname="VelocityXYZ">
+   </LINK>
+   <NODE id="7" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
+   <PIN pinname="Descriptive Name" slicecount="1" values="Output">
+   </PIN>
+   <BOUNDS type="Box" left="1500" top="4631" width="750" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1500" top="4631" width="750" height="240">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="3" srcpinname="Output" dstnodeid="7" dstpinname="Input Node">
+   </LINK>
+   <BOUNDS type="Window" left="4110" top="15120" width="5895" height="5625">
+   </BOUNDS>
+   </PATCH>

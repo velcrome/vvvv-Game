@@ -16,11 +16,13 @@ namespace VVVV.Pack.Game.Nodes
 	#endregion PluginInfo
 	public class GameAlignTogetherNode : AbstractActionNode
 	{
-		[Input("Strength", DefaultValue = 1.0)]
-		protected ISpread<double> FStrength;	
+		[Input("Strength", DefaultValue = 1.0, AutoValidate = false)]
+		protected Pin<double> FStrength;	
 		
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
+			FStrength.Sync();
+			
 			int i = 0;
 			Vector3D heading = new Vector3D();
 			foreach (var a in agents) {

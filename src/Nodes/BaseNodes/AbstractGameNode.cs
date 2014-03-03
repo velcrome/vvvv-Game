@@ -100,7 +100,7 @@ namespace VVVV.Pack.Game
 
             foreach (var p in FHost.GetPins())
             {
-                FLogger.Log(LogType.Message, p.ToString());
+//                FLogger.Log(LogType.Message, p.ToString());
 
             }            
         }

@@ -184,7 +184,7 @@ namespace VVVV.Pack.Game.Nodes
     public class SplitAgentNode : DynamicNode
     {
         [Input("Input")] 
-        protected IDiffSpread<Agent> FInput;
+        protected Pin<Agent> FInput;
         
         [Output("Timestamp", AutoFlush = false)] 
         protected ISpread<string> FTimeStamp;
@@ -203,8 +203,9 @@ namespace VVVV.Pack.Game.Nodes
         public override void Evaluate(int SpreadMax)
         {
             TypeUpdate();
-
+            
             SpreadMax = FInput.SliceCount;
+            if (FInput.IsAnyEmpty()) SpreadMax = 0;
 
 
             foreach (string pinName in FPins.Keys)
@@ -244,7 +245,7 @@ namespace VVVV.Pack.Game.Nodes
         public class SetAgentNode : DynamicNode
         {
             [Input("Input")] 
-            protected IDiffSpread<Agent> FInput;
+            protected Pin<Agent> FInput;
 
             [Output("Output", AutoFlush = false)] 
             protected Pin<Agent> FOutput;
@@ -263,12 +264,13 @@ namespace VVVV.Pack.Game.Nodes
 
             public override void Evaluate(int SpreadMax)
             {
-                SpreadMax = FInput.SliceCount;
-                if (FInput.SliceCount == 0 || FInput[0] == null)
+                if (FInput.IsAnyEmpty())
                 {
                     FOutput.SliceCount = 0;
+                    FOutput.Flush();
                     return;
                 }
+                SpreadMax = FInput.SliceCount;
 
                 for (int i = 0; i < SpreadMax; i++)
                 {
