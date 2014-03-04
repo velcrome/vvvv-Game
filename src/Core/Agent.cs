@@ -43,13 +43,14 @@ namespace VVVV.Pack.Game.Core
             private set;
         }
 
-
+        protected static Dictionary<string, Delegate> SkillMethods;
         public Dictionary<object, ArrayList> RunningNodes { get; private set; }
 
         #endregion
 
         public Agent()
         {
+            if (SkillMethods == null) SkillMethods = new Dictionary<string, Delegate>();
             RunningNodes = new Dictionary<object, ArrayList>();
             Id = Guid.NewGuid().ToString();
             BirthTime = DateTime.Now;
@@ -64,108 +65,62 @@ namespace VVVV.Pack.Game.Core
             return face;
         }
 
+       
+
         #endregion
 
         #region DynamicObject
 
-        // Calling a method. 
+        // Calling an extension method defined in GameAPI. If a valid proxy delegate is found will be cached globally among all Agents
+        // - has no runtime check if parameters of the cached method matches
+        // - no overloading supported yet.
+        // - caching might stop adopting changes during runtime, no?
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            result = null;
+            var methodName = binder.Name;
 
-            MethodInfo extensionMethod;
-            try
-            {
-                extensionMethod = typeof (AgentAPI).GetMethod(binder.Name, BindingFlags.Static
-                                                                               | BindingFlags.Public |
-                                                                               BindingFlags.NonPublic);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(
-                    binder.Name +
-                    "()   ->   TODO: discovery of multiple extension methods with the same name and checking against arguments provided. for now do not overload", e);
-                return false;
-            }
+            if (!SkillMethods.ContainsKey(methodName)) {
+                var methods = typeof (AgentAPI).GetMethods(methodName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).First<MethodInfo>;
+                
+                if (methods.GetLength > 1)
+                    throw new Exception(methodName +"()  cannot be overloaded yet", e);
 
-            try {
+                if (methods.GetLength = 0)
+                    throw new Exception(methodName + "() not found. Define it in the partial class AgentAPI", e);
+
+                MethodInfo extensionMethod = methods.First<MethodInfo>; 
                 Expression[] parameters = extensionMethod.GetParameters()
-                                           .Select(p => Expression.Parameter(p.ParameterType, p.Name))
-                                           .ToArray();  
+                                            .Select(p => Expression.Parameter(p.ParameterType, p.Name))
+                                            .ToArray();  
 
                 if (parameters.Length != args.Count() + 1) throw new Exception("Something seems wrong with the arguments for " + binder.Name + "()");
 
                 var call = Expression.Call(extensionMethod, parameters);
                 var func = Expression.Lambda(call, binder.Name, false, (ParameterExpression[])parameters).Compile();
 
-                // todo: caching
-                var curry = Impromptu.Curry(func, parameters.Length);
-
-                curry = curry(this);  // first argument is the instance of IAgent
-
-                foreach (var arg in args) curry = curry(arg); // followed by whatever parameters you sent in
-                result = curry;
-                return true;
+                SkillMethods.Add(methodName, func);
             }
-            catch (Exception e)
-            {
-                throw new Exception(binder.Name + "() has not been found. Create an Extension Method of IAgent within the partial GameAPI class.", e);
-                result = null;
-                return false;
-            }
+
+            var curry = Impromptu.Curry(SkillMethods[methodName], args.Length + 1);
+            curry = curry(this);  // first argument is the instance of IAgent
+            foreach (var arg in args) curry = curry(arg); // followed by whatever parameters you sent in
+            result = curry;
+            return true;
         }
 
-        // If you try to get a value of a property  
-        // not defined in the class, this method is called. 
+        // If you try to get a field not defined in Agent, this method is called. 
+        // Is not suited for initialisation, because binder.ReturnType is always object
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            bool success = false; 
             string name = binder.Name;
-            result = null;
-
-           // If the property name is not found in a dictionary, it was most likely not initialized
-            // we cannot add it on the fly, because we do not know its type.
-            // binder.ReturnType is always System.Object
 
             if (!Data.ContainsKey(name))
             {
-                //try
-                //{
-
-                //    var methods = from type in typeof(IAgent).Assembly.GetTypes()
-                //                  //                where type.IsSealed 
-                //                  where !type.IsGenericType && !type.IsNested
-                //                  from method in type.GetMethods(BindingFlags.Static
-                //                    | BindingFlags.Public | BindingFlags.NonPublic)
-                //                  where method.Name == binder.Name
-                //                  where method.IsDefined(typeof(ExtensionAttribute), false)
-                //                  select method;
-
-                //    var extensionMethod = methods.First();
-
-                //    var agent = Expression.Constant(this);
-                //    var call = Expression.Call(extensionMethod, agent);
-
-                //    result = Expression.Lambda(call).Compile();
-                //    return true;
-                //}
-                //catch (Exception e)
-                //{
-                    throw new Exception(name + " has not been initialized. Also no Extension Method of IAgent of that name could be found");
-
-                    //    fails. extensionmethod is found in the Assembly, but not bound correctly during invoke
-                    //    http://www.developerfusion.com/community/blog-entry/8389108/c-40-why-dynamic-binding-and-extension-methods-dont-mix/
-                    //    would have been nice to add Face specific functionality in extension methods of Agent
-                    //    edit: Expression trees seem capable of doing that, but I have too little experience with it.
-                    //    works for parameterless methods now.
-       //         }
+                    throw new Exception(name + " has not been initialized. Also no matching "+name+"() in AgentAPI could be found");
             }
-            else
-            {
-                success = true;
-                result = Data[name];
-            }
-            return success;
+            
+            result = Data[name];
+            return true;
 
 
         }
@@ -176,6 +131,18 @@ namespace VVVV.Pack.Game.Core
         {
             Assign(binder.Name, value);
             return true;
+        }
+
+        public override bool TryConvert(ConvertBinder binder, out object result)
+        {
+            var type = binder.Type;
+
+            if (type.IsInterface && type.IsAssignableFrom(typeof(IAgent))) {
+                result = Impromptu.ActLike(this, binder.Type);
+                return true;
+            } 
+            return base.TryConvert(binder, out result);
+            
         }
         #endregion DynamicObject
 
@@ -215,16 +182,9 @@ namespace VVVV.Pack.Game.Core
             {
                 if (!baseProperties.Contains(prop))
                 {
-                    try
-                    {
-                        Init(prop.Name, prop.PropertyType, populateFirst);
-                    }
-                    catch (Exception e) {throw new Exception("Something wrong with "+faceType.Name+"? ", e);}
+                    Init(prop.Name, prop.PropertyType, populateFirst);
                 }
-
              }
-
-
         }
 
         public void Init<T>(string name, bool populateFirst=false) 
