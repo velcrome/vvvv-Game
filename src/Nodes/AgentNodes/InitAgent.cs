@@ -25,7 +25,9 @@ namespace VVVV.Pack.Game.Nodes
         {
             var attr = new InputAttribute(name);
             attr.BinVisibility = PinVisibility.Hidden;
+            attr.BinSize = 1;
             attr.AutoValidate = false;
+
 
             attr.Order = FCount;
             attr.BinOrder = FCount + 1;

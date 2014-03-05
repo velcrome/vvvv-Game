@@ -77,16 +77,22 @@ namespace VVVV.Pack.Game.Core
         {
             var methodName = binder.Name;
 
-            if (!SkillMethods.ContainsKey(methodName)) {
-                var methods = typeof (AgentAPI).GetMethods(methodName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).First<MethodInfo>;
-                
-                if (methods.GetLength > 1)
-                    throw new Exception(methodName +"()  cannot be overloaded yet", e);
+            if (!SkillMethods.ContainsKey(methodName))
+            {
+                var api =
+                    typeof (AgentAPI).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
-                if (methods.GetLength = 0)
-                    throw new Exception(methodName + "() not found. Define it in the partial class AgentAPI", e);
+                var methods = (from method in api
+                              where method.Name == methodName
+                              select method).ToArray();
 
-                MethodInfo extensionMethod = methods.First<MethodInfo>; 
+                if (methods.Length > 1)
+                    throw new Exception(methodName +"() is ambiguous, methods in AgentAPI cannot be overloaded yet.");
+
+                if (methods.Length == 0)
+                    throw new Exception(methodName + "() not found. Define it in the partial class AgentAPI");
+
+                var extensionMethod = methods.First<MethodInfo>(); 
                 Expression[] parameters = extensionMethod.GetParameters()
                                             .Select(p => Expression.Parameter(p.ParameterType, p.Name))
                                             .ToArray();  
@@ -131,12 +137,13 @@ namespace VVVV.Pack.Game.Core
             return true;
         }
 
+        // alternative to Face<IFace> that allows for direct cast
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
             var type = binder.Type;
 
-            if (type.IsInterface && type.IsAssignableFrom(typeof(IAgent))) {
-                result = Impromptu.ActLike(this, binder.Type);
+            if (type.IsInterface && typeof(IAgent).IsAssignableFrom(type)) {
+                result = this.ActLike(type);
                 return true;
             } 
             return base.TryConvert(binder, out result);

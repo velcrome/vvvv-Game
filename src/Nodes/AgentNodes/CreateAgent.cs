@@ -15,7 +15,7 @@ namespace VVVV.Pack.Game.AgentNodes
         {
             var attr = new InputAttribute(name);
             attr.BinVisibility = PinVisibility.Hidden;
-            attr.BinSize = -1;
+            attr.BinSize = 1;
             attr.Order = FCount;
             attr.BinOrder = FCount + 1;
             //                attr.AutoValidate = false;  // need to sync all pins manually

@@ -21,6 +21,7 @@ namespace VVVV.Pack.Game.AgentNodes
         {
             var attr = new OutputAttribute(name);
             attr.BinVisibility = PinVisibility.Hidden;
+
             attr.AutoFlush = false;
 
             attr.Order = FCount;

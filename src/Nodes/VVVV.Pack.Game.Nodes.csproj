@@ -120,7 +120,7 @@
     <ItemGroup>
       <MyFiles Include="..\..\patches\**\*.*" />
     </ItemGroup>
-    <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <!--Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" /-->
   </Target>
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
   <Import Project="..\packages\VVVV.PluginInterfaces.31.7.0-develop-avalon-e-159\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.7.0-develop-avalon-e-159\build\net40\VVVV.PluginInterfaces.targets')" />
