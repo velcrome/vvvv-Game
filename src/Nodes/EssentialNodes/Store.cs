@@ -93,13 +93,13 @@ namespace VVVV.Pack.Game.Nodes
                 }
             }
 
-            if (!FAdd.IsAnyEmpty())
+            if (!FAdd.IsAnyInvalid())
             {
                 FAgents.AddRange(FAdd);
                 FAgents.Sort();
             }
 
-            if (FInput.SliceCount > 0 && FInput[0] != null && FInput.PluginIO.IsConnected)
+            if (!FInput.IsAnyInvalid() && FInput.PluginIO.IsConnected)
             {
                 FInput[0].Agents.AddRange(FAgents);
                 FInput.Sync();

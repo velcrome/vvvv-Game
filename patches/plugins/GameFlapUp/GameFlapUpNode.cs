@@ -35,6 +35,7 @@ namespace VVVV.Pack.Game.Nodes
 			foreach (var a in agents) {
 				var agent = a.Face<IMoveableAgent>();
 				if (FPushFlap[i]) agent.ForceSum += FlapDirection * FStrength[i];
+				
 
 				i++;
 				agent.ReturnCode = ReturnCodeEnum.Success;

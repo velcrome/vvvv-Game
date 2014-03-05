@@ -1,110 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using VVVV.Core.Logging;
-using VVVV.Pack.Game.Core;
-using VVVV.Pack.Game.Faces;
+using VVVV.Pack.Game.AgentNodes;
 using VVVV.PluginInterfaces.V2;
+using VVVV.PluginInterfaces.V2.NonGeneric;
 
 namespace VVVV.Pack.Game.Nodes
 {
-
     #region PluginInfo
+
     [PluginInfo(Name = "Init",
-        Category = "Game.Agent",
-        Help = "",
-        Tags = "")]
+        Category = "Game",
+        Help = "inits an Agent",
+        Tags = "Agent")]
     #endregion PluginInfo
-    public class InitAgentNode : IPluginEvaluate, IPartImportsSatisfiedNotification
+    public class InitAgendNode : AbstractFacedDynamicNode
     {
         #region fields & pins
 
-        [Input("Agent")]
-        protected Pin<Agent> FInput;
-
-        [Input("Init First Element", IsToggle = true, DefaultBoolean = true)]
+        [Input("Init First Element", IsToggle = true, DefaultBoolean = true, IsSingle = true)]
         protected ISpread<bool> FInitFirst;
 
-        [Input("Face", EnumName = "AllAgentFaces")]
-        protected IDiffSpread<EnumEntry> FFace;
-
-        [Input("Scan", IsBang = true, IsSingle = true)]
-        protected ISpread<bool> FScan;
-
-
-        [Output("Agent")]
-        public Pin<Agent> FOutput;
-
-        private Type[] AllAgentFaces;
-
-        [Import()]
-        public ILogger FLogger;
         #endregion
 
-        public void OnImportsSatisfied()
+        protected override IOAttribute DefinePin(string name, Type type)
         {
-            Update();
+            var attr = new InputAttribute(name);
+            attr.BinVisibility = PinVisibility.Hidden;
+            attr.AutoValidate = false;
+
+            attr.Order = FCount;
+            attr.BinOrder = FCount + 1;
+            return attr;
         }
-        
-        private void Update() {
-            var baseType = typeof(IAgent);
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => baseType.IsAssignableFrom(p) && (p != typeof(Agent)) );
 
-            var names = new string[types.Count()];
-            AllAgentFaces = types.ToArray();
-
-            int i = 0;
-            foreach (var face in AllAgentFaces)
-            {
-                names[i] = face.ToString();
-                i++;
-            }
-
-            EnumManager.UpdateEnum("AllAgentFaces",baseType.ToString(), names);  
-        }
-        
-        
-        public void Evaluate(int SpreadMax)
+        public override void Evaluate(int SpreadMax)
         {
-            if (FScan[0])
-            {
-                Update();
-            }
+            SpreadMax = FInput.SliceCount;
+            if (FInput.IsAnyInvalid()) SpreadMax = 0;
 
-            if (FInput.IsAnyEmpty())
+            foreach (string pinName in FPins.Keys)
             {
-                SpreadMax = 0;
-                FOutput.SliceCount = 0;
+                ((ISpread)FPins[pinName].RawIOObject).SliceCount = SpreadMax;
             }
-            else
-            {
-                SpreadMax = FInput.SliceCount;
-                FOutput.AssignFrom(FInput);
-            }
+            FOutput.SliceCount = SpreadMax;
 
-            var baseProperties = typeof (IAgent).GetProperties();
 
             for (int i = 0; i < SpreadMax; i++)
             {
                 var agent = FInput[i];
-                
-                // use all given faces and apply them to each Agent
-                for (int j = 0; j < FFace.SliceCount; j++)
-                {
-                    Type face = AllAgentFaces[FFace[j].Index];
-                    agent.Init(face, FInitFirst[j]);
 
-                }
+                 Type face = AllAgentFaces[FFace[0].Index];
+                 agent.Init(face, FInitFirst[0]);
             }
-
-
-
+            FOutput.AssignFrom(FInput);
         }
+
+
 
 
     }

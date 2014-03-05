@@ -66,7 +66,7 @@ namespace VVVV.Pack.Game
 
         public bool IsPinValid(Pin<BehaviorLink> pin)
         {
-            return pin.SliceCount > 0 && pin[0] != null && pin.PluginIO.IsConnected;
+            return !pin.IsAnyInvalid() && pin.PluginIO.IsConnected;
         }
         #endregion
 

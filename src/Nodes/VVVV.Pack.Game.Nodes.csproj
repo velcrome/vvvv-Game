@@ -83,15 +83,19 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="AgentNodes\DynamicNodes.cs" />
+    <Compile Include="BaseNodes\AbstractFacedDynamicNode.cs" />
+    <Compile Include="BaseNodes\AbstractDynamicNode.cs" />
     <Compile Include="AgentNodes\InitAgent.cs" />
+    <Compile Include="AgentNodes\CreateAgent.cs" />
+    <Compile Include="AgentNodes\SplitAgent.cs" />
     <Compile Include="BaseNodes\AbstractActionNode.cs" />
     <Compile Include="BaseNodes\AbstractGameNode.cs" />
     <Compile Include="BaseNodes\AbstractDecorator.cs" />
+    <Compile Include="SpreadUtils.cs" />
     <Compile Include="Templates\TemplateAction.cs" />
-    <Compile Include="Essentials\Action.cs" />
-    <Compile Include="Essentials\Birth.cs" />
-    <Compile Include="Essentials\Decorator.cs" />
+    <Compile Include="EssentialNodes\Action.cs" />
+    <Compile Include="EssentialNodes\Birth.cs" />
+    <Compile Include="EssentialNodes\Decorator.cs" />
     <Compile Include="CompositeNodes\ParallelGameNode.cs" />
     <Compile Include="PatchNodes\Lid.cs" />
     <Compile Include="BaseNodes\AbstractCompositeNode.cs" />
@@ -99,18 +103,18 @@
     <Compile Include="CompositeNodes\SelectorGameNode.cs" />
     <Compile Include="CompositeNodes\SequenceGameNode.cs" />
     <Compile Include="PatchNodes\Pot.cs" />
-    <Compile Include="Essentials\Store.cs" />
+    <Compile Include="EssentialNodes\Store.cs" />
   </ItemGroup>
   <ItemGroup />
   <Target Name="BeforeBuild">
     <Exec Command="CALL ..\..\patches\killVVVV.bat" />
     <ItemGroup>
       <MyFiles Include="..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\**\*.*" Exclude="..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\**\bin\**\*.*" />
-      <MyFiles Remove="*~.xml" />
-      <MyFiles Remove="*.dll" />
-      <MyFiles Remove="*.pdb" />
+      <MyFiles Remove="**/*~.xml" />
+      <MyFiles Remove="**/*.dll" />
+      <MyFiles Remove="**/*.pdb" />
     </ItemGroup>
-    <Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\patches\%(RecursiveDir)%(Filename)%(Extension)')" ContinueOnError="true" SkipUnchangedFiles="true" />
+    <!--Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\patches\%(RecursiveDir)%(Filename)%(Extension)')" ContinueOnError="true" SkipUnchangedFiles="true" /-->
   </Target>
   <Target Name="AfterBuild">
     <ItemGroup>
