@@ -12,7 +12,7 @@ namespace VVVV.Pack.Game.Nodes
     #endregion PluginInfo
     public class SelectorGameNode : AbstractCompositeNode
     {
-        public override void Evaluate(int SpreadMax)
+        public override void Evaluate(int spreadMax)
         {
             // initialize with all non-running agents
             var continueWith = from agents in FAgents

@@ -90,7 +90,7 @@
     <Compile Include="AgentNodes\SplitAgent.cs" />
     <Compile Include="BaseNodes\AbstractActionNode.cs" />
     <Compile Include="BaseNodes\AbstractGameNode.cs" />
-    <Compile Include="BaseNodes\AbstractDecorator.cs" />
+    <Compile Include="BaseNodes\AbstractDecoratorNode.cs" />
     <Compile Include="SpreadUtils.cs" />
     <Compile Include="Templates\TemplateAction.cs" />
     <Compile Include="EssentialNodes\Action.cs" />

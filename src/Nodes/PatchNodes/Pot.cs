@@ -15,7 +15,7 @@ namespace VVVV.Pack.Game.Nodes
                 Help = "Necessary base node to patch an action or decorator",
                 Tags = "")]
     #endregion PluginInfo
-    public class PotGameNode : AbstractDecoratorNode
+    public class PotGameNode : AbstractGameNode
     {
         [Input("Sink", AutoValidate = false, Order = 1)]
         public Pin<BehaviorLink> FSink;
@@ -26,9 +26,14 @@ namespace VVVV.Pack.Game.Nodes
         [Input("ReturnCode", AutoValidate = false, Order = 3)]
         public ISpread<ReturnCodeEnum> FReturn;
 
+        [Input("Input", AutoValidate = false)]
+        public Pin<BehaviorLink> FInput;
+
+
         public override void OnImportsSatisfied()
         {
             base.OnImportsSatisfied();
+            FInput.Connected += connect;
             FEditedAgents.Changed += editAgents;
         }
 
@@ -46,9 +51,9 @@ namespace VVVV.Pack.Game.Nodes
         }
 
 
-        public override void Evaluate(int SpreadMax)
+        public override void Evaluate(int spreadMax)
         {
-            Behave(FAgents);
+            PushToLid(FAgents);
            
             if (IsPinValid(FInput))
             {
@@ -68,7 +73,7 @@ namespace VVVV.Pack.Game.Nodes
             FinishEvaluation();
         }
 
-        protected override void Behave(IEnumerable<Agent> agents)
+        public void PushToLid(IEnumerable<Agent> agents)
         {
             if (IsPinValid(FSink))
             {

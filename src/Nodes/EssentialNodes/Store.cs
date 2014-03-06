@@ -93,6 +93,15 @@ namespace VVVV.Pack.Game.Nodes
                 }
             }
 
+            var killedAgents = from agent in FAgents
+                               where agent.Killed 
+                               select agent;
+            foreach (var killedAgent in killedAgents)
+            {
+                FAgents.Remove(killedAgent);
+            }
+
+
             if (!FAdd.IsAnyInvalid())
             {
                 FAgents.AddRange(FAdd);
@@ -102,6 +111,12 @@ namespace VVVV.Pack.Game.Nodes
             if (!FInput.IsAnyInvalid() && FInput.PluginIO.IsConnected)
             {
                 FInput[0].Agents.AddRange(FAgents);
+
+                foreach (var agent in FInput[0].Agents)
+                {
+                    agent.ReturnCode = ReturnCodeEnum.Success;
+                }
+                
                 FInput.Sync();
 
                 FOutput.AssignFrom(FInput[0].Agents);

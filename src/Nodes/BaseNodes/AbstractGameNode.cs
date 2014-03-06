@@ -76,9 +76,6 @@ namespace VVVV.Pack.Game
 
 //          Flush all output pins.
 
-
-//            FLogger.Log(LogType.Message, "Hi "+this.ToString());
-            
             FReturnCode.SliceCount = FAgents.Count;
             int i = 0;
             foreach (Agent agent in FAgents)
@@ -104,25 +101,9 @@ namespace VVVV.Pack.Game
 
             }            
         }
-        
-        public virtual void Evaluate(int SpreadMax)
-        {
 
-            StartEvaluation();
-            /*      TODO: check for security, if more than one parent is connected.
-            IPin pin = (IPin)FOutput.PluginIO;            
-            if (pin.GetConnectedPins().Length > 1)
-            {
-                var pins = pin.GetConnectedPins();
-                var node = pins[0].ParentNode;
+        public abstract void Evaluate(int spreadMax);
 
-
-                throw new Exception("Please do not connect more than one node downstream!");
-            }
-*/
-
-            FinishEvaluation();             
-        }
 
     }
 }

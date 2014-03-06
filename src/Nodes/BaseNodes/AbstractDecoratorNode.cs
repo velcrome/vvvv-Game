@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using VVVV.Pack.Game.Core;
+using VVVV.Pack.Game.Faces;
 using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game
@@ -16,22 +18,30 @@ namespace VVVV.Pack.Game
             FInput.Connected += connect;
         }
 
-        public override void Evaluate(int SpreadMax)
-        {
-            Behave(FAgents);
 
+
+
+        public override void Evaluate(int spreadMax)
+        {
+            StartEvaluation();
+            Before(FAgents); // hook for a priori checks
+
+            var notFailedAgents = from agent in FAgents
+                                where agent.ReturnCode != ReturnCodeEnum.Failure
+                                select agent;
             if (IsPinValid(FInput))
             {
-                FInput[0].Agents.AddRange(FAgents); // add all.
+                FInput[0].Agents.AddRange(notFailedAgents); 
                 FInput.Sync(); // call child
-            } else
-            {
-                throw new Exception("Decorator cannot be used unconnected");
             }
+
+            After(notFailedAgents); // hook for post priori checks
 
             FinishEvaluation();
         }
 
-        protected abstract void Behave(IEnumerable<Agent> agents);
+        public abstract void Before(IEnumerable<IAgent> agents);
+        public abstract void After(IEnumerable<IAgent> agents);
+
     }
 }

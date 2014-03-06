@@ -8,6 +8,7 @@ namespace VVVV.Pack.Game.Faces
     public interface IAgent : IComparable, ICloneable, IDisposable
     {
         DateTime BirthTime { get;  }
+
         ReturnCodeEnum ReturnCode { get; set; }
         string Id { get;  }
 
@@ -22,6 +23,9 @@ namespace VVVV.Pack.Game.Faces
         // face must be IAgent or any other interface extending IAgent. will init all Properties in one go
         // will be automatically called by Face<>()
         void Init(Type face, bool populateFirst = true);
+
+        bool Killed { get;  }
+        void Kill();
 
     }
 }

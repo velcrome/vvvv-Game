@@ -1,6 +1,7 @@
 ﻿#region usings
 using System.Collections.Generic;
 using VVVV.Pack.Game.Core;
+using VVVV.Pack.Game.Faces;
 using VVVV.PluginInterfaces.V2;
 
 
@@ -16,8 +17,13 @@ namespace VVVV.Pack.Game.Nodes
     #endregion PluginInfo
     public class DecoratorTestGameNode : AbstractDecoratorNode
     {
-        protected override void Behave(IEnumerable<Agent> agents)
+        public override void Before(IEnumerable<IAgent> agents)
         {
         }
+
+        public override void After(IEnumerable<IAgent> agents)
+        {
+        }
+    
     }
 }

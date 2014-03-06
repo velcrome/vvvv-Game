@@ -39,6 +39,17 @@ namespace VVVV.Pack.Game
         }
 
         [TestMethod]
+        public void TestKill()
+        {
+            var agent = new Agent();
+
+            Assert.AreEqual(false, agent.Killed);
+            agent.Kill();
+
+            Assert.AreEqual(true, agent.Killed);
+        }
+        
+        [TestMethod]
         public void TestAccess()
         {
             var agent = new Agent().Face<ITestAgent>();

@@ -43,7 +43,7 @@ namespace VVVV.Pack.Game.Nodes
 
         #endregion
         
-        public override void Evaluate(int SpreadMax)
+        public override void Evaluate(int spreadMax)
         {
             // initialize UnitedStates
             FPolicy.Sync();

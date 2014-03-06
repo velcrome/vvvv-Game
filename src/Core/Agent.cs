@@ -20,8 +20,20 @@ namespace VVVV.Pack.Game.Core
 
         [DataMember]
 		Dictionary<string, Bin> Data = new Dictionary<string, Bin>() ;
-		
-		[DataMember]
+
+        [DataMember]
+        public bool Killed
+        {
+            get;
+            private set;
+        }
+        
+        public void Kill()
+        {
+            Killed = true;
+        }
+
+        [DataMember]
 		public string Id {
 			get;
 			private set;

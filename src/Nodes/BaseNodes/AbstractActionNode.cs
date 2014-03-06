@@ -9,7 +9,7 @@ namespace VVVV.Pack.Game.Nodes
 
         protected abstract void Behave(IEnumerable<IAgent> agents);
 
-        public override void Evaluate(int SpreadMax)
+        public override void Evaluate(int spreadMax)
         {
             StartEvaluation();
             Behave(FAgents);

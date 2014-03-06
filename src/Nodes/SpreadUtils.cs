@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VVVV.PluginInterfaces.V2.NonGeneric;
+﻿using VVVV.PluginInterfaces.V2.NonGeneric;
 
 namespace VVVV.Pack.Game
 {
