@@ -24,8 +24,6 @@ namespace VVVV.Pack.Game.Faces
         // will be automatically called by Face<>()
         void Init(Type face, bool populateFirst = true);
 
-        bool Killed { get;  }
-        void Kill();
-
+        bool Killed { get; set; }
     }
 }

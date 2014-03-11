@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VVVV.Pack.Game.Faces;
-using VVVV.Utils.VColor;
 using VVVV.Utils.VMath;
 
 
@@ -29,9 +25,6 @@ namespace VVVV.Pack.Game.Core.Tests
 
             Assert.AreEqual(0.0, ((Vector3D)copy["Test"].First).x);
             Assert.AreEqual(1.0, ((Vector3D)copy["Test"][1]).x);
-
-
-
         }
 
 

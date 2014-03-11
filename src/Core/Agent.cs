@@ -25,12 +25,7 @@ namespace VVVV.Pack.Game.Core
         public bool Killed
         {
             get;
-            private set;
-        }
-        
-        public void Kill()
-        {
-            Killed = true;
+            set;
         }
 
         [DataMember]
@@ -68,10 +63,10 @@ namespace VVVV.Pack.Game.Core
 
         #region duck casting
 
-        public T Face<T>(bool makeSafe = true) where T : class, IAgent
+        public T Face<T>(bool makeSafe = false) where T : class, IAgent
         {
-            var face = ImpromptuInterface.Impromptu.ActLike<T>(this);
-            Init(typeof (T), makeSafe);
+            var face = Impromptu.ActLike<T>(this);
+            if (makeSafe) Init(typeof (T), makeSafe);
             return face;
         }
 

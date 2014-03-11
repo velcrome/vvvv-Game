@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VVVV.Pack.Game.Core;
 using VVVV.Utils.VMath;
 
-namespace VVVV.Pack.Game
+namespace VVVV.Pack.Game.Core.Tests
 {
     [TestClass]
     public class DynamicAgentTest

@@ -6,49 +6,12 @@ using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
 using VVVV.Utils.VMath;
 
-namespace VVVV.Pack.Game
+namespace VVVV.Pack.Game.Core.Tests
 {
     [TestClass]
     public class FaceAgentTest
     {
-        [TestMethod]
-        public void TestExtensionMethod()
-        {
-            var agent = new Agent();
-                
-
-            var named = agent.Face<INamedAgent>(true);
-            Assert.AreEqual("vvvv", named.Name);
-
-            named.SetRandomName();
-            Assert.AreEqual("Marko", named.Name);
-
-
-        }
-
-        [TestMethod]
-        public void TestExtensionMethodWithParameter()
-        {
-            var agent = new Agent();
-
-            var positioned = agent.Face<IMoveableAgent>(true);
-            Assert.AreEqual(new Vector3D(), positioned.Position);
-
-            var v3 = positioned.SetRandomPosition(10.0);
-            Assert.AreEqual(v3, positioned.Position);
-        }
-
-        [TestMethod]
-        public void TestKill()
-        {
-            var agent = new Agent();
-
-            Assert.AreEqual(false, agent.Killed);
-            agent.Kill();
-
-            Assert.AreEqual(true, agent.Killed);
-        }
-        
+       
         [TestMethod]
         public void TestAccess()
         {
@@ -81,7 +44,7 @@ namespace VVVV.Pack.Game
         [TestMethod]
         public void TestInt()
         {
-            var agent = new Agent().Face<ITestAgent>();
+            var agent = new Agent().Face<ITestAgent>(true);
     //        agent.Init("SingleInt", typeof(int));
             agent.SingleInt++;
             Assert.AreEqual(1, agent["SingleInt"].First, "Face Agent int initialisation");

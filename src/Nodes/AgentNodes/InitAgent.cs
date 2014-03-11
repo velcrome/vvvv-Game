@@ -1,6 +1,5 @@
 ﻿using System;
 using VVVV.Pack.Game.AgentNodes;
-using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
 using VVVV.PluginInterfaces.V2.NonGeneric;
 
