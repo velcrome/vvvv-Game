@@ -93,10 +93,6 @@ namespace VVVV.Pack.Game.Nodes
                 }
             }
 
-            var aliveAgents = from agent in FAgents
-                               where agent.Killed == false 
-                               select agent;
-
             FAgents.RemoveAll(IsKilled);
 
             if (!FAdd.IsAnyInvalid())

@@ -39,7 +39,7 @@ namespace VVVV.Pack.Game.Faces
             {
                 var pos = a.PositionHistory();
                 pos.Insert(0, velocity + a.Position);
-                while (pos.Count > a.HistoryCount) pos.RemoveAt(a.HistoryCount - 1);
+                while (pos.Count > a.HistoryCount) pos.RemoveAt(a.HistoryCount);
             }
             else a.Position += velocity;
 
@@ -48,7 +48,7 @@ namespace VVVV.Pack.Game.Faces
             {
                 var vel = a.VelocityHistory();
                 vel.Insert(0, velocity);
-                while (vel.Count > a.HistoryCount) vel.RemoveAt(a.HistoryCount - 1);
+                while (vel.Count > a.HistoryCount) vel.RemoveAt(a.HistoryCount);
             }
             else a.Velocity = velocity;
 
@@ -56,7 +56,7 @@ namespace VVVV.Pack.Game.Faces
             {
                 var forceSum = a.ForceSumHistory();
                 forceSum.Insert(0, velocity);
-                while (forceSum.Count > a.HistoryCount) forceSum.RemoveAt(a.HistoryCount - 1);
+                while (forceSum.Count > a.HistoryCount) forceSum.RemoveAt(a.HistoryCount);
             }
             else a.ForceSum *= 0;
 
@@ -67,15 +67,27 @@ namespace VVVV.Pack.Game.Faces
         {
             return (Bin<Vector3D>)agent["Position"];
         }
+        public static Vector3D PositionHistory(this IAgent agent, int index)
+        {
+            return (Vector3D)agent["Position"][index];
+        }
 
         public static Bin<Vector3D> VelocityHistory(this IAgent agent)
         {
-            return (Bin<Vector3D>)agent["Velocity"];
+            return (Bin<Vector3D>)(agent["Velocity"]);
+        }
+        public static Vector3D VelocityHistory(this IAgent agent, int index)
+        {
+            return (Vector3D)(agent["Velocity"][index]);
         }
 
         public static Bin<Vector3D> ForceSumHistory(this IAgent agent)
         {
             return (Bin<Vector3D>)agent["ForceSum"];
+        }
+        public static Vector3D ForceSumHistory(this IAgent agent, int index)
+        {
+            return (Vector3D)agent["ForceSum"][index];
         }
 
         
