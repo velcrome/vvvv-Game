@@ -1,5 +1,7 @@
 #region usings
 using System.Collections.Generic;
+using System.Linq;
+
 using VVVV.Core.Logging;
 using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
@@ -24,28 +26,20 @@ namespace VVVV.Pack.Game.Nodes
 
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
-			int i = 0;
-			foreach (var a in agents) {
-
-				var agent = a.Face<IMoveableAgent>(true);
-				agent.ReturnCode = ReturnCodeEnum.Success; 
-	
-				int j=0;
-				foreach  (var a2 in agents)
+			int i = 0; 
+			foreach (dynamic agent in agents) {
+				Vector3D pos = agent.Position.First;  
+				var forces = 	(IEnumerable<Vector3D>)from agent2 in agents 
+								where VMath.Dist(pos, agent2.PositionHistory(0)) < FMaxRadius[i]
+								select pos - agent2.PositionHistory(0);
+				
+				var sum = new Vector3D();
+				foreach  (var force in forces)
             	{
-					var agent2 = a2.Face<IMoveableAgent>(true);
-            		
-            		if (i != j) // if its the same agent dont do it
-            		{
-            			Vector3D pos1 = agent.Position;
-            			Vector3D pos2 =agent2.Position;
-            			
-            			double dist = VMath.Dist(pos1, pos2);
-            			if ( dist<FMaxRadius[0] ) //if I'm within range
-            				agent.ForceSum += FStrength[0]*(pos1 - pos2);
-            		}
-            		j++;
+       				sum += force;
                 }
+				agent.ForceSum.First += sum * FStrength[i];
+				
 				i++;
 			}
 		}

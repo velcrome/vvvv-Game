@@ -17,100 +17,12 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Agents" visible="1">
+   <PIN pinname="Agents" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Sink" visible="1">
    </PIN>
    </NODE>
-   <NODE id="5" systemname="Split (Game.Agent)" filename="%VVVV%\packs\vvvv-Message\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Split (Game.Agent)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
-   <BOUNDS type="Node" left="2355" top="1335" width="750" height="270">
-   </BOUNDS>
-   <PIN pinname="Input" visible="1" pintype="Input">
-   </PIN>
-   <PIN pinname="Configuration" slicecount="1" pintype="Configuration" values="|Vector3D ForceSum, Vector3D Position|">
-   </PIN>
-   <BOUNDS type="Box" left="1755" top="0" width="2400" height="1800">
-   </BOUNDS>
-   <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
-   </BOUNDS>
-   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Interface" pintype="Input" visible="1" slicecount="1" values="IAgent">
-   </PIN>
-   <PIN pinname="Verbose" pintype="Input" visible="-1" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="Window Handle" pintype="Output">
-   </PIN>
-   <PIN pinname="Timestamp" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="Position Bin Size" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="VelocityXYZ" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="Velocity Bin Size" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="ID" pintype="Output" visible="-1">
-   </PIN>
-   <PIN pinname="color" visible="1">
-   </PIN>
-   <PIN pinname="color Bin Size" visible="1">
-   </PIN>
-   <PIN pinname="ForceSumXYZ" visible="1">
-   </PIN>
-   <PIN pinname="ForceSum Bin Size" visible="1">
-   </PIN>
-   </NODE>
-   <NODE id="4" systemname="Set (Game.Agent)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game.Agent)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
-   <BOUNDS type="Node" left="2025" top="3840" width="750" height="270">
-   </BOUNDS>
-   <PIN pinname="Input" visible="1" pintype="Input">
-   </PIN>
-   <PIN pinname="Configuration" slicecount="1" pintype="Configuration" values="|Vector3D ForceSum|">
-   </PIN>
-   <BOUNDS type="Box" left="1590" top="1350" width="2400" height="1800">
-   </BOUNDS>
-   <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
-   </BOUNDS>
-   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Interface" pintype="Input" visible="1" slicecount="1" values="IAgent">
-   </PIN>
-   <PIN pinname="Verbose" pintype="Input" visible="-1" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="Window Handle" pintype="Output">
-   </PIN>
-   <PIN pinname="Timestamp" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="Position Bin Size" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="VelocityXYZ" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="Velocity Bin Size" pintype="Output" visible="1">
-   </PIN>
-   <PIN pinname="ID" pintype="Output" visible="-1">
-   </PIN>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="color" visible="1">
-   </PIN>
-   <PIN pinname="color Bin Size" visible="1">
-   </PIN>
-   <PIN pinname="ForceSumXYZ" visible="1" slicecount="30" values="1.00767868383207,-0.475328168652954,-1.40394766685535,-0.785843262254416,-0.0340572793598509,-2.16335336464683,-0.597650778425839,2.90333201621332,0.676067450382814,0.20113514856949,1.01435135133289,1.57465204431953,-1.92733686150784,1.3381300216114,0.0273837609298779,-0.916306132053923,-0.523878811736937,0.0326045176363362,-1.57464850186109,3.05522910251172,-1.6533139945386,1.95484120111285,0.812938654190179,0.645404490687894,0.656458982462362,-0.914297006955819,1.50025325820821,0.154217621651957,1.32339381885502,-0.39940997590947">
-   </PIN>
-   <PIN pinname="ForceSum Bin Size" visible="1" slicecount="1" values="-1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="7" srcpinname="Agents" dstnodeid="5" dstpinname="Input">
-   </LINK>
-   <LINK srcnodeid="4" srcpinname="Output" dstnodeid="6" dstpinname="Agents">
-   </LINK>
    <LINK srcnodeid="7" srcpinname="Output" dstnodeid="6" dstpinname="Sink">
-   </LINK>
-   <LINK srcnodeid="7" srcpinname="Agents" dstnodeid="4" dstpinname="Input">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="2" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="3660" top="450" width="795" height="720">
@@ -163,7 +75,7 @@
    </BOUNDS>
    <PIN pinname="Input 2" visible="1">
    </PIN>
-   <PIN pinname="Input 1" visible="1">
+   <PIN pinname="Input 1" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -208,16 +120,12 @@
    </NODE>
    <LINK srcnodeid="12" srcpinname="Y Output Value" dstnodeid="10" dstpinname="Input 2">
    </LINK>
-   <LINK srcnodeid="5" srcpinname="ForceSum Bin Size" dstnodeid="4" dstpinname="ForceSum Bin Size">
-   </LINK>
-   <LINK srcnodeid="5" srcpinname="PositionXYZ" dstnodeid="8" dstpinname="Input 1">
-   </LINK>
    <LINK srcnodeid="2" srcpinname="Y Output Value" dstnodeid="8" dstpinname="Input 2">
    </LINK>
    <NODE systemname="Subtract (Value)" nodename="Subtract (Value)" componentmode="Hidden" id="11">
    <BOUNDS type="Node" left="2505" top="3240" width="975" height="270">
    </BOUNDS>
-   <PIN pinname="Input 1" visible="1">
+   <PIN pinname="Input 1" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -226,8 +134,104 @@
    </NODE>
    <LINK srcnodeid="10" srcpinname="Output" dstnodeid="11" dstpinname="Input 2">
    </LINK>
+   <NODE id="5" systemname="Split (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Split (Game)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
+   <BOUNDS type="Node" left="2355" top="1335" width="750" height="270">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" pintype="Input">
+   </PIN>
+   <PIN pinname="Configuration" slicecount="1" pintype="Configuration" values="|Vector3D ForceSum, Vector3D Position|">
+   </PIN>
+   <BOUNDS type="Box" left="1755" top="0" width="2400" height="1800">
+   </BOUNDS>
+   <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Interface" pintype="Input" visible="1">
+   </PIN>
+   <PIN pinname="Verbose" pintype="Input" visible="-1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Window Handle" pintype="Output">
+   </PIN>
+   <PIN pinname="Timestamp" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Position Bin Size" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="VelocityXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Velocity Bin Size" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="ID" pintype="Output" visible="-1">
+   </PIN>
+   <PIN pinname="color" visible="1">
+   </PIN>
+   <PIN pinname="color Bin Size" visible="1">
+   </PIN>
+   <PIN pinname="ForceSumXYZ" visible="1">
+   </PIN>
+   <PIN pinname="ForceSum Bin Size" visible="1">
+   </PIN>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="5" srcpinname="PositionXYZ" dstnodeid="8" dstpinname="Input 1">
+   </LINK>
    <LINK srcnodeid="5" srcpinname="ForceSumXYZ" dstnodeid="11" dstpinname="Input 1">
    </LINK>
+   <NODE id="4" systemname="Set (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
+   <BOUNDS type="Node" left="2025" top="3840" width="750" height="270">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" pintype="Input">
+   </PIN>
+   <PIN pinname="Configuration" slicecount="1" pintype="Configuration" values="|Vector3D ForceSum|">
+   </PIN>
+   <BOUNDS type="Box" left="1590" top="1350" width="2400" height="1800">
+   </BOUNDS>
+   <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Interface" pintype="Input" visible="1">
+   </PIN>
+   <PIN pinname="Verbose" pintype="Input" visible="-1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Window Handle" pintype="Output">
+   </PIN>
+   <PIN pinname="Timestamp" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="PositionXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Position Bin Size" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="VelocityXYZ" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="Velocity Bin Size" pintype="Output" visible="1">
+   </PIN>
+   <PIN pinname="ID" pintype="Output" visible="-1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="color" visible="1">
+   </PIN>
+   <PIN pinname="color Bin Size" visible="1">
+   </PIN>
+   <PIN pinname="ForceSumXYZ" visible="1">
+   </PIN>
+   <PIN pinname="ForceSum Bin Size" visible="1">
+   </PIN>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   </NODE>
    <LINK srcnodeid="11" srcpinname="Output" dstnodeid="4" dstpinname="ForceSumXYZ">
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="ForceSum Bin Size" dstnodeid="4" dstpinname="ForceSum Bin Size">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Agents" dstnodeid="5" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="7" srcpinname="Agents" dstnodeid="4" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="4" srcpinname="Agent" dstnodeid="6" dstpinname="Agents">
    </LINK>
    </PATCH>

@@ -7,12 +7,12 @@ namespace VVVV.Pack.Game.Nodes
 {
     #region PluginInfo
 
-    [PluginInfo(Name = "Init",
+    [PluginInfo(Name = "Set",
         Category = "Game",
-        Help = "inits an Agent",
+        Help = "Inits or sets an Agents attributes",
         Tags = "Agent")]
     #endregion PluginInfo
-    public class InitAgentNode : AbstractFacedDynamicNode
+    public class SetAgentNode : AbstractFacedDynamicNode
     {
         #region fields & pins
 

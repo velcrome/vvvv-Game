@@ -1,5 +1,6 @@
 #region usings
 using System.Collections.Generic;
+using Microsoft.CSharp.RuntimeBinder;
 using VVVV.Core.Logging;
 using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
@@ -25,12 +26,11 @@ namespace VVVV.Pack.Game.Nodes
 			FDownDirection.Sync();
 
 			foreach (var a in agents) {
-				var agent = a.Face<IMoveableAgent>();
-				
-				agent.ForceSum += FDownDirection[i];
+				dynamic agent = a;
+				agent.ForceSum.First += FDownDirection[i];
 
 				i++;
-				agent.ReturnCode = ReturnCodeEnum.Success;
+				a.ReturnCode = ReturnCodeEnum.Success;
 
 			}
 		}

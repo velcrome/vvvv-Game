@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta31.2.dtd" >
    <PATCH nodename="C:\dev\vvvv\GAME\vvvv-Game2\patches\modules\Vlappy Birds (Game).v4p" systemname="Vlappy Birds (Game)" filename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Vlappy Birds (Game).v4p">
-   <BOUNDS type="Window" left="16080" top="9555" width="25440" height="15990">
+   <BOUNDS type="Window" left="4035" top="1125" width="14400" height="15480">
    </BOUNDS>
    <NODE systemname="Renderer (TTY)" nodename="Renderer (TTY)" componentmode="InABox" id="12">
    <BOUNDS type="Node" left="360" top="1452" width="100" height="100">
@@ -85,7 +85,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="825" top="19515" width="4800" height="3600">
    </BOUNDS>
-   <BOUNDS type="Window" left="495" top="480" width="14025" height="11790">
+   <BOUNDS type="Window" left="19095" top="13965" width="21810" height="6330">
    </BOUNDS>
    <PIN pinname="Layers" visible="1">
    </PIN>
@@ -424,7 +424,7 @@
    </LINK>
    <LINK srcnodeid="99" srcpinname="Transform Out" dstnodeid="71" dstpinname="Transform">
    </LINK>
-   <NODE systemname="Init (FlappyBird)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Init (FlappyBird).v4p" nodename="%VVVV%\packs\vvvv-Game\nodes\modules\Init (FlappyBird).v4p" componentmode="Hidden" id="125">
+   <NODE systemname="Init (FlappyBird)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Init (FlappyBird).v4p" nodename="%VVVV%\packs\vvvv-Game\nodes\modules\Init (FlappyBird).v4p" componentmode="InAWindow" id="125">
    <BOUNDS type="Node" left="5353" top="8469" width="1305" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="2404" top="5654" width="5898" height="5631">
@@ -640,6 +640,22 @@
    <PIN pinname="Y Input Value" slicecount="1" values="0">
    </PIN>
    </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="188" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="10920" top="13005" width="795" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="10920" top="13005" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="194" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="6765" top="6480" width="795" height="720">
    </BOUNDS>
@@ -659,13 +675,13 @@
    <LINK srcnodeid="194" srcpinname="Y Output Value" dstnodeid="125" dstpinname="VelocityXYZ">
    </LINK>
    <NODE systemname="Split (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Split (Game)" componentmode="Hidden" id="90">
-   <BOUNDS type="Node" left="2262" top="11505" width="930" height="270">
+   <BOUNDS type="Node" left="2256" top="11505" width="1596" height="264">
    </BOUNDS>
    <PIN pinname="Input" visible="1">
    </PIN>
    <PIN pinname="Interface" slicecount="1" values="IMoveableAgent">
    </PIN>
-   <PIN pinname="Configuration" slicecount="1" values="|vector3d Position|">
+   <PIN pinname="Configuration" slicecount="1" values="|vector3d Position, vector3d Velocity, vector3d ForceSum|">
    </PIN>
    <PIN pinname="PositionXYZ" visible="1">
    </PIN>
@@ -681,6 +697,8 @@
    <LINK srcnodeid="90" srcpinname="PositionXYZ" dstnodeid="118" dstpinname="Input">
    </LINK>
    <LINK srcnodeid="90" srcpinname="PositionXYZ" dstnodeid="187" dstpinname="Y Input Value">
+   </LINK>
+   <LINK srcnodeid="90" srcpinname="VelocityXYZ" dstnodeid="188" dstpinname="Y Input Value">
    </LINK>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="202" systemname="IOBox (Node)">
    <BOUNDS type="Box" left="3270" top="10950" width="795" height="240">
@@ -773,103 +791,5 @@
    <LINK srcnodeid="74" srcpinname="Output" dstnodeid="90" dstpinname="Agent">
    </LINK>
    <LINK srcnodeid="125" srcpinname="Output" dstnodeid="74" dstpinname="Add Agent">
-   </LINK>
-   <NODE systemname="Store (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Store (Game)" componentmode="Hidden" id="208">
-   <BOUNDS type="Node" left="13980" top="10755" width="5400" height="270">
-   </BOUNDS>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="Add Agent" visible="1">
-   </PIN>
-   <PIN pinname="Input" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Clear" slicecount="1" visible="1" values="0">
-   </PIN>
-   </NODE>
-   <NODE systemname="Split (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Split (Game)" componentmode="Hidden" id="209">
-   <BOUNDS type="Node" left="14007" top="11310" width="930" height="270">
-   </BOUNDS>
-   <PIN pinname="Input" visible="1">
-   </PIN>
-   <PIN pinname="Interface">
-   </PIN>
-   <PIN pinname="Configuration" slicecount="1" values="|vector3d Position|">
-   </PIN>
-   <PIN pinname="PositionXYZ" visible="1">
-   </PIN>
-   <PIN pinname="Agent" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Scan" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Face" slicecount="1" values="VVVV.Pack.Game.Faces.IMoveableAgent">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="208" srcpinname="Output" dstnodeid="209" dstpinname="Agent">
-   </LINK>
-   <NODE systemname="Init (FlappyPipe)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Init (FlappyPipe).v4p" nodename="Init (FlappyPipe)" componentmode="InAWindow" id="210">
-   <BOUNDS type="Node" left="17970" top="9780" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Agent" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="210" srcpinname="Agent" dstnodeid="208" dstpinname="Add Agent">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="211" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="16665" top="7875" width="480" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="16665" top="7875" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Boolean">
-   </PIN>
-   <PIN pinname="Behavior" slicecount="1" values="Bang">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="211" srcpinname="Y Output Value" dstnodeid="210" dstpinname="Insert">
-   </LINK>
-   <NODE systemname="IsOutsideBox (Game)" filename="plugins\GameIsScrolledOut\GameIsOutsideBox.csproj" nodename="IsOutsideBox (Game)" componentmode="Hidden" id="214">
-   <BOUNDS type="Node" left="19290" top="9750" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Input" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="214" srcpinname="Output" dstnodeid="208" dstpinname="Input">
-   </LINK>
-   <LINK srcnodeid="211" srcpinname="Y Output Value" dstnodeid="208" dstpinname="Clear">
-   </LINK>
-   <NODE systemname="Translate (Transform Vector)" nodename="Translate (Transform Vector)" componentmode="Hidden" id="216">
-   <BOUNDS type="Node" left="13830" top="11850" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="XYZ" visible="1">
-   </PIN>
-   <PIN pinname="Transform Out" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="209" srcpinname="PositionXYZ" dstnodeid="216" dstpinname="XYZ">
-   </LINK>
-   <LINK srcnodeid="216" srcpinname="Transform Out" dstnodeid="153" dstpinname="Transform">
-   </LINK>
-   <LINK srcnodeid="177" srcpinname="Output" dstnodeid="211" dstpinname="Y Input Value">
-   </LINK>
-   <NODE systemname="TeleportBy (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\GameTeleport\GameTeleport.csproj" nodename="TeleportBy (Game)" componentmode="Hidden" id="213">
-   <BOUNDS type="Node" left="19260" top="8835" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="Enable">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="213" srcpinname="Output" dstnodeid="214" dstpinname="Input">
    </LINK>
    </PATCH>

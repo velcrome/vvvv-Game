@@ -11,7 +11,7 @@ namespace VVVV.Pack.Game.Core
 {
     [Serializable]
     [JsonConverter(typeof(BinSerializer))]
-    public class Bin<T> : Bin
+    public class Bin<T> : Bin, IEnumerable<T>
     {
         public Bin()
         {
@@ -74,10 +74,15 @@ namespace VVVV.Pack.Game.Core
         {
             return new Bin<T>(s);  
         }
-                
 
-
-
+        // necessary implementation for IEnumerable<T>
+        public new IEnumerator<T> GetEnumerator()
+        {
+            foreach (T item in this.ToArray())
+            {
+                yield return item;
+            }
+        }
     }
     
     

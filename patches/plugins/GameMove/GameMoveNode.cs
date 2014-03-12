@@ -20,25 +20,17 @@ namespace VVVV.Pack.Game.Nodes
 		protected Pin<double> FMaxSpeed;
 
 		[Input("Agility", DefaultValue = 0.5, MinValue=0.0001, MaxValue=1.0, AutoValidate = false)]
-		protected Pin<double> FAgility;
+		protected Pin<double> FAgility; 
 
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
 			FMaxSpeed.Sync();
 			FAgility.Sync();
 			
+			int i=0;
 			foreach (var a in agents) {
-				IMoveableAgent agent = a.Face<IMoveableAgent>(true);
-				
-				agent.Velocity += FAgility[0] * (agent.ForceSum);
-				if (VMath.Polar(agent.Velocity).z > FMaxSpeed[0]) {
-					agent.Velocity = FMaxSpeed[0] * ~agent.Velocity;
-				}
-				
-				agent.Position += agent.Velocity; 
-				agent.ForceSum *= 0;
-//				agent.ForceSum *= FAgility[0];
-//				agent.ForceSum = agent.Velocity;
+				dynamic agent = a;
+				a.Move(FMaxSpeed[i], FAgility[i]);
 			}
 		}
 	}

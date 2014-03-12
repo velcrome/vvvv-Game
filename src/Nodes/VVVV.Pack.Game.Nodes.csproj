@@ -83,10 +83,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="AgentNodes\EnableHistoryAgent.cs" />
     <Compile Include="AgentNodes\KillAgent.cs" />
     <Compile Include="BaseNodes\AbstractFacedDynamicNode.cs" />
     <Compile Include="BaseNodes\AbstractDynamicNode.cs" />
-    <Compile Include="AgentNodes\InitAgent.cs" />
+    <Compile Include="AgentNodes\SetAgent.cs" />
     <Compile Include="AgentNodes\CreateAgent.cs" />
     <Compile Include="AgentNodes\SplitAgent.cs" />
     <Compile Include="BaseNodes\AbstractActionNode.cs" />

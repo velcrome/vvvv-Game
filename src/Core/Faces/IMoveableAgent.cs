@@ -12,7 +12,7 @@ namespace VVVV.Pack.Game.Faces
 
         Vector3D ForceSum { get; set; } // Sum of all Forces acting on the Agent
 
-        int HistoryCount { get; set; } 
+        int HistoryCount { get; set; } // lower limit is 1.
 
         Vector3D SetRandomPosition(double width); //optional header 
         Vector3D Move(double maxSpeed = double.PositiveInfinity, double agility = 1.0);
@@ -25,7 +25,7 @@ namespace VVVV.Pack.Game.Faces
         {
             var a = agent.Face<IMoveableAgent>();
 
-            if (a.HistoryCount < 0) a.HistoryCount = 0;
+            if (a.HistoryCount < 1) a.HistoryCount = 1;
 
             var velocity = a.Velocity;
             velocity += agility * (a.ForceSum);
@@ -35,7 +35,7 @@ namespace VVVV.Pack.Game.Faces
             }
 
 
-            if (a.HistoryCount > 0)
+            if (a.HistoryCount > 1)
             {
                 var pos = a.PositionHistory();
                 pos.Insert(0, velocity + a.Position);
@@ -44,7 +44,7 @@ namespace VVVV.Pack.Game.Faces
             else a.Position += velocity;
 
 
-            if (a.HistoryCount > 0)
+            if (a.HistoryCount > 1)
             {
                 var vel = a.VelocityHistory();
                 vel.Insert(0, velocity);
@@ -52,7 +52,7 @@ namespace VVVV.Pack.Game.Faces
             }
             else a.Velocity = velocity;
 
-            if (a.HistoryCount > 0)
+            if (a.HistoryCount > 1)
             {
                 var forceSum = a.ForceSumHistory();
                 forceSum.Insert(0, velocity);
