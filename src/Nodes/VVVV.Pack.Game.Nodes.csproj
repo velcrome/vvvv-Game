@@ -134,8 +134,8 @@
     <ItemGroup>
       <MyFiles Include="..\..\patches\**\*.*" />
     </ItemGroup>
-    <!--Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" /-->
-    <!--PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" />
+  <!--PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
