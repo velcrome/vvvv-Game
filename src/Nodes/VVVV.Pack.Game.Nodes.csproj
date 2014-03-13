@@ -83,7 +83,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="AgentNodes\EnableHistoryAgent.cs" />
     <Compile Include="AgentNodes\KillAgent.cs" />
     <Compile Include="BaseNodes\AbstractFacedDynamicNode.cs" />
     <Compile Include="BaseNodes\AbstractDynamicNode.cs" />
@@ -93,6 +92,15 @@
     <Compile Include="BaseNodes\AbstractActionNode.cs" />
     <Compile Include="BaseNodes\AbstractGameNode.cs" />
     <Compile Include="BaseNodes\AbstractDecoratorNode.cs" />
+    <Compile Include="EssentialNodes\GameDeathNode.cs" />
+    <Compile Include="MovementNodes\GameAlignTogetherNode.cs" />
+    <Compile Include="MovementNodes\GameCohesionNode.cs" />
+    <Compile Include="MovementNodes\GameContainInBoxNode.cs" />
+    <Compile Include="MovementNodes\GameIsOutsideBoxNode.cs" />
+    <Compile Include="MovementNodes\GameKeepApartNode.cs" />
+    <Compile Include="MovementNodes\GameMoveNode.cs" />
+    <Compile Include="AgentNodes\MoveableAgentNode.cs" />
+    <Compile Include="MovementNodes\GameTeleportNode.cs" />
     <Compile Include="SpreadUtils.cs" />
     <Compile Include="Templates\TemplateAction.cs" />
     <Compile Include="EssentialNodes\Action.cs" />

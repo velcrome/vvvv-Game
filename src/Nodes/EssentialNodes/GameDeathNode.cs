@@ -24,7 +24,7 @@ namespace VVVV.Pack.Game.Nodes
 			if (!FEnable[0]) return;
 			
 			foreach (var agent in agents) {
-				agent.Kill();
+				agent.Killed = true;
 
 			}
 		}

@@ -14,7 +14,7 @@ namespace VVVV.Pack.Game.Nodes
         Help = "Manages IMoveableAgent",
         Tags = "Agent")]
     #endregion PluginInfo
-    public class MovingAgent : IPluginEvaluate
+    public class MoveableAgentNode : IPluginEvaluate
     {
         #region fields & pins
 
@@ -48,8 +48,6 @@ namespace VVVV.Pack.Game.Nodes
             if (FInput.IsAnyInvalid()) SpreadMax = 0;
             
             FHistoryCount.Sync();
-
-        	
         	
         	FTransform.SliceCount = SpreadMax;
             FPosition.SliceCount = SpreadMax;

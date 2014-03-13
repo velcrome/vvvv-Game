@@ -119,7 +119,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2640" top="75" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" values="20">
+   <PIN pinname="Y Input Value" slicecount="1" values="50">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -214,12 +214,6 @@
    </NODE>
    <LINK srcnodeid="1" srcpinname="Agents" dstnodeid="0" dstpinname="Agent">
    </LINK>
-   <LINK srcnodeid="0" srcpinname="Agent" dstnodeid="7" dstpinname="Input Node" linkstyle="VHV">
-   <LINKPOINT x="1485" y="3788">
-   </LINKPOINT>
-   <LINKPOINT x="990" y="3788">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="5" srcpinname="Y Output Value" dstnodeid="0" dstpinname="PositionXYZ">
    </LINK>
    <LINK srcnodeid="8" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Init First Element">
@@ -245,5 +239,49 @@
    <LINK srcnodeid="15" srcpinname="OutputXYZ" dstnodeid="17" dstpinname="Input 1">
    </LINK>
    <LINK srcnodeid="10" srcpinname="Y Output Value" dstnodeid="15" dstpinname="Spread Count">
+   </LINK>
+   <NODE systemname="Set (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game)" componentmode="Hidden" id="19">
+   <BOUNDS type="Node" left="1455" top="3930" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Configuration" slicecount="1" values="|Color color|">
+   </PIN>
+   <PIN pinname="Init First Element" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   <PIN pinname="color" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Agent" dstnodeid="19" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="19" srcpinname="Agent" dstnodeid="7" dstpinname="Input Node">
+   </LINK>
+   <NODE systemname="HSL (Color Join)" nodename="HSL (Color Join)" componentmode="Hidden" id="20">
+   <BOUNDS type="Node" left="4695" top="3525" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Hue" visible="1">
+   </PIN>
+   <PIN pinname="Lightness" slicecount="1" values="0.5">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="LinearSpread (Spreads)" nodename="LinearSpread (Spreads)" componentmode="Hidden" id="21">
+   <BOUNDS type="Node" left="5925" top="720" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Spread Count" visible="1" slicecount="1" values="50">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Width" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Input" visible="1" slicecount="1" values="0.5">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="21" srcpinname="Output" dstnodeid="20" dstpinname="Hue">
+   </LINK>
+   <LINK srcnodeid="20" srcpinname="Output" dstnodeid="19" dstpinname="color">
+   </LINK>
+   <LINK srcnodeid="10" srcpinname="Y Output Value" dstnodeid="21" dstpinname="Spread Count">
    </LINK>
    </PATCH>

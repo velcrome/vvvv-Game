@@ -109,7 +109,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5520" top="915" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" values="0.28">
+   <PIN pinname="Y Input Value" slicecount="1" values="4.22">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -181,13 +181,13 @@
    <LINK srcnodeid="5" srcpinname="ForceSumXYZ" dstnodeid="11" dstpinname="Input 1">
    </LINK>
    <NODE id="4" systemname="Set (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
-   <BOUNDS type="Node" left="2025" top="3840" width="750" height="270">
+   <BOUNDS type="Node" left="1995" top="3840" width="750" height="270">
    </BOUNDS>
    <PIN pinname="Input" visible="1" pintype="Input">
    </PIN>
    <PIN pinname="Configuration" slicecount="1" pintype="Configuration" values="|Vector3D ForceSum|">
    </PIN>
-   <BOUNDS type="Box" left="1590" top="1350" width="2400" height="1800">
+   <BOUNDS type="Box" left="1560" top="1350" width="2400" height="1800">
    </BOUNDS>
    <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
    </BOUNDS>
