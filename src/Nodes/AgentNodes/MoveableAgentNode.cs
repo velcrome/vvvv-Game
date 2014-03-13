@@ -1,8 +1,6 @@
-using System;
 using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
 using VVVV.PluginInterfaces.V2;
-using VVVV.PluginInterfaces.V2.NonGeneric;
 using VVVV.Utils.VMath;
 
 namespace VVVV.Pack.Game.Nodes
@@ -30,13 +28,13 @@ namespace VVVV.Pack.Game.Nodes
         [Output("Transform", AutoFlush = false)]
         public Pin<Matrix4x4> FTransform;
 
-        [Output("Position", AutoFlush = false)]
+        [Output("Position", AutoFlush = false, BinVisibility = PinVisibility.Hidden)]
         public ISpread<ISpread<Vector3D>> FPosition;
 
-        [Output("Velocity", AutoFlush = false)]
+        [Output("Velocity", AutoFlush = false, BinVisibility = PinVisibility.Hidden)]
         public ISpread<ISpread<Vector3D>> FVelocity;
 
-        [Output("ForceSum", AutoFlush = false)]
+        [Output("ForceSum", AutoFlush = false, BinVisibility = PinVisibility.Hidden)]
         public ISpread<ISpread<Vector3D>> FForceSum;
 
         #endregion

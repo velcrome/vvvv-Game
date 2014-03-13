@@ -69,6 +69,9 @@
       <HintPath>..\packages\VVVV.Core.31.7.0-develop-avalon-e-159\lib\net45\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="VVVV.Nodes">
+      <HintPath>..\..\..\..\..\..\apps\code\vvvv_45beta31.2_x64\lib\nodes\plugins\VVVV.Nodes.dll</HintPath>
+    </Reference>
     <Reference Include="VVVV.Utils">
       <HintPath>..\packages\VVVV.Utils.31.7.0-develop-avalon-e-159\lib\net45\VVVV.Utils.dll</HintPath>
       <Private>False</Private>
@@ -83,6 +86,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="AgentNodes\Cons.cs" />
     <Compile Include="AgentNodes\KillAgent.cs" />
     <Compile Include="BaseNodes\AbstractFacedDynamicNode.cs" />
     <Compile Include="BaseNodes\AbstractDynamicNode.cs" />
@@ -131,6 +135,26 @@
       <MyFiles Include="..\..\patches\**\*.*" />
     </ItemGroup>
     <!--Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" /-->
+    <!--PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\apps\code\vvvv_45beta31.2_x64\vvvv.exe</StartProgram>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DebugType>None</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\apps\code\vvvv_45beta31.2_x64\vvvv.exe</StartProgram>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup-->
   </Target>
   <Import Project="..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets" Condition="Exists('..\packages\VVVV.SlimDX.1.0.1\build\net40\VVVV.SlimDX.targets')" />
   <Import Project="..\packages\VVVV.PluginInterfaces.31.7.0-develop-avalon-e-159\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.7.0-develop-avalon-e-159\build\net40\VVVV.PluginInterfaces.targets')" />
