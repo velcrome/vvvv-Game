@@ -27,18 +27,25 @@ namespace VVVV.Pack.Game.Nodes
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
 			int i = 0; 
-			foreach (dynamic agent in agents) {
-				Vector3D pos = agent.Position.First;  
-				var forces = 	(IEnumerable<Vector3D>)from agent2 in agents 
-								where VMath.Dist(pos, agent2.PositionHistory(0)) < FMaxRadius[i]
-								select pos - agent2.PositionHistory(0);
+			foreach (var a in agents)
+			{
+			    var agent = a.Face<IMoveableAgent>();
+
+			    var vectors = from peer in agents
+                              where peer != agent
+			                  where agent.Distance(peer) < FMaxRadius[i] 
+			                  select agent.Vector(peer);
+
 				
 				var sum = new Vector3D();
-				foreach  (var force in forces)
-            	{
-       				sum += force;
+				foreach  (var v in vectors)
+				{
+
+				    var dist = (FMaxRadius[i] - v.Length)/FMaxRadius[i];
+
+                    sum += (1 - dist) * ~v;
                 }
-				agent.ForceSum.First += sum * FStrength[i];
+				agent.ForceSum += sum * FStrength[i];
 				
 				i++;
 			}

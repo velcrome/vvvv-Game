@@ -24,10 +24,15 @@ namespace VVVV.Pack.Game.Faces
 
         public static double Distance(this IAgent agent, IAgent otherAgent)
         {
-
             return VMath.Dist((Vector3D)agent["Position"].First, (Vector3D)otherAgent["Position"].First);
         }
 
+        public static Vector3D Vector(this IAgent agent, IAgent otherAgent)
+        {
+            return (Vector3D)(agent["Position"].First) - (Vector3D)(otherAgent["Position"].First);
+        }
+
+        
         public static Vector3D Move(this IAgent agent, double maxSpeed = double.PositiveInfinity, double agility = 1.0)
         {
             var a = agent.Face<IMoveableAgent>();

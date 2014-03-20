@@ -87,6 +87,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Compile Include="AgentNodes\Cons.cs" />
+    <Compile Include="AgentNodes\FrameDelay.cs" />
     <Compile Include="AgentNodes\KillAgent.cs" />
     <Compile Include="BaseNodes\AbstractFacedDynamicNode.cs" />
     <Compile Include="BaseNodes\AbstractDynamicNode.cs" />
@@ -135,7 +136,7 @@
       <MyFiles Include="..\..\patches\**\*.*" />
     </ItemGroup>
     <!--Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\..\build\$(Platform)\$(Configuration)\$(SolutionName)\nodes\%(RecursiveDir)%(Filename)%(Extension)')" /-->
-  <!--PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <!--PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>

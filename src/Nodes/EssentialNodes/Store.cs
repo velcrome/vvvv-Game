@@ -20,16 +20,7 @@ namespace VVVV.Pack.Game.Nodes
         #region pins and fields
         #pragma warning disable 649, 169
 
-/*        [Input("Edit Message")]
-        IDiffSpread<Agent> FEdit;
 
-        [Input("Edit Slice")]
-        IDiffSpread<int> FEditIndex;
-
-        [Input("Edit", IsSingle = true, IsBang = true)]
-        ISpread<bool> FEditNow;
-
-*/  
         [Input("Delete Slice")]
         ISpread<int> FDeleteIndex;
 
@@ -97,7 +88,12 @@ namespace VVVV.Pack.Game.Nodes
 
             if (!FAdd.IsAnyInvalid())
             {
-                FAgents.AddRange(FAdd);
+                foreach (var agent in FAdd)
+                {
+                    if (agent != null) FAgents.Add(agent);
+                }
+                
+//                FAgents.AddRange(FAdd);
                 FAgents.Sort();
             }
 
