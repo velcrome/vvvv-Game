@@ -17,33 +17,44 @@ namespace VVVV.Pack.Game.Nodes
 	#endregion PluginInfo
 	public class GameConwayNode : AbstractActionNode
 	{
-		[Input("StarveCount", IsSingle = true, DefaultValue = 0, AutoValidate = false)]
+		[Input("Current Count", IsSingle = true, DefaultValue = 1, AutoValidate = false)]
+		public Pin<int> FCurrentAgentCount;
+
+		[Input("Max Count", IsSingle = true, DefaultValue = 100, AutoValidate = false)]
+		public Pin<int> FMaxAgentCount;
+
+		[Input("Starve", IsSingle = true, DefaultValue = 1, AutoValidate = false)]
 		public Pin<int> FStarveCount;
 
-		[Input("CloneCount", IsSingle = true, DefaultValue = 3, AutoValidate = false)]
+		[Input("Feed", IsSingle = true, DefaultValue = 3, AutoValidate = false)]
 		public Pin<int> FCloneCount;
 
 		[Input("Radius", IsSingle = true, DefaultValue = 1.0, AutoValidate = false)]
 		public Pin<double> FRadius;
 		
 		
-		[Output("Clone Position", AutoFlush = false)]
-		public Pin<Vector3D> FCloneOut;
+		[Output("Clone these Agents", AutoFlush = false)]
+		public Pin<Agent> FCloneOut;
 		
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
+			FCurrentAgentCount.Sync();
+			FMaxAgentCount.Sync();
+			
 			FStarveCount.Sync();
 			FCloneCount.Sync();
 			FRadius.Sync();
 			
 			
-			FCloneOut.SliceCount = 0;
+			FCloneOut.SliceCount = 0; 
+			var diff = FMaxAgentCount[0] - FCurrentAgentCount[0];
+			
 			var starve = FStarveCount[0];
 			var clone = FCloneCount[0];
 			var radius = FRadius[0];
 			
-			foreach (var agent in agents) { 
-				
+			foreach (var a in agents) { 
+				dynamic agent = a;
 				var closeBy = 	from peer in agents
 							  	where peer != agent
 								where VMath.Dist((Vector3D)peer["Position"].First, (Vector3D)agent["Position"].First) < radius
@@ -51,12 +62,23 @@ namespace VVVV.Pack.Game.Nodes
 								select peer;
 
 				if (closeBy.Count() < starve) {
-					agent.Killed = true;
-					agent.ReturnCode = ReturnCodeEnum.Failure;
+					agent.Vitality.First --;
+					
+					if (agent.Vitality.First <0) {
+						agent.Killed = true;
+						agent.ReturnCode = ReturnCodeEnum.Failure;
+					}
 				}
 				
-				if ((closeBy.Count() > clone)) {
-					FCloneOut.Add((Vector3D)agent["Position"].First);
+				if ((closeBy.Count() >= clone)) {
+					if (agent.Vitality.First >= 100) {
+						if (diff > 0) {
+							diff--;
+							agent.Vitality.First = 50;
+							FCloneOut.Add((Agent)a);
+						
+						}
+					} else agent.Vitality.First ++;
 				}
 				
 				FCloneOut.Flush();
