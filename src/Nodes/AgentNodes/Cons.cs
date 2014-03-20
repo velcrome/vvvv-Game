@@ -1,9 +1,6 @@
-﻿using System;
-using VVVV.Nodes;
-using VVVV.Pack.Game.AgentNodes;
+﻿using VVVV.Nodes;
 using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
-using VVVV.PluginInterfaces.V2.NonGeneric;
 
 namespace VVVV.Pack.Game.Nodes
 {

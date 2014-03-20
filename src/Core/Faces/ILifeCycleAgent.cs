@@ -20,6 +20,7 @@ namespace VVVV.Pack.Game.Faces
         TimeSpan Age(); //optional header 
         TimeSpan RestLifeTime();
         TimeSpan TotalLifeTime();
+        
         double LifeTimeProgress();
     }
 

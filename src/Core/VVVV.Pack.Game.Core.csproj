@@ -85,6 +85,7 @@
     <Compile Include="Agent.cs" />
     <Compile Include="Bin.cs" />
     <Compile Include="BinSerializer.cs" />
+    <Compile Include="Faces\IFoodAgent.cs" />
     <Compile Include="Faces\IMoveableAgent.cs" />
     <Compile Include="Faces\INamedAgent.cs" />
     <Compile Include="Faces\ITargetAgent.cs" />
