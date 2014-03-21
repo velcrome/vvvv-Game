@@ -29,16 +29,13 @@ namespace VVVV.Pack.Game.Nodes
 			int i = 0;
 			FPushFlap.Sync();
 			FStrength.Sync();
-			
-			
 
 			foreach (var a in agents) {
-				var agent = a.Face<IMoveableAgent>();
-				if (FPushFlap[i]) agent.ForceSum += FlapDirection * FStrength[i];
 				
-
+				dynamic agent = a;
+				if (FPushFlap[i]) agent.ForceSum.First +=  FlapDirection * FStrength[i];
 				i++;
-				agent.ReturnCode = ReturnCodeEnum.Success;
+				a.ReturnCode = ReturnCodeEnum.Success;
 
 			}
 		}

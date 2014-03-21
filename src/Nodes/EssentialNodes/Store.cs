@@ -93,14 +93,7 @@ namespace VVVV.Pack.Game.Nodes
                 }
             }
 
-            var killedAgents = from agent in FAgents
-                               where agent.Killed 
-                               select agent;
-            foreach (var killedAgent in killedAgents)
-            {
-                FAgents.Remove(killedAgent);
-            }
-
+            FAgents.RemoveAll(IsKilled);
 
             if (!FAdd.IsAnyInvalid())
             {
@@ -127,6 +120,11 @@ namespace VVVV.Pack.Game.Nodes
             }
             FOutput.Flush();
 
+        }
+
+        private static bool IsKilled(Agent agent)
+        {
+            return agent.Killed;
         }
     }
 }

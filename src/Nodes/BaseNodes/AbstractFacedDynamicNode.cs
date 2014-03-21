@@ -62,6 +62,8 @@ namespace VVVV.Pack.Game.AgentNodes
                 }
 
                 EnumManager.UpdateEnum("AllAgentFaces", baseType.ToString(), names);
+
+                AgentSkills.Methods.Clear(); // Reset Method Cache
             }
         }
 

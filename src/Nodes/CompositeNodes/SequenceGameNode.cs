@@ -32,20 +32,20 @@ namespace VVVV.Pack.Game.Nodes
                     pin.Sync(); // call child
 
                     // treat all running agents 
-                    running = from agents in pin[0].Agents
-                              where agents.ReturnCode == ReturnCodeEnum.Running
-                              select agents;
+                    running = from agent in pin[0].Agents
+                              where agent.ReturnCode == ReturnCodeEnum.Running
+                              select agent;
                     foreach (var agent in running) agent.AddRunning(this, pin);
 
                     // the agents that can be processed 
-                    continueWith = from agents in pin[0].Agents
-                                   where agents.ReturnCode == ReturnCodeEnum.Success
-                                   select agents;
+                    continueWith = from agent in pin[0].Agents
+                                   where agent.ReturnCode == ReturnCodeEnum.Success
+                                   select agent;
 
                     // treat all running agents that changed their ReturnCode. can be done 
-                    var resetRunning = from agents in pin[0].Agents
-                                       where agents.RunningNodes.ContainsKey(this) && agents.RunningNodes[this].Contains(pin) && agents.ReturnCode != ReturnCodeEnum.Running
-                                       select agents;
+                    var resetRunning = from agent in pin[0].Agents
+                                       where agent.RunningNodes.ContainsKey(this) && agent.RunningNodes[this].Contains(pin) && agent.ReturnCode != ReturnCodeEnum.Running
+                                       select agent;
                     foreach (var agent in resetRunning) agent.RemoveRunning(this, pin);
 
 

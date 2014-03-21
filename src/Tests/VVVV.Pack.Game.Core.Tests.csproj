@@ -70,6 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentTest.cs" />
+    <Compile Include="IAgentTest.cs" />
+    <Compile Include="ILifeCycleAgentTest.cs" />
+    <Compile Include="INamedAgentTest.cs" />
+    <Compile Include="IMoveableAgentTest.cs" />
     <Compile Include="JsonAgentTest.cs" />
     <Compile Include="FaceAgentTest.cs" />
     <Compile Include="DynamicAgentTest.cs" />

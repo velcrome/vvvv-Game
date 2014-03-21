@@ -25,12 +25,7 @@ namespace VVVV.Pack.Game.Core
         public bool Killed
         {
             get;
-            private set;
-        }
-        
-        public void Kill()
-        {
-            Killed = true;
+            set;
         }
 
         [DataMember]
@@ -53,14 +48,12 @@ namespace VVVV.Pack.Game.Core
             private set;
         }
 
-        protected static Dictionary<string, Delegate> SkillMethods;
         public Dictionary<object, ArrayList> RunningNodes { get; private set; }
 
         #endregion
 
         public Agent()
         {
-            if (SkillMethods == null) SkillMethods = new Dictionary<string, Delegate>();
             RunningNodes = new Dictionary<object, ArrayList>();
             Id = Guid.NewGuid().ToString();
             BirthTime = DateTime.Now;
@@ -68,10 +61,10 @@ namespace VVVV.Pack.Game.Core
 
         #region duck casting
 
-        public T Face<T>(bool makeSafe = true) where T : class, IAgent
+        public T Face<T>(bool makeSafe = false) where T : class, IAgent
         {
-            var face = ImpromptuInterface.Impromptu.ActLike<T>(this);
-            Init(typeof (T), makeSafe);
+            var face = Impromptu.ActLike<T>(this);
+            if (makeSafe) Init(typeof (T), makeSafe);
             return face;
         }
 
@@ -89,7 +82,7 @@ namespace VVVV.Pack.Game.Core
         {
             var methodName = binder.Name;
 
-            if (!SkillMethods.ContainsKey(methodName))
+            if (!AgentSkills.Methods.ContainsKey(methodName))
             {
                 var api =
                     typeof (AgentAPI).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
@@ -114,10 +107,10 @@ namespace VVVV.Pack.Game.Core
                 var call = Expression.Call(extensionMethod, parameters);
                 var func = Expression.Lambda(call, binder.Name, false, (ParameterExpression[])parameters).Compile();
 
-                SkillMethods.Add(methodName, func);
+                AgentSkills.Methods.Add(methodName, func);
             }
 
-            var curry = Impromptu.Curry(SkillMethods[methodName], args.Length + 1);
+            var curry = Impromptu.Curry(AgentSkills.Methods[methodName], args.Length + 1);
             curry = curry(this);  // first argument is the instance of IAgent
             foreach (var arg in args) curry = curry(arg); // followed by whatever parameters you sent in
             result = curry;

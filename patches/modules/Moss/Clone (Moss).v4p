@@ -1,0 +1,181 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta31.2.dtd" >
+   <PATCH nodename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Moss\Clone (Moss).v4p" systemname="Clone (Moss)" filename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Moss\Clone (Moss).v4p">
+   <NODE systemname="Birth (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Birth (Game)" componentmode="Hidden" id="1">
+   <BOUNDS type="Node" left="1440" top="3180" width="1212" height="264">
+   </BOUNDS>
+   <PIN pinname="Agents" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="1440" top="3180">
+   </BOUNDS>
+   <PIN pinname="Spread Count" slicecount="1" visible="1" values="45">
+   </PIN>
+   <PIN pinname="Insert" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="5" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="3090" top="135" width="792" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3090" top="135" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="PositionXYZ">
+   </PIN>
+   </NODE>
+   <NODE id="7" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
+   <PIN pinname="Descriptive Name" slicecount="1" values="Output">
+   </PIN>
+   <BOUNDS type="Box" left="1440" top="5235" width="750" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1440" top="5235" width="750" height="240">
+   </BOUNDS>
+   <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
+   </PIN>
+   </NODE>
+   <BOUNDS type="Window" left="4110" top="15120" width="9990" height="7260">
+   </BOUNDS>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="8" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="540" top="2745" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="540" top="2745" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   </NODE>
+   <NODE systemname="Set (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game)" componentmode="Hidden" id="0">
+   <BOUNDS type="Node" left="1440" top="3795" width="3345" height="270">
+   </BOUNDS>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   <PIN pinname="Scan" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Init First Element">
+   </PIN>
+   <PIN pinname="Face" slicecount="1" values="VVVV.Pack.Game.Faces.IMoveableAgent">
+   </PIN>
+   <BOUNDS type="Box" left="1440" top="3795">
+   </BOUNDS>
+   <PIN pinname="Configuration" slicecount="1" values="|vector3d Position, vector3d Velocity, vector3d ForceSum, int HistoryCount|">
+   </PIN>
+   <PIN pinname="PositionXYZ" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="VelocityXYZ" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="ForceSum Bin Size" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Velocity Bin Size" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Position Bin Size" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1" srcpinname="Agents" dstnodeid="0" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="8" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Init First Element">
+   </LINK>
+   <NODE systemname="Set (Game)" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll" nodename="Set (Game)" componentmode="Hidden" id="19">
+   <BOUNDS type="Node" left="1440" top="4530" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Configuration" slicecount="1" values="|Color color, int Vitality|">
+   </PIN>
+   <PIN pinname="Init First Element" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Agent" visible="1">
+   </PIN>
+   <PIN pinname="color" visible="1">
+   </PIN>
+   <PIN pinname="Vitality" slicecount="1" values="5">
+   </PIN>
+   <BOUNDS type="Box" left="1440" top="4530">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Agent" dstnodeid="19" dstpinname="Agent">
+   </LINK>
+   <LINK srcnodeid="19" srcpinname="Agent" dstnodeid="7" dstpinname="Input Node">
+   </LINK>
+   <NODE systemname="Count (3d)" filename="%VVVV%\lib\nodes\modules\3D\Count (3D).v4p" nodename="Count (3d)" componentmode="Hidden" id="24">
+   <BOUNDS type="Node" left="1440" top="1545" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Count" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="1440" top="1545">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="5" srcpinname="Y Output Value" dstnodeid="24" dstpinname="Input">
+   </LINK>
+   <NODE systemname="GT (Value)" nodename="GT (Value)" componentmode="Hidden" id="25">
+   <BOUNDS type="Node" left="1440" top="2520" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="25" srcpinname="Output" dstnodeid="1" dstpinname="Insert">
+   </LINK>
+   <NODE systemname="GetSlice (Spreads)" nodename="GetSlice (Spreads)" componentmode="Hidden" id="33">
+   <BOUNDS type="Node" left="3105" top="3180" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Bin Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Index" visible="1">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="I (Spreads)" nodename="I (Spreads)" componentmode="Hidden" id="34">
+   <BOUNDS type="Node" left="3720" top="2520" width="450" height="270">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname=".. To [" slicecount="1" visible="1" values="3">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="34" srcpinname="Output" dstnodeid="33" dstpinname="Index">
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="Y Output Value" dstnodeid="33" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="33" srcpinname="Output" dstnodeid="0" dstpinname="PositionXYZ">
+   </LINK>
+   <LINK srcnodeid="24" srcpinname="Count" dstnodeid="25" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="24" srcpinname="Count" dstnodeid="1" dstpinname="Spread Count">
+   </LINK>
+   <LINK srcnodeid="24" srcpinname="Count" dstnodeid="34" dstpinname=".. To [">
+   </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="36" systemname="IOBox (Color)">
+   <BOUNDS type="Box" left="5295" top="3435" width="2250" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5295" top="3435" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="color">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="36" srcpinname="Color Output" dstnodeid="19" dstpinname="color">
+   </LINK>
+   </PATCH>
