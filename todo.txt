@@ -1,0 +1,2 @@
+- TemplateFace
+- Pot and Lid as dynamicpins
