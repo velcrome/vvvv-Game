@@ -33,7 +33,7 @@ namespace VVVV.Pack.Game.Nodes
 		public Pin<double> FRadius;
 		
 		
-		[Output("Clone these Agents", AutoFlush = false)]
+		[Output("Cloned Agents", AutoFlush = false)]
 		public Pin<Agent> FCloneOut;
 		
 		protected override void Behave(IEnumerable<IAgent> agents)
@@ -53,32 +53,30 @@ namespace VVVV.Pack.Game.Nodes
 			var clone = FCloneCount[0];
 			var radius = FRadius[0];
 			
-			foreach (var a in agents) { 
-				dynamic agent = a;
+			foreach (dynamic agent in agents) { 
 				var closeBy = 	from peer in agents
 							  	where peer != agent
 								where VMath.Dist((Vector3D)peer["Position"].First, (Vector3D)agent["Position"].First) < radius
-								
 								select peer;
 
 				if (closeBy.Count() < starve) {
-					agent.Vitality.First --;
+					agent.Feed(0.005);
 					
-					if (agent.Vitality.First <0) {
+					if (agent.Health < 0.1) {
 						agent.Killed = true;
 						agent.ReturnCode = ReturnCodeEnum.Failure;
 					}
 				}
 				
 				if ((closeBy.Count() >= clone)) {
-					if (agent.Vitality.First >= 100) {
+
+					if (agent.Health >= 0.9) {
 						if (diff > 0) {
+							agent.Burn(0.5);
+							FCloneOut.Add((Agent)agent.Clone());
 							diff--;
-							agent.Vitality.First = 50;
-							FCloneOut.Add((Agent)a);
-						
 						}
-					} else agent.Vitality.First ++;
+					} 
 				}
 				
 				FCloneOut.Flush();

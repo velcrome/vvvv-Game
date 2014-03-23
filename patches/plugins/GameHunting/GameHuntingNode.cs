@@ -4,6 +4,7 @@ using System.Linq;
 using VVVV.Core.Logging;
 using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
+using VVVV.Pack.Game;
 using VVVV.PluginInterfaces.V1;
 using VVVV.PluginInterfaces.V2;
 using VVVV.Utils.VMath;
@@ -37,16 +38,19 @@ namespace VVVV.Pack.Game.Nodes
 			FCalories.Sync();
 			
 			int i = 0;
-			foreach (var agent in agents) {
+			if ((FHunter.SliceCount == 0) || (FHunter[0] == null)) return; 
+			
+			
+			foreach (dynamic agent in agents) {
 				
 				var hunters = 	from hunter in FHunter
-								where (double)hunter["Health"].First < 0.3
+								where (double)hunter["Health"].First < 0.5
 								where agent.Distance(hunter) <= FRadius[i]
 								select hunter;
 				
 			
 				foreach (var hunter in hunters.Take(1)) {
-					hunter.Feed(FCalories[i]);
+					hunter.Feed(FCalories[i] * (double)agent.Health);
 					agent.Killed = true;
 
 				}
