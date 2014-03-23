@@ -8,7 +8,7 @@ namespace VVVV.Pack.Game.Nodes
 {
     #region PluginInfo
 
-    [PluginInfo(Name = "Kill",
+    [PluginInfo(Name = "KillAgent",
         Category = "Game",
         Help = "Marks an Agent to be killed. Will be removed by the Store.",
         Tags = "Agent")]

@@ -72,6 +72,13 @@ namespace VVVV.Pack.Game.Faces
             Digest(a);
         }
 
+        public static void Burn(this IAgent agent, double energy = 0.5)
+        {
+            dynamic a = agent;
+            a.Energy -= energy;
+            Digest(a);
+        }
+        
         public static void Feed(this IAgent agent, double foodAmount)
         {
             dynamic a = agent;

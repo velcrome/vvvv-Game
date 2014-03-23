@@ -13,14 +13,14 @@ namespace VVVV.Pack.Game.AgentNodes
     {
         #region fields & pins
 
-        [Input("Agent")]
+        [Input("Agent", Order = 0)]
         protected Pin<Agent> FInput;
 
 
-        [Input("Face", EnumName = "AllAgentFaces", IsSingle = true)]
+        [Input("Face", EnumName = "AllAgentFaces", IsSingle = true, Order =  1)]
         protected IDiffSpread<EnumEntry> FFace;
 
-        [Input("Scan", IsBang = true, IsSingle = true)]
+        [Input("Scan", IsBang = true, IsSingle = true, Order = 2)]
         protected IDiffSpread<bool> FScan;
 
 

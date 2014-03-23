@@ -257,6 +257,38 @@ namespace VVVV.Pack.Game.Core
 
         #region Essentials
 
+        public override bool Equals(System.Object obj)
+        {
+            Agent a = obj as Agent; // If parameter cannot be cast return false:
+            if (a == null) return false;
+            return base.Equals(obj) && Id == a.Id; // Return true if the fields match:
+        }
+
+        public bool Equals(Agent a)
+        {
+            return base.Equals((Agent)a) && Id == a.Id; // Return true if the fields match:
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public static bool operator ==(Agent a, Agent b)
+        {
+            // If both are null, or both are same instance, return true.
+            if (ReferenceEquals(a, b)) return true;
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null)) return false;
+            // Return true if the fields match:
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(Agent a, Agent b)
+        {
+            return !(a == b);
+        }
+
         public int CompareTo(object other)
         {
             if (other == null) return 0;

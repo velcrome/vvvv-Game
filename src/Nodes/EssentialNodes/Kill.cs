@@ -12,19 +12,23 @@ using VVVV.Utils.VMath;
 namespace VVVV.Pack.Game.Nodes
 {
 	#region PluginInfo
-	[PluginInfo(Name = "Death", Category = "Game", Help = "Basic template with one value in/out", Tags = "")]
+	[PluginInfo(Name = "Kill", Category = "Game", Help = "Simply Kill", Tags = "")]
 	#endregion PluginInfo
 	public class GameDeathNode : AbstractActionNode
 	{
-		[Input("Enable", IsSingle = true, IsToggle = true)]
+		[Input("Kill", IsSingle = true, IsToggle = true)]
 		public ISpread<bool> FEnable;
 
-		protected override void Behave(IEnumerable<IAgent> agents)
+        [Input("ReturnCode", IsSingle = true)]
+        public ISpread<ReturnCodeEnum> FSetCode;
+        
+        protected override void Behave(IEnumerable<IAgent> agents)
 		{
 			if (!FEnable[0]) return;
 			
 			foreach (var agent in agents) {
 				agent.Killed = true;
+                agent.ReturnCode = FSetCode[0];
 
 			}
 		}

@@ -25,17 +25,10 @@ namespace VVVV.Pack.Game.Nodes
         protected override void Behave(IEnumerable<IAgent> agents)
         {
             int i = 0;
-            foreach (var agent in agents)
+            foreach (dynamic agent in agents)
             {
                 var code = FSetCode[i];
                 agent.ReturnCode = code;
-
-                ((dynamic) agent).Test = "hello";
-
-                var f = agent.Face<IMoveableAgent>(false);
-
-                f.Position += new Vector3D(1,1,1);
-                f.Velocity += new Vector3D(0.1,0.1,0.1);
                 i++;
             }
         }
