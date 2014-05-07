@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using VVVV.Pack.Game.Core;
 using VVVV.Utils.VMath;
@@ -27,7 +28,9 @@ namespace VVVV.Pack.Game
         [TestMethod]
         public void TestJson()
         {
-            var agent = new Agent();
+            dynamic agent = new Agent();
+            agent.Id = "foobar";
+            agent.BirthTime = DateTime.MinValue;
 
             agent.Init("Test", "foo");
             agent["Test"].Add("bar");
@@ -39,8 +42,6 @@ namespace VVVV.Pack.Game
             settings.TypeNameHandling = TypeNameHandling.None;
 
            string s = JsonConvert.SerializeObject(agent, settings);
-
-
             Agent copy = JsonConvert.DeserializeObject<Agent>(s);
 
             Assert.AreEqual("foo", copy["Test"].First);
@@ -50,8 +51,8 @@ namespace VVVV.Pack.Game
             Assert.AreEqual(1.0, ((Vector3D)copy["Path"][1]).x);
 
             // does not look pretty yet. waiting for beta32
-    //        Assert.AreEqual("{\r\n  \"Data\": {\r\n    \"Test\": {\r\n      \"Type\": \"string\",\r\n      \"Bin\": [\r\n        \"foo\",\r\n        \"bar\"\r\n      ]\r\n    },\r\n    \"Path\": {\r\n      \"Type\": \"vector3d\",\r\n      \"Bin\": [\r\n        {\r\n          \"x\": 0.0,\r\n          \"y\": 0.0,\r\n          \"z\": 0.0\r\n        },\r\n        {\r\n          \"x\": 1.0,\r\n          \"y\": 1.0,\r\n          \"z\": 1.0\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}", s, "Json failed");
-            Assert.Inconclusive();
+           Assert.AreEqual("{\r\n  \"Data\": {\r\n    \"Test\": {\r\n      \"Type\": \"string\",\r\n      \"Bin\": [\r\n        \"foo\",\r\n        \"bar\"\r\n      ]\r\n    },\r\n    \"Path\": {\r\n      \"Type\": \"vector3d\",\r\n      \"Bin\": [\r\n        {\r\n          \"x\": 0.0,\r\n          \"y\": 0.0,\r\n          \"z\": 0.0\r\n        },\r\n        {\r\n          \"x\": 1.0,\r\n          \"y\": 1.0,\r\n          \"z\": 1.0\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"Killed\": false,\r\n  \"Id\": \"foobar\",\r\n  \"ReturnCode\": 0,\r\n  \"BirthTime\": \"0001-01-01T00:00:00\"\r\n}", s, "Json failed");
+   //         Assert.Inconclusive();
         }
     }
 }
