@@ -47,12 +47,18 @@ namespace VVVV.Pack.Game.AgentNodes
             {
 
                 var baseType = typeof (IAgent);
-                var types = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(s => s.GetTypes())
-                    .Where(p => baseType.IsAssignableFrom(p) && (p != typeof (Agent)));
 
-                var names = new string[types.Count()];
-                AllAgentFaces = types.ToArray();
+                var faces = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                            where assembly.FullName.Contains("Game") // filters out only Assemblies, that have something to do with Game, some Assemblies might contain stuff that cannot be reflected properly
+                            let types = assembly.GetTypes()
+                                from type in types
+                                where type.IsInterface 
+                                where typeof(IAgent).IsAssignableFrom(type)
+                            select type;
+
+
+                var names = new string[faces.Count()];
+                AllAgentFaces = faces.ToArray();
 
                 int i = 0;
                 foreach (var face in AllAgentFaces)

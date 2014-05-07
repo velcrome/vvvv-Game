@@ -55,8 +55,8 @@ namespace VVVV.Pack.Game.Core
         public Agent()
         {
             RunningNodes = new Dictionary<object, ArrayList>();
-            Id = Guid.NewGuid().ToString();
             BirthTime = DateTime.Now;
+            this.Id = Guid.NewGuid().ToString();
         }
 
         #region duck casting
@@ -122,23 +122,55 @@ namespace VVVV.Pack.Game.Core
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             string name = binder.Name;
-
-            if (!Data.ContainsKey(name))
+            switch (name)
             {
-                    throw new Exception(name + " has not been initialized. Also no matching "+name+"() in AgentAPI could be found");
+                case "BirthTime":
+                    result = BirthTime;
+                    break;
+                case "Killed":
+                    result = Killed;
+                    break;
+                case "Id":
+                    result = Id;
+                    break;
+                case "ReturnCode":
+                    result = ReturnCode;
+                    break;
+                default:
+                    if (Data.ContainsKey(name))
+                    {
+                        result = Data[name];
+                    }
+                    else throw new Exception(name + " has not been initialized. Also no matching " + name + "() in AgentAPI could be found");
+                    break;
             }
-            
-            result = Data[name];
             return true;
-
-
         }
 
         // If you try to set a value of a property that is 
         // not defined in the class, this method is called. 
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
-            Assign(binder.Name, value);
+           string name = binder.Name;
+           switch (name)
+           {
+               case "BirthTime":
+                   BirthTime = (DateTime) value;
+                   break;
+               case "Killed":
+                   Killed = (bool) value;
+                   break;
+               case "Id":
+                   Id = (string) value;
+                   break;
+               case "ReturnCode":
+                   ReturnCode = (ReturnCodeEnum) value;
+                   break;
+               default: 
+                   Assign(binder.Name, value);
+                   break;
+           }
+
             return true;
         }
 

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VVVV.Pack.Game.Faces;
 using VVVV.Utils.VMath;
 
 namespace VVVV.Pack.Game.Faces

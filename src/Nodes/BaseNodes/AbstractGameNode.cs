@@ -7,6 +7,9 @@ using VVVV.PluginInterfaces.V2;
 
 namespace VVVV.Pack.Game
 {
+    /// <summary>
+    /// The abstract base node for all plugins that handle Behavior Links
+    /// </summary>
     public abstract class AbstractGameNode : IPluginEvaluate, IPartImportsSatisfiedNotification
     {
 
@@ -71,11 +74,11 @@ namespace VVVV.Pack.Game
         #endregion
 
         #region essentials
+    /// <summary>
+    /// Flush all output pins.
+    /// </summary>        
         protected void FinishEvaluation()
         {
-
-//          Flush all output pins.
-
             FReturnCode.SliceCount = FAgents.Count;
             int i = 0;
             foreach (Agent agent in FAgents)
@@ -91,6 +94,10 @@ namespace VVVV.Pack.Game
         }
         #endregion
 
+        /// <summary>
+        /// This method is not useful yet. It's purpose is to sync all input pins automatically. 
+        /// There is no easy way to find all Pins of a node that allows for syncing, IPin does not have this functionality
+        /// </summary>
         protected virtual void StartEvaluation()
         {
             //          Sync all input pins.
