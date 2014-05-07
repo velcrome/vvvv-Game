@@ -1,4 +1,4 @@
-﻿using VVVV.Nodes;
+﻿using VVVV.Nodes.Generic;
 using VVVV.Pack.Game.Core;
 using VVVV.PluginInterfaces.V2;
 

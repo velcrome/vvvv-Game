@@ -46,26 +46,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp">
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="VVVV.Core">
-      <HintPath>..\packages\VVVV.Core.31.7.0-develop-avalon-e-159\lib\net45\VVVV.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\VVVV.Core.31.10.0-develop-261\lib\net40\VVVV.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="VVVV.Utils">
-      <HintPath>..\packages\VVVV.Utils.31.7.0-develop-avalon-e-159\lib\net45\VVVV.Utils.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="VVVV.Utils, Version=31.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\VVVV.Utils.31.10.0-develop-261\lib\net40\VVVV.Utils.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
@@ -97,7 +96,7 @@
     <Otherwise>
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
-          <Private>True</Private>
+          <Private>False</Private>
         </Reference>
       </ItemGroup>
     </Otherwise>
