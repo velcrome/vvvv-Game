@@ -1,11 +1,9 @@
 ﻿#region usings
 using System.Collections.Generic;
-using VVVV.Core.Logging;
 using VVVV.Pack.Game.Core;
 using VVVV.Pack.Game.Faces;
-using VVVV.PluginInterfaces.V1;
 using VVVV.PluginInterfaces.V2;
-using VVVV.Utils.VMath;
+
 
 #endregion usings
 

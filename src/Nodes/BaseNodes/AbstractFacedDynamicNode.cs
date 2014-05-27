@@ -49,7 +49,7 @@ namespace VVVV.Pack.Game.AgentNodes
                 var baseType = typeof (IAgent);
 
                 var faces = from assembly in AppDomain.CurrentDomain.GetAssemblies()
-                            where assembly.FullName.Contains("Game") // filters out only Assemblies, that have something to do with Game, some Assemblies might contain stuff that cannot be reflected properly
+//                            where assembly.FullName.Contains("Game") // filters out only Assemblies, that have something to do with Game, some Assemblies might contain stuff that cannot be reflected properly
                             let types = assembly.GetTypes()
                                 from type in types
                                 where type.IsInterface 

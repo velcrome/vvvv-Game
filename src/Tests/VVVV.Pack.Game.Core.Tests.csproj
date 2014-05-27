@@ -57,12 +57,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="VVVV.Core">
-      <HintPath>..\packages\VVVV.Core.31.10.0-develop-261\lib\net40\VVVV.Core.dll</HintPath>
+      <HintPath>..\packages\VVVV.Core.32.0.0\lib\net40\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VVVV.Utils, Version=31.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="VVVV.Utils, Version=32.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\VVVV.Utils.31.10.0-develop-261\lib\net40\VVVV.Utils.dll</HintPath>
+      <HintPath>..\packages\VVVV.Utils.32.0.0\lib\net40\VVVV.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

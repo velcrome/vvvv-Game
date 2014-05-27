@@ -14,41 +14,38 @@ namespace VVVV.Pack.Game.Nodes
 	#region PluginInfo
 	[PluginInfo(Name = "IsOutsideBox", Category = "Game", Help = "Basic template with one value in/out", Tags = "")]
 	#endregion PluginInfo
-	public class GameIsOutsideBoxNode : AbstractDecoratorNode
+	public class GameIsOutsideBoxNode : AbstractConditionNode
 	{
-		[Input("Center", AutoValidate = false)]
+		[Input("Center", AutoValidate = false, IsSingle = true)]
 		protected Pin<Vector3D> FCenter;
 
-		[Input("Width", AutoValidate = false, DefaultValues = new double[] {1.0, 1.0, 1.0})]
+		[Input("Width", AutoValidate = false, DefaultValues = new double[] {1.0, 1.0, 1.0}, IsSingle = true)]
 		protected Pin<Vector3D> FWidth;
 
 		public override void After(IEnumerable<IAgent> agents)
 		{
 		}
-		
-		public override void Before(IEnumerable<IAgent> agents)
+
+	    public override bool Condition(IAgent agent)
+	    {
+            var a = agent.Face<IMoveableAgent>();
+
+            var center = FCenter[0];
+            var width = FWidth[0] / 2;
+
+            bool outside = false;
+            if (isOutside(a.Position.x, center.x, width.x)) outside = true;
+            if (isOutside(a.Position.y, center.y, width.y)) outside = true;
+            if (isOutside(a.Position.z, center.z, width.z)) outside = true;
+
+	        return outside;
+	    }
+
+	    public override void Before(IEnumerable<IAgent> agents)
 		{
-			int i = 0;
 			FCenter.Sync();
 			FWidth.Sync();
 
-			foreach (var a in agents) {
-
-				var agent = a.Face<IMoveableAgent>();
-				
-				var center = FCenter[i];
-				var width = FWidth[i] /2;
-				
-				bool outside = false;
-				if (isOutside(agent.Position.x, center.x, width.x)) outside = true;
-				if (isOutside(agent.Position.y, center.y, width.y)) outside = true;
-				if (isOutside(agent.Position.z, center.z, width.z)) outside = true;
-				
-				i++;
-
-				if (!outside) agent.ReturnCode = ReturnCodeEnum.Failure; // will interrupt further evaluation upstream.
-
-			}
 		}
 		
 		private bool isOutside(double input, double center, double width) {

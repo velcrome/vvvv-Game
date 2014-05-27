@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta31.2.dtd" >
-   <PATCH nodename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Moss\_root_DarwinSurvival.v4p" systemname="_root_DarwinSurvival" filename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Moss\_root_DarwinSurvival.v4p">
-   <BOUNDS type="Window" left="390" top="10515" width="9900" height="9900">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45alpha31.7.dtd" >
+   <PATCH nodename="C:\dev\vvvv\vvvv-Game\patches\modules\Moss\_root_DarwinSurvival.v4p" systemname="_root_DarwinSurvival" filename="C:\apps\code\vvvv_45beta31.2_x64\packs\vvvv-Game\nodes\modules\Moss\_root_DarwinSurvival.v4p">
+   <BOUNDS type="Window" left="0" top="1755" width="9900" height="9900">
    </BOUNDS>
    <NODE systemname="Group (EX9)" nodename="Group (EX9)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="3450" top="12630" width="8820" height="270">
@@ -21,7 +21,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="3450" top="14715" width="2400" height="1800">
    </BOUNDS>
-   <BOUNDS type="Window" left="10545" top="10410" width="5250" height="10050">
+   <BOUNDS type="Window" left="20445" top="2790" width="5250" height="10050">
    </BOUNDS>
    <PIN pinname="Actual Backbuffer Width" visible="1">
    </PIN>
@@ -324,7 +324,7 @@
    <BOUNDS type="Box" left="15600" top="5610">
    </BOUNDS>
    </NODE>
-   <NODE systemname="Init (Moss)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Moss\Init (Moss).v4p" nodename="Init (Moss)" componentmode="Hidden" id="43">
+   <NODE systemname="Init (Moss)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Moss\Init (Moss).v4p" nodename="Init (Moss)" componentmode="InAWindow" id="43">
    <BOUNDS type="Node" left="8085" top="2895" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Insert" visible="1">
@@ -570,7 +570,7 @@
    </NODE>
    <LINK srcnodeid="72" srcpinname="Output" dstnodeid="62" dstpinname="Input">
    </LINK>
-   <NODE systemname="Init (Bird)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Moss\Init (Bird).v4p" nodename="Init (Bird)" componentmode="Hidden" id="75">
+   <NODE systemname="Init (Bird)" filename="%VVVV%\packs\vvvv-Game\nodes\modules\Moss\Init (Bird).v4p" nodename="Init (Bird)" componentmode="InAWindow" id="75">
    <BOUNDS type="Node" left="24855" top="5100" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
@@ -578,6 +578,8 @@
    <PIN pinname="Insert" visible="1" slicecount="1" values="0">
    </PIN>
    <BOUNDS type="Box" left="24855" top="5100">
+   </BOUNDS>
+   <BOUNDS type="Window" left="15945" top="2475" width="9990" height="11070">
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="76" systemname="IOBox (Value Advanced)">
@@ -723,7 +725,7 @@
    </PIN>
    <PIN pinname="Input" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Efficiency" slicecount="1" values="0.008">
+   <PIN pinname="Efficiency" slicecount="1" values="0.002">
    </PIN>
    <BOUNDS type="Box" left="30855" top="4530">
    </BOUNDS>
@@ -872,12 +874,14 @@
    </LINK>
    <LINK srcnodeid="112" srcpinname="FoodStatus" dstnodeid="109" dstpinname="Input" hiddenwhenlocked="1">
    </LINK>
-   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
+   <NODE systemname="MAINLOOP (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
    <BOUNDS type="Node" left="750" top="4800" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Maximum background fpsS" visible="1">
    </PIN>
    <PIN pinname="Time Mode" slicecount="1" values="Filtered">
+   </PIN>
+   <PIN pinname="Increase Timing Precision" slicecount="1" values="0">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="116" systemname="IOBox (Value Advanced)">
@@ -1033,7 +1037,7 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="FrameDelay (Game)" nodename="FrameDelay (Game)" componentmode="Hidden" id="153" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll">
-   <BOUNDS type="Node" left="8520" top="5085" width="100" height="100">
+   <BOUNDS type="Node" left="8520" top="5085" width="900" height="270">
    </BOUNDS>
    <PIN pinname="Agent" visible="1">
    </PIN>
@@ -1417,7 +1421,7 @@
    <NODE systemname="FrameDelay (Game)" nodename="FrameDelay (Game)" componentmode="Hidden" id="188" filename="%VVVV%\packs\vvvv-Game\nodes\plugins\VVVV.Pack.Game.Nodes.dll">
    <BOUNDS type="Node" left="25875" top="4005" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Input" visible="1">
+   <PIN pinname="Input" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Agent" visible="1">
    </PIN>
@@ -1625,7 +1629,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="17970" top="10605" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" values="0" visible="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>

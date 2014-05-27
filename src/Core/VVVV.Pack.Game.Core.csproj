@@ -55,11 +55,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="VVVV.Core">
-      <HintPath>..\packages\VVVV.Core.31.10.0-develop-261\lib\net40\VVVV.Core.dll</HintPath>
+      <HintPath>..\packages\VVVV.Core.32.0.0\lib\net40\VVVV.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VVVV.Utils">
-      <HintPath>..\packages\VVVV.Utils.31.10.0-develop-261\lib\net40\VVVV.Utils.dll</HintPath>
+      <HintPath>..\packages\VVVV.Utils.32.0.0\lib\net40\VVVV.Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -84,12 +84,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\VVVV.PluginInterfaces.31.10.0-develop-261\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.31.10.0-develop-261\build\net40\VVVV.PluginInterfaces.targets')" />
+  <Import Project="..\packages\VVVV.PluginInterfaces.32.0.0\build\net40\VVVV.PluginInterfaces.targets" Condition="Exists('..\packages\VVVV.PluginInterfaces.32.0.0\build\net40\VVVV.PluginInterfaces.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\VVVV.PluginInterfaces.31.10.0-develop-261\build\net40\VVVV.PluginInterfaces.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VVVV.PluginInterfaces.31.10.0-develop-261\build\net40\VVVV.PluginInterfaces.targets'))" />
+    <Error Condition="!Exists('..\packages\VVVV.PluginInterfaces.32.0.0\build\net40\VVVV.PluginInterfaces.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VVVV.PluginInterfaces.32.0.0\build\net40\VVVV.PluginInterfaces.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
