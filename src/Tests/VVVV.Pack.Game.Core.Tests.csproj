@@ -82,6 +82,10 @@
       <Name>VVVV.Pack.Game.Core</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Nodes\VVVV.Pack.Game.Nodes.csproj">
+      <Project>{6a0afb1f-8219-4a08-85f7-b7f19b66ac16}</Project>
+      <Name>VVVV.Pack.Game.Nodes</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

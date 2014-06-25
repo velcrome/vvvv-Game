@@ -74,6 +74,7 @@
     <Compile Include="BaseNodes\AbstractGameNode.cs" />
     <Compile Include="BaseNodes\AbstractDecoratorNode.cs" />
     <Compile Include="EssentialNodes\Kill.cs" />
+    <Compile Include="EssentialNodes\Set.cs" />
     <Compile Include="MovementNodes\GameAlignTogetherNode.cs" />
     <Compile Include="MovementNodes\GameCohesionNode.cs" />
     <Compile Include="MovementNodes\GameContainInBoxNode.cs" />

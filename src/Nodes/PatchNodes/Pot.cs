@@ -58,6 +58,7 @@ namespace VVVV.Pack.Game.Nodes
             if (IsPinValid(FInput))
             {
                 // valid FInput means, this is a decorator
+                FInput[0].Agents.Clear();
                 FInput[0].Agents.AddRange(FAgents);
                 FInput.Sync();
             } 
@@ -77,6 +78,7 @@ namespace VVVV.Pack.Game.Nodes
         {
             if (IsPinValid(FSink))
             {
+                FSink[0].Agents.Clear();
                 FSink[0].Agents.AddRange(FAgents);
             }
             FSink.Sync();

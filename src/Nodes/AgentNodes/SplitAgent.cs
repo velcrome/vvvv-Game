@@ -7,10 +7,8 @@ using VVVV.PluginInterfaces.V2.NonGeneric;
 namespace VVVV.Pack.Game.AgentNodes
 {
     #region PluginInfo
-
     [PluginInfo(Name = "Split", AutoEvaluate = true, Category = "Game",
         Help = "Splits all Agents into custom dynamic pins", Tags = "Agent")]
-
     #endregion PluginInfo
     public class SplitAgentNode : AbstractFacedDynamicNode
     {

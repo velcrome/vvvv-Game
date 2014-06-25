@@ -40,11 +40,9 @@ namespace VVVV.Pack.Game.Nodes
 				var sum = new Vector3D();
 				foreach  (var v in vectors)
 				{
-
 				    var dist = (FMaxRadius[i] - v.Length)/FMaxRadius[i];
-
                     sum += (1 - dist) * ~v;
-                }
+				}
 				agent.ForceSum += sum * FStrength[i];
 				
 				i++;

@@ -6,6 +6,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VVVV.Pack.Game.Core", "Core\VVVV.Pack.Game.Core.csproj", "{C2F6EC8A-AA56-4121-B60F-72012D192835}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VVVV.Pack.Game.Core.Tests", "Tests\VVVV.Pack.Game.Core.Tests.csproj", "{13A9D7B7-BD30-4624-8000-BD5F5B303949}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6A0AFB1F-8219-4A08-85F7-B7F19B66AC16} = {6A0AFB1F-8219-4A08-85F7-B7F19B66AC16}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

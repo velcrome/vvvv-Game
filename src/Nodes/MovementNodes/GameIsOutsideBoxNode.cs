@@ -16,29 +16,37 @@ namespace VVVV.Pack.Game.Nodes
 	#endregion PluginInfo
 	public class GameIsOutsideBoxNode : AbstractConditionNode
 	{
-		[Input("Center", AutoValidate = false, IsSingle = true)]
+		[Input("Center", AutoValidate = false)]
 		protected Pin<Vector3D> FCenter;
 
-		[Input("Width", AutoValidate = false, DefaultValues = new double[] {1.0, 1.0, 1.0}, IsSingle = true)]
+		[Input("Width", AutoValidate = false, DefaultValues = new double[] {1.0, 1.0, 1.0})]
 		protected Pin<Vector3D> FWidth;
 
 		public override void After(IEnumerable<IAgent> agents)
 		{
 		}
 
-	    public override bool Condition(IAgent agent)
+	    public override IEnumerable<bool> Condition(IEnumerable<IAgent> agents)
 	    {
-            var a = agent.Face<IMoveableAgent>();
 
-            var center = FCenter[0];
-            var width = FWidth[0] / 2;
+	        int i = 0;
+            foreach (var agent in agents)
+	        {
+                var a = agent.Face<IMoveableAgent>();
 
-            bool outside = false;
-            if (isOutside(a.Position.x, center.x, width.x)) outside = true;
-            if (isOutside(a.Position.y, center.y, width.y)) outside = true;
-            if (isOutside(a.Position.z, center.z, width.z)) outside = true;
+                var center = FCenter[i];
+                var width = FWidth[i] / 2;
 
-	        return outside;
+                bool outside = false;
+	            i++;
+
+                if (isOutside(a.Position.x, center.x, width.x)) outside = true;
+                if (isOutside(a.Position.y, center.y, width.y)) outside = true;
+                if (isOutside(a.Position.z, center.z, width.z)) outside = true;
+
+                yield return outside;
+            }
+
 	    }
 
 	    public override void Before(IEnumerable<IAgent> agents)

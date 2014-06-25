@@ -31,15 +31,21 @@ namespace VVVV.Pack.Game
             bool pinFalse = IsPinValid(FInputFalse);
 
 
+
+            var result = Condition(notFailedAgents);
+
+            int i = 0;
             foreach (var agent in notFailedAgents)
             {
-                if (Condition(agent))
+                if (result.ElementAt(i))
                 {
                     if (pinTrue) FInput[0].Agents.Add(agent);
-                } else
+                }
+                else
                 {
                     if (pinFalse) FInputFalse[0].Agents.Add(agent);
                 }
+                i++;
 
             }
 
@@ -50,7 +56,7 @@ namespace VVVV.Pack.Game
             FinishEvaluation();
         }
 
-        public abstract bool Condition(IAgent agent);
+        public abstract IEnumerable<bool> Condition(IEnumerable<IAgent> agents);
 
         public override void Before(IEnumerable<IAgent> agents)
         {

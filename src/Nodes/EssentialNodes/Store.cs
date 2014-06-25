@@ -39,6 +39,8 @@ namespace VVVV.Pack.Game.Nodes
         [Output("Output", AutoFlush = false)]
         private Pin<Agent> FOutput;
 
+        [Output("Killed Agents", AutoFlush = false)]
+        private Pin<Agent> FKilled;
 
         private List<Agent> FAgents = new List<Agent>();
 
@@ -63,7 +65,12 @@ namespace VVVV.Pack.Game.Nodes
 
         public void Evaluate(int SpreadMax)
         {
-            if (FClear[0]) FAgents.Clear();
+            FKilled.SliceCount = 0;
+            if (FClear[0])
+            {
+                FKilled.AssignFrom(FAgents);
+                FAgents.Clear();
+            }
 
             if (FDeleteNow[0])
             {
@@ -84,6 +91,10 @@ namespace VVVV.Pack.Game.Nodes
                 }
             }
 
+            var killed = from a in FAgents
+                         where a.Killed
+                         select a;
+            FKilled.AddRange(killed);
             FAgents.RemoveAll(IsKilled);
 
             if (!FAdd.IsAnyInvalid())
@@ -92,8 +103,6 @@ namespace VVVV.Pack.Game.Nodes
                 {
                     if (agent != null) FAgents.Add(agent);
                 }
-                
-//                FAgents.AddRange(FAdd);
                 FAgents.Sort();
             }
 
@@ -115,6 +124,7 @@ namespace VVVV.Pack.Game.Nodes
                 FOutput.AssignFrom(FAgents);
             }
             FOutput.Flush();
+            FKilled.Flush();
 
         }
 
