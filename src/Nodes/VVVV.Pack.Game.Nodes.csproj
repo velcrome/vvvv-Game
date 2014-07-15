@@ -64,6 +64,7 @@
     <Compile Include="AgentNodes\Cons.cs" />
     <Compile Include="AgentNodes\FrameDelay.cs" />
     <Compile Include="AgentNodes\KillAgent.cs" />
+    <Compile Include="AgentNodes\Search.cs" />
     <Compile Include="BaseNodes\AbstractConditionNode.cs" />
     <Compile Include="BaseNodes\AbstractFacedDynamicNode.cs" />
     <Compile Include="BaseNodes\AbstractDynamicNode.cs" />
