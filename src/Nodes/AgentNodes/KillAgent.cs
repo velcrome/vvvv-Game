@@ -1,8 +1,6 @@
-﻿using System;
-using VVVV.Pack.Game.AgentNodes;
-using VVVV.Pack.Game.Core;
+﻿using VVVV.Pack.Game.Core;
+using VVVV.Pack.Game.Faces;
 using VVVV.PluginInterfaces.V2;
-using VVVV.PluginInterfaces.V2.NonGeneric;
 
 namespace VVVV.Pack.Game.Nodes
 {
@@ -50,4 +48,44 @@ namespace VVVV.Pack.Game.Nodes
 
 
     }
+
+    #region PluginInfo
+    [PluginInfo(Name = "Hit",
+        Category = "Game",
+        Help = "Marks an Agent to be hit. ",
+        Tags = "Agent")]
+    #endregion PluginInfo
+    public class HitAgentNode : IPluginEvaluate
+    {
+        #region fields & pins
+
+        [Input("Agent")]
+        protected Pin<Agent> FInput;
+
+        [Input("Hit", IsToggle = true, DefaultBoolean = false, AutoValidate = false)]
+        protected ISpread<bool> FHit;
+
+        [Output("Agent", AutoFlush = false)]
+        public Pin<Agent> FOutput;
+        #endregion
+
+        public void Evaluate(int SpreadMax)
+        {
+            SpreadMax = FInput.SliceCount;
+
+            if (FInput.IsAnyInvalid()) SpreadMax = 0;
+            FHit.Sync();
+
+            for (int i = 0; i < SpreadMax; i++)
+            {
+                var agent = FInput[i];
+                if (FHit[i]) agent.Hit();
+            }
+            FOutput.AssignFrom(FInput);
+            FOutput.Flush();
+        }
+    }
+
+
+
 }

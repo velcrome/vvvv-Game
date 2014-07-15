@@ -65,7 +65,7 @@ namespace VVVV.Pack.Game.Nodes
 
         public override void Evaluate(int spreadMax)
         {
-            FLogger.Log(LogType.Error, FAgents.Count.ToString());
+//            FLogger.Log(LogType.Error, FAgents.Count.ToString());
             
             foreach (string pinName in FPins.Keys)
             {

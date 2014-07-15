@@ -30,9 +30,9 @@ namespace VVVV.Pack.Game.Nodes
 	    {
 
 	        int i = 0;
-            foreach (var agent in agents)
+            foreach (var a in agents)
 	        {
-                var a = agent.Face<IMoveableAgent>();
+//                var a = agent.Face<IMoveableAgent>();
 
                 var center = FCenter[i];
                 var width = FWidth[i] / 2;
@@ -40,9 +40,12 @@ namespace VVVV.Pack.Game.Nodes
                 bool outside = false;
 	            i++;
 
-                if (isOutside(a.Position.x, center.x, width.x)) outside = true;
-                if (isOutside(a.Position.y, center.y, width.y)) outside = true;
-                if (isOutside(a.Position.z, center.z, width.z)) outside = true;
+	            var pos = (Vector3D)a["Position"].First;
+
+
+                if (isOutside(pos.x, center.x, width.x)) outside = true;
+                if (isOutside(pos.y, center.y, width.y)) outside = true;
+                if (isOutside(pos.z, center.z, width.z)) outside = true;
 
                 yield return outside;
             }

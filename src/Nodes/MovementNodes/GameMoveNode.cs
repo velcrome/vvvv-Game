@@ -28,9 +28,8 @@ namespace VVVV.Pack.Game.Nodes
 			FAgility.Sync();
 			
 			int i=0;
-			foreach (var a in agents) {
-				dynamic agent = a;
-				a.Move(FMaxSpeed[i], FAgility[i]);
+			foreach (dynamic agent in agents) {
+				agent.Move(FMaxSpeed[i], FAgility[i]);
 			}
 		}
 	}

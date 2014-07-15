@@ -27,9 +27,9 @@ namespace VVVV.Pack.Game.Nodes
 		protected override void Behave(IEnumerable<IAgent> agents)
 		{
 			int i = 0; 
-			foreach (var a in agents)
+			foreach (dynamic agent in agents)
 			{
-			    var agent = a.Face<IMoveableAgent>();
+//			    var agent = a.Face<IMoveableAgent>();
 
 			    var vectors = from peer in agents
                               where peer != agent

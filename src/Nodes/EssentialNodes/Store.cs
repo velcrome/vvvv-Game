@@ -36,6 +36,9 @@ namespace VVVV.Pack.Game.Nodes
         [Input("Input", AutoValidate = false)]
         public Pin<BehaviorLink> FInput;
 
+        [Input("Tick", AutoValidate = false, IsSingle = true, DefaultBoolean = true, IsBang = true)]
+        public Pin<bool> FTick;
+
         [Output("Output", AutoFlush = false)]
         private Pin<Agent> FOutput;
 
@@ -106,7 +109,7 @@ namespace VVVV.Pack.Game.Nodes
                 FAgents.Sort();
             }
 
-            if (!FInput.IsAnyInvalid() && FInput.PluginIO.IsConnected)
+            if (!FInput.IsAnyInvalid() && FInput.PluginIO.IsConnected && FTick[0])
             {
                 FInput[0].Agents.AddRange(FAgents);
 
