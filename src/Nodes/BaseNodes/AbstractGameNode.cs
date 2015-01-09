@@ -44,7 +44,8 @@ namespace VVVV.Pack.Game
             FOutput.Flush();
 
             FOutput.Disconnected += disconnect;
-            FMainLoop.OnPrepareGraph += init;
+//            FMainLoop.OnPrepareGraph += init;
+            FMainLoop.OnResetCache += init;
 
         }
 

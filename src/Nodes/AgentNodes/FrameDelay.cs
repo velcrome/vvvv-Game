@@ -38,15 +38,15 @@ namespace VVVV.Pack.Game.Nodes
         [Import()]
         protected ILogger FLogger;
 
-        protected bool firstFrame = true;
-        protected List<Agent> lastFrame = new List<Agent>(); 
+        protected bool IsFirstFrame = true;
+        protected List<Agent> LastFrameAgents = new List<Agent>(); 
 
         
         #endregion
 
         public void OnImportsSatisfied()
         {
-            FMainLoop.OnPrepareGraph += Push;
+            FMainLoop.OnResetCache += Push;
   //          FInput.Changed += InputChanged;
 
         }
@@ -60,23 +60,23 @@ namespace VVVV.Pack.Game.Nodes
         {
 //            FLogger.Log(LogType.Debug, "push "+ FInput.SliceCount);
 
-            lastFrame.Clear();
+            LastFrameAgents.Clear();
             foreach (var agent in FInput)
             {
-                if (agent != null) lastFrame.Add(agent);
+                if (agent != null) LastFrameAgents.Add(agent);
             }
             
         }
 
         public void Evaluate(int SpreadMax)
         {
-            if (firstFrame || FInit[0])
+            if (IsFirstFrame || FInit[0])
             {
                 FOutput.AssignFrom(FDefault);
-                firstFrame = false;
+                IsFirstFrame = false;
             } else
             {
-                FOutput.AssignFrom(lastFrame);
+                FOutput.AssignFrom(LastFrameAgents);
             }
             
             FOutput.Flush();

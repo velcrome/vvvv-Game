@@ -33,6 +33,9 @@ namespace VVVV.Pack.Game.Nodes
         [Input("Add Agent")]
         Pin<Agent> FAdd;
 
+        [Input("Limit Agent Count", DefaultValue = 32, IsSingle = true, Visibility = PinVisibility.OnlyInspector)]
+        Pin<int> FLimitCount;
+
         [Input("Input", AutoValidate = false)]
         public Pin<BehaviorLink> FInput;
 
@@ -89,7 +92,7 @@ namespace VVVV.Pack.Game.Nodes
 
                 for (int i = 0; i < del.Count; i++)
                 {
-                    if (FAgents.Count > i)
+//                    if (FAgents.Count > i)
                         FAgents.RemoveAt(del[i] - i);
                 }
             }
@@ -102,9 +105,14 @@ namespace VVVV.Pack.Game.Nodes
 
             if (!FAdd.IsAnyInvalid())
             {
+                var count = FAgents.Count;
                 foreach (var agent in FAdd)
                 {
-                    if (agent != null) FAgents.Add(agent);
+                    if (agent != null && !Limited(count))
+                    {
+                        FAgents.Add(agent);
+                        count++;
+                    }
                 }
                 FAgents.Sort();
             }
@@ -112,6 +120,7 @@ namespace VVVV.Pack.Game.Nodes
             FTick.Sync();
             if (!FInput.IsAnyInvalid() && FInput.PluginIO.IsConnected && FTick[0])
             {
+                FInput[0].Agents.Clear();
                 FInput[0].Agents.AddRange(FAgents);
 
                 foreach (var agent in FInput[0].Agents)
@@ -121,15 +130,22 @@ namespace VVVV.Pack.Game.Nodes
                 
                 FInput.Sync();
 
+                FOutput.SliceCount = 0;
                 FOutput.AssignFrom(FInput[0].Agents);
             }
             else
             {
+                FOutput.SliceCount = 0;
                 FOutput.AssignFrom(FAgents);
             }
             FOutput.Flush();
             FKilled.Flush();
 
+        }
+
+        protected bool Limited(int count)
+        {
+            return (FLimitCount[0] >= 0) && (count >= FLimitCount[0]);
         }
 
         private static bool IsKilled(Agent agent)

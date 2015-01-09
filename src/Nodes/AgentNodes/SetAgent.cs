@@ -43,8 +43,11 @@ namespace VVVV.Pack.Game.Nodes
             {
                 var agent = FInput[i];
 
-                Type face = AllAgentFaces[FFace[0].Index];
-                agent.Init(face, FInitFirst[0]);
+                if (FInitFirst[0])
+                {
+                    Type face = AllAgentFaces[FFace[0].Index];
+                    agent.Init(face, FInitFirst[0]);
+                }
 
                 foreach (string pinName in FPins.Keys)
                 {
